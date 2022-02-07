@@ -26,15 +26,23 @@ class _SignInState extends State<SignIn> {
     return loading
         ? const Loading()
         : Scaffold(
-            backgroundColor: Colors.brown[100],
+            backgroundColor: Colors.indigo[100],
             appBar: AppBar(
-              backgroundColor: Colors.brown[400],
+              backgroundColor: Colors.indigo[800],
               elevation: 0.0,
               title: const Text('Sign in'),
               actions: [
                 TextButton.icon(
-                  icon: const Icon(Icons.person),
-                  label: const Text('Register'),
+                  icon: const Icon(
+                    Icons.person,
+                    color: Colors.white,
+                  ),
+                  label: const Text(
+                    'Register',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
                   onPressed: () => widget.toggleView(),
                 ),
               ],

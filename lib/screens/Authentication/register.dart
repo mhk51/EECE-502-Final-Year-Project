@@ -20,21 +20,30 @@ class _RegisterState extends State<Register> {
   // text field state
   String email = '';
   String password = '';
+  String username = '';
 
   @override
   Widget build(BuildContext context) {
     return loading
         ? const Loading()
         : Scaffold(
-            backgroundColor: Colors.brown[100],
+            backgroundColor: Colors.indigo[100],
             appBar: AppBar(
-              backgroundColor: Colors.brown[400],
+              backgroundColor: Colors.indigo[800],
               elevation: 0.0,
               title: const Text('Sign up'),
               actions: <Widget>[
                 TextButton.icon(
-                  icon: const Icon(Icons.person),
-                  label: const Text('Sign In'),
+                  icon: const Icon(
+                    Icons.person,
+                    color: Colors.white,
+                  ),
+                  label: const Text(
+                    'Sign In',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
                   onPressed: () => widget.toggleView(),
                   // style: TextButton.styleFrom(
                   //   primary: Colors.pink[400],
@@ -49,6 +58,16 @@ class _RegisterState extends State<Register> {
                 key: _formKey,
                 child: Column(
                   children: <Widget>[
+                    const SizedBox(height: 20.0),
+                    TextFormField(
+                      decoration:
+                          textInputDecoration.copyWith(hintText: 'Username...'),
+                      validator: (val) =>
+                          val!.isEmpty ? 'Enter a Username' : null,
+                      onChanged: (val) {
+                        setState(() => username = val);
+                      },
+                    ),
                     const SizedBox(height: 20.0),
                     TextFormField(
                       decoration:
@@ -72,25 +91,29 @@ class _RegisterState extends State<Register> {
                       },
                     ),
                     const SizedBox(height: 20.0),
-                    RaisedButton(
-                        color: Colors.pink[400],
-                        child: const Text(
-                          'Register',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
-                            setState(() => loading = true);
-                            dynamic result = await _auth
-                                .registerWithEmailAndPassword(email, password);
-                            if (result == null) {
-                              setState(() {
-                                loading = false;
-                                error = 'Please supply a valid email';
-                              });
-                            }
+                    ElevatedButton(
+                      child: const Text(
+                        'Register',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          setState(() => loading = true);
+                          dynamic result =
+                              await _auth.registerWithEmailAndPassword(
+                                  email, password, username);
+                          if (result == null) {
+                            setState(() {
+                              loading = false;
+                              error = 'Please supply a valid email';
+                            });
                           }
-                        }),
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.pink[400],
+                      ),
+                    ),
                     const SizedBox(height: 12.0),
                     Text(
                       error,

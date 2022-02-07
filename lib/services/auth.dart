@@ -8,13 +8,18 @@ class AuthService {
 
   // create user obj based on firebase user
   CustomUser? _userFromFirebaseUser(User? user) {
-    return user != null ? CustomUser(uid: user.uid) : null;
+    if (user != null) {
+      return CustomUser(uid: user.uid, name: user.displayName);
+    } else {
+      return null;
+    }
   }
 
   // auth change user stream
   Stream<CustomUser?> get user {
+    // _auth.userChanges()
     //.map((FirebaseUser user) => _userFromFirebaseUser(user));
-    return _auth.authStateChanges().map(_userFromFirebaseUser);
+    return _auth.userChanges().map(_userFromFirebaseUser);
   }
 
   // sign in anon
@@ -43,11 +48,15 @@ class AuthService {
   }
 
   // register with email and password
-  Future registerWithEmailAndPassword(String email, String password) async {
+  Future registerWithEmailAndPassword(
+      String email, String password, String username) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       User? user = result.user;
+      await user!.updateDisplayName(username);
+      await user.reload();
+      user = _auth.currentUser;
       // create a new document for the user with the uid
       // await DatabaseService(uid: user!.uid)
       //     .updateUserData('0', 'new crew member', 100);
