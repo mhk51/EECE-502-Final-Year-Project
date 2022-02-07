@@ -1,39 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/custom/borderBox.dart';
-import 'package:flutter_application_1/custom/lineChart.dart';
+import 'package:flutter_application_1/custom/border_box.dart';
+import 'package:flutter_application_1/custom/line_chart.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
-        body: Container(
+        body: SizedBox(
           width: size.width,
           height: size.height,
           child: Column(
-
             crossAxisAlignment: CrossAxisAlignment.start,
-
             children: [
-              
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Text("Home"),
               ),
-               Padding(
-                padding: const EdgeInsets.all(8.0),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Text("Blood Sugar Graph:"),
               ),
-              lineChart(),
-
-
+              const LineChart(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-
-                  borderBox(
+                children: const [
+                  BorderBox(
                     padding: EdgeInsets.all(8.0),
                     width: 50,
                     height: 50,
@@ -42,7 +38,7 @@ class HomeScreen extends StatelessWidget {
                       color: Colors.black,
                     ),
                   ),
-                  borderBox(
+                  BorderBox(
                     padding: EdgeInsets.all(8.0),
                     width: 50,
                     height: 50,
@@ -51,7 +47,7 @@ class HomeScreen extends StatelessWidget {
                       color: Colors.black,
                     ),
                   ),
-                  borderBox(
+                  BorderBox(
                     padding: EdgeInsets.all(8.0),
                     width: 50,
                     height: 50,
@@ -60,7 +56,7 @@ class HomeScreen extends StatelessWidget {
                       color: Colors.black,
                     ),
                   ),
-                  borderBox(
+                  BorderBox(
                     padding: EdgeInsets.all(8.0),
                     width: 50,
                     height: 50,
@@ -69,7 +65,7 @@ class HomeScreen extends StatelessWidget {
                       color: Colors.black,
                     ),
                   ),
-                  borderBox(
+                  BorderBox(
                     padding: EdgeInsets.all(8.0),
                     width: 50,
                     height: 50,

@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/homeScreen.dart';
+import 'package:flutter_application_1/screens/wrapper.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_application_1/models/user.dart';
+import 'package:flutter_application_1/services/auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -11,11 +17,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'What Do I Eat Demo',
-      theme: ThemeData(primaryColor: Colors.white,),
-      home: HomeScreen(),
+    return StreamProvider<CustomUser?>.value(
+      value: AuthService().user,
+      initialData: null,
+      child: const MaterialApp(
+        home: Wrapper(),
+      ),
     );
   }
 }
-
