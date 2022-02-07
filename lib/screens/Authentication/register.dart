@@ -20,6 +20,7 @@ class _RegisterState extends State<Register> {
   // text field state
   String email = '';
   String password = '';
+  String confirmPass = '';
   String username = '';
 
   @override
@@ -88,6 +89,17 @@ class _RegisterState extends State<Register> {
                           : null,
                       onChanged: (val) {
                         setState(() => password = val);
+                      },
+                    ),
+                    const SizedBox(height: 20.0),
+                    TextFormField(
+                      decoration: textInputDecoration.copyWith(
+                          hintText: 'Confirm Password...'),
+                      obscureText: true,
+                      validator: (val) =>
+                          val != password ? 'Enter a matching password' : null,
+                      onChanged: (val) {
+                        setState(() => confirmPass = val);
                       },
                     ),
                     const SizedBox(height: 20.0),

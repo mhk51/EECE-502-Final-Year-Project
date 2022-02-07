@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/custom/border_box.dart';
 import 'package:flutter_application_1/custom/line_chart.dart';
 import 'package:flutter_application_1/models/user.dart';
+import 'package:flutter_application_1/screens/settings_form.dart';
 import 'package:flutter_application_1/services/auth.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +22,7 @@ class HomeScreen extends StatelessWidget {
             return Container(
               padding:
                   const EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-              // child: const SettingsForm(),
+              child: const SettingsForm(),
             );
           });
     }

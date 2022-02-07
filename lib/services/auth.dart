@@ -47,6 +47,14 @@ class AuthService {
     }
   }
 
+  //update User display name
+  Future<User?> updateDisplayName(String username) async {
+    User? user = _auth.currentUser;
+    await user!.updateDisplayName(username);
+    await user.reload();
+    return user;
+  }
+
   // register with email and password
   Future registerWithEmailAndPassword(
       String email, String password, String username) async {
@@ -54,12 +62,11 @@ class AuthService {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       User? user = result.user;
-      await user!.updateDisplayName(username);
-      await user.reload();
-      user = _auth.currentUser;
+      // user = _auth.currentUser;
       // create a new document for the user with the uid
       // await DatabaseService(uid: user!.uid)
       //     .updateUserData('0', 'new crew member', 100);
+      user = await updateDisplayName(username);
       return _userFromFirebaseUser(user);
     } catch (error) {
       print(error.toString());
