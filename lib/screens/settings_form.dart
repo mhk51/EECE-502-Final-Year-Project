@@ -31,46 +31,64 @@ class _SettingsFormState extends State<SettingsForm> {
     return Container(
       padding: const EdgeInsets.all(0),
       child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Text(
-                user!.name!,
-                style: const TextStyle(
-                  fontSize: 18,
+        key: _formKey,
+        child: Column(
+          children: [
+            Text(
+              user!.name!,
+              style: const TextStyle(
+                fontSize: 18,
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            TextFormField(
+              decoration:
+                  textInputDecoration.copyWith(hintText: 'Dispaly Name...'),
+              validator: (val) => val!.isEmpty ? 'Enter a username' : null,
+              onChanged: (val) {
+                setState(() => username = val);
+              },
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            TextButton(
+              onPressed: () async {
+                if (_formKey.currentState!.validate()) {
+                  await _auth.updateDisplayName(username);
+                  Navigator.pop(context);
+                }
+              },
+              child: const Text(
+                'Update',
+                style: TextStyle(color: Colors.white),
+              ),
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.pink[400],
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            TextButton(
+              onPressed: () async {
+                await _auth.resetPassowrd();
+              },
+              child: const Text(
+                'Reset Password',
+                style: TextStyle(
+                  color: Colors.white,
                 ),
               ),
-              const SizedBox(
-                height: 20,
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.pink[400],
               ),
-              TextFormField(
-                decoration:
-                    textInputDecoration.copyWith(hintText: 'Dispaly Name...'),
-                validator: (val) => val!.isEmpty ? 'Enter a username' : null,
-                onChanged: (val) {
-                  setState(() => username = val);
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextButton(
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    await _auth.updateDisplayName(username);
-                    Navigator.pop(context);
-                  }
-                },
-                child: const Text(
-                  'Update',
-                  style: TextStyle(color: Colors.white),
-                ),
-                style: TextButton.styleFrom(
-                  backgroundColor: Colors.pink[400],
-                ),
-              )
-            ],
-          )),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
