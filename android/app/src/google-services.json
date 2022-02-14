@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "787180969644",
+    "firebase_url": "https://eece501-project-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "eece501-project",
+    "storage_bucket": "eece501-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:787180969644:android:19fb15a3c4e94b9e0b8909",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "787180969644-0pteo892g7u38o2jfaddsrhh2san4o2g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAY9BGkrGS7_tPoT2T-OZ3ohnVyqI8G0uY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "787180969644-0pteo892g7u38o2jfaddsrhh2san4o2g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
