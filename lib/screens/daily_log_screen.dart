@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class dailyLogScreen extends StatelessWidget {
-  const dailyLogScreen({Key? key}) : super(key: key);
+class DailyLogScreen extends StatelessWidget {
+  const DailyLogScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class dailyLogScreen extends StatelessWidget {
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
+                children: const [
                   Text("Carbs: 158g"),
                   Text("Protein: 70g"),
                   Text("Fat: 65g"),
@@ -29,15 +29,15 @@ class dailyLogScreen extends StatelessWidget {
               ),
               Column(
                 children: [
-                  Text("Breakfast"),
+                  const Text("Breakfast"),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Table(
                       border: TableBorder.all(),
-                      children: [
+                      children: const [
                         TableRow(
                           children: [
-                            Container(
+                            SizedBox(
                               height: 48,
                               child: Text("3 Eggs"),
                             ),
@@ -45,7 +45,7 @@ class dailyLogScreen extends StatelessWidget {
                         ),
                         TableRow(
                           children: [
-                            Container(
+                            SizedBox(
                               height: 48,
                               child: Text("2 Medium Toast "),
                             ),
@@ -58,15 +58,15 @@ class dailyLogScreen extends StatelessWidget {
               ),
               Column(
                 children: [
-                  Text("Lunch"),
+                  const Text("Lunch"),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Table(
                       border: TableBorder.all(),
-                      children: [
+                      children: const [
                         TableRow(
                           children: [
-                            Container(
+                            SizedBox(
                               height: 48,
                               child: Text("Fajita Wrap"),
                             ),
@@ -79,15 +79,15 @@ class dailyLogScreen extends StatelessWidget {
               ),
               Column(
                 children: [
-                  Text("Dinner"),
+                  const Text("Dinner"),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Table(
                       border: TableBorder.all(),
-                      children: [
+                      children: const [
                         TableRow(
                           children: [
-                            Container(
+                            SizedBox(
                               height: 48,
                               child: Text("2 Tbsp Labneh"),
                             ),
@@ -95,7 +95,7 @@ class dailyLogScreen extends StatelessWidget {
                         ),
                         TableRow(
                           children: [
-                            Container(
+                            SizedBox(
                               height: 48,
                               child: Text("1 Medium Toast "),
                             ),
@@ -108,15 +108,15 @@ class dailyLogScreen extends StatelessWidget {
               ),
               Column(
                 children: [
-                  Text("Snack"),
+                  const Text("Snack"),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Table(
                       border: TableBorder.all(),
-                      children: [
+                      children: const [
                         TableRow(
                           children: [
-                            Container(
+                            SizedBox(
                               height: 48,
                               child: Text("Chocolate Bar"),
                             ),

@@ -74,16 +74,27 @@ class HomeScreen extends StatelessWidget {
               Container(
                 alignment: Alignment.center,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await Navigator.pushNamed(context, '/LoggingFood');
+                  },
                   child: const Text("Log Current Sugar Level"),
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size(340, 40),
+                    minimumSize: const Size(340, 40),
                     alignment: Alignment.center,
                   ),
                 ),
               ),
-              Text("Tip Of The Day:"),
-              Text("Choose food with low levels of added sugar"),
+              const SizedBox(
+                height: 20,
+              ),
+              const Text("Tip Of The Day:"),
+              const SizedBox(
+                height: 20,
+              ),
+              const Text("Choose food with low levels of added sugar"),
+              const SizedBox(
+                height: 20,
+              ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -105,31 +116,52 @@ class HomeScreen extends StatelessWidget {
                                 color: Colors.black,
                               ),
                             ),
-                            const BorderBox(
-                              padding: EdgeInsets.all(8.0),
+                            BorderBox(
+                              padding: const EdgeInsets.all(8.0),
                               width: 60,
                               height: 60,
-                              child: Icon(
-                                Icons.list,
-                                color: Colors.black,
+                              child: TextButton(
+                                onPressed: () async {
+                                  await Navigator.pushNamed(
+                                      context, '/ItemInfo');
+                                },
+                                child:
+                                    const Icon(Icons.list, color: Colors.black),
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                ),
                               ),
                             ),
-                            const BorderBox(
-                              padding: EdgeInsets.all(8.0),
+                            BorderBox(
+                              padding: const EdgeInsets.all(8.0),
                               width: 60,
                               height: 60,
-                              child: Icon(
-                                Icons.add,
-                                color: Colors.black,
+                              child: TextButton(
+                                onPressed: () async {
+                                  await Navigator.pushNamed(
+                                      context, '/DailyLogging');
+                                },
+                                child:
+                                    const Icon(Icons.add, color: Colors.black),
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                ),
                               ),
                             ),
-                            const BorderBox(
-                              padding: EdgeInsets.all(8.0),
+                            BorderBox(
+                              padding: const EdgeInsets.all(8.0),
                               width: 60,
                               height: 60,
-                              child: Icon(
-                                Icons.graphic_eq,
-                                color: Colors.black,
+                              child: TextButton(
+                                onPressed: () async {
+                                  await Navigator.pushNamed(
+                                      context, '/Insights');
+                                },
+                                child: const Icon(Icons.graphic_eq,
+                                    color: Colors.black),
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                ),
                               ),
                             ),
                             BorderBox(

@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/custom/constants.dart';
 
-class ItemInfoScreen extends StatelessWidget {
-  const ItemInfoScreen({Key? key}) : super(key: key);
+class LoggingFoodScreen extends StatelessWidget {
+  const LoggingFoodScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,67 +12,67 @@ class ItemInfoScreen extends StatelessWidget {
           backgroundColor: Colors.blue[800],
           title: const Padding(
             padding: EdgeInsets.all(8.0),
-            child: Text("Item Info"),
+            child: Text("Picking Food"),
           ),
           // centerTitle: true,
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text("Item Info:"),
-            TextField(
-              decoration: InputDecoration(
-                hintText: "Enter Serving Size:",
-                border: OutlineInputBorder(),
-              ),
-              keyboardType: TextInputType.text,
+            const Text("Logging Food: "),
+            const CupertinoSearchTextField(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    onPressed: () {}, child: const Text("All Results")),
+                ElevatedButton(onPressed: () {}, child: const Text("Favorites"))
+              ],
             ),
-            //CupertinoSearchTextField(),
             Column(
               children: [
-                Text("Table of Nutritional Facts: "),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Table(
                     border: TableBorder.all(),
-                    children: [
+                    children: const [
                       TableRow(
                         children: [
-                          Container(
+                          SizedBox(
                             height: 48,
-                            child: Text("Food Name"),
+                            child: Text("Option 1"),
                           ),
                         ],
                       ),
                       TableRow(
                         children: [
-                          Container(
+                          SizedBox(
                             height: 48,
-                            child: Text("Carbs: "),
+                            child: Text("Option 2"),
                           ),
                         ],
                       ),
                       TableRow(
                         children: [
-                          Container(
+                          SizedBox(
                             height: 48,
-                            child: Text("Protien: "),
+                            child: Text("Option 3"),
                           ),
                         ],
                       ),
                       TableRow(
                         children: [
-                          Container(
+                          SizedBox(
                             height: 48,
-                            child: Text("Fat: "),
+                            child: Text("Option 4"),
                           ),
                         ],
                       ),
                       TableRow(
                         children: [
-                          Container(
+                          SizedBox(
                             height: 48,
-                            child: Text("Sugar: "),
+                            child: Text("Option 5"),
                           ),
                         ],
                       ),
@@ -82,10 +81,9 @@ class ItemInfoScreen extends StatelessWidget {
                 ),
               ],
             ),
-            Text("Comment on food selected"),
             ElevatedButton(
               onPressed: () {},
-              child: Text("Add"),
+              child: const Text("Input New Recipe"),
             )
           ],
         ),

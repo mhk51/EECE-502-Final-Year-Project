@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/custom/constants.dart';
 
-class loggingFoodScreen extends StatelessWidget {
-  const loggingFoodScreen({Key? key}) : super(key: key);
+class ItemInfoScreen extends StatelessWidget {
+  const ItemInfoScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,24 +13,25 @@ class loggingFoodScreen extends StatelessWidget {
           backgroundColor: Colors.blue[800],
           title: const Padding(
             padding: EdgeInsets.all(8.0),
-            child: Text("Picking Food"),
+            child: Text("Item Info"),
           ),
           // centerTitle: true,
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text("Logging Food: "),
-            CupertinoSearchTextField(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(onPressed: () {}, child: Text("All Results")),
-                ElevatedButton(onPressed: () {}, child: Text("Favorites"))
-              ],
+            const Text("Item Info:"),
+            const TextField(
+              decoration: InputDecoration(
+                hintText: "Enter Serving Size:",
+                border: OutlineInputBorder(),
+              ),
+              keyboardType: TextInputType.text,
             ),
+            //CupertinoSearchTextField(),
             Column(
               children: [
+                const Text("Table of Nutritional Facts: "),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Table(
@@ -39,7 +41,7 @@ class loggingFoodScreen extends StatelessWidget {
                         children: [
                           Container(
                             height: 48,
-                            child: Text("Option 1"),
+                            child: Text("Food Name"),
                           ),
                         ],
                       ),
@@ -47,7 +49,7 @@ class loggingFoodScreen extends StatelessWidget {
                         children: [
                           Container(
                             height: 48,
-                            child: Text("Option 2"),
+                            child: Text("Carbs: "),
                           ),
                         ],
                       ),
@@ -55,7 +57,7 @@ class loggingFoodScreen extends StatelessWidget {
                         children: [
                           Container(
                             height: 48,
-                            child: Text("Option 3"),
+                            child: Text("Protien: "),
                           ),
                         ],
                       ),
@@ -63,7 +65,7 @@ class loggingFoodScreen extends StatelessWidget {
                         children: [
                           Container(
                             height: 48,
-                            child: Text("Option 4"),
+                            child: Text("Fat: "),
                           ),
                         ],
                       ),
@@ -71,7 +73,7 @@ class loggingFoodScreen extends StatelessWidget {
                         children: [
                           Container(
                             height: 48,
-                            child: Text("Option 5"),
+                            child: Text("Sugar: "),
                           ),
                         ],
                       ),
@@ -80,9 +82,10 @@ class loggingFoodScreen extends StatelessWidget {
                 ),
               ],
             ),
+            const Text("Comment on food selected"),
             ElevatedButton(
               onPressed: () {},
-              child: Text("Input New Recipe"),
+              child: const Text("Add"),
             )
           ],
         ),

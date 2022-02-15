@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/custom/line_chart.dart';
 
-class weeklyInsightsScreen extends StatelessWidget {
-  const weeklyInsightsScreen({Key? key}) : super(key: key);
+class WeeklyInsightsScreen extends StatelessWidget {
+  const WeeklyInsightsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,14 +18,14 @@ class weeklyInsightsScreen extends StatelessWidget {
         ),
         body:
             Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          Text("Weekly Insights: "),
+          const Text("Weekly Insights: "),
           Column(
-            children: [
+            children: const [
               LineChart(),
             ],
           ),
           Column(
-            children: [
+            children: const [
               Text("Recommendations:"),
               Text("Insert Recommendation here...")
             ],

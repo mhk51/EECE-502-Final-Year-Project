@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/daily_log_screen.dart';
+import 'package:flutter_application_1/screens/item_info_screen.dart';
+import 'package:flutter_application_1/screens/logging_food_screen.dart';
+import 'package:flutter_application_1/screens/weekly_insights_screen.dart';
 import 'package:flutter_application_1/screens/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_application_1/models/user.dart';
 import 'package:flutter_application_1/services/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'screens/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,8 +24,15 @@ class MyApp extends StatelessWidget {
     return StreamProvider<CustomUser?>.value(
       value: AuthService().user,
       initialData: null,
-      child: const MaterialApp(
-        home: Wrapper(),
+      child: MaterialApp(
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const Wrapper(),
+          '/Insights': (context) => const WeeklyInsightsScreen(),
+          '/ItemInfo': (context) => const ItemInfoScreen(),
+          '/LoggingFood': (context) => const LoggingFoodScreen(),
+          '/DailyLogging': (context) => const DailyLogScreen(),
+        },
       ),
     );
   }
