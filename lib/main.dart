@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_application_1/models/user.dart';
 import 'package:flutter_application_1/services/auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'screens/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

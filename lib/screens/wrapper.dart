@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/Authentication/authenticate.dart';
 import 'package:flutter_application_1/screens/home_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_application_1/screens/itemInfo_screen.dart';
+import 'package:flutter_application_1/screens/loggingFood_screen.dart';
+import 'package:flutter_application_1/screens/weeklyInsights_screen.dart';
+import 'package:flutter_application_1/screens/dailyLog_screen.dart';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({Key? key}) : super(key: key);
@@ -15,7 +19,7 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       return const Authenticate();
     } else {
-      return HomeScreen();
+      return HomeScreen(); //HomeScreen();
     }
   }
 }
