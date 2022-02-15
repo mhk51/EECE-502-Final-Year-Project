@@ -2,6 +2,7 @@
 
 import 'package:flutter_application_1/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_application_1/services/database.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -63,9 +64,11 @@ class AuthService {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       User? user = result.user;
-      if (!user!.emailVerified) {
-        await user.sendEmailVerification();
-      }
+      // if (!user!.emailVerified) {
+      //   await user.sendEmailVerification();
+      // }
+      await DatabaseService(uid: user!.uid)
+          .updateUserDataCollection(username, email, 0, 0, 0);
       // create a new document for the user with the uid
       // await DatabaseService(uid: user!.uid)
       //     .updateUserData('0', 'new crew member', 100);
@@ -79,7 +82,7 @@ class AuthService {
 
   Future resetPassowrd() async {
     User? user = _auth.currentUser;
-    _auth.sendPasswordResetEmail(email: user!.email!);
+    await _auth.sendPasswordResetEmail(email: user!.email!);
   }
 
   // sign out

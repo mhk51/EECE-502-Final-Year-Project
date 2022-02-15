@@ -101,13 +101,19 @@ class HomeScreen extends StatelessWidget {
                       color: Colors.black,
                     ),
                   ),
-                  const BorderBox(
-                    padding: EdgeInsets.all(8.0),
+                  BorderBox(
+                    padding: const EdgeInsets.all(8.0),
                     width: 60,
                     height: 60,
-                    child: Icon(
-                      Icons.graphic_eq,
-                      color: Colors.black,
+                    child: TextButton(
+                      onPressed: () {},
+                      child: const Icon(
+                        Icons.search,
+                        color: Colors.black,
+                      ),
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.white,
+                      ),
                     ),
                   ),
                   BorderBox(

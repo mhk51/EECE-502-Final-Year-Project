@@ -12,6 +12,15 @@ class Parent extends CustomUser {
 }
 
 class Child extends CustomUser {
-  Child({required String uid, String? name, String? email})
+  final int age;
+  final int weight;
+  final int height;
+  Child(
+      {required String uid,
+      String? name,
+      String? email,
+      required this.age,
+      required this.height,
+      required this.weight})
       : super(uid: uid, name: name, email: email);
 }

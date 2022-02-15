@@ -1,51 +1,66 @@
-// import 'package:flutter_firebase/models/brew.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:flutter_firebase/models/user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_application_1/models/user.dart';
 
-// class DatabaseService {
-//   final String uid;
-//   DatabaseService({required this.uid});
+class DatabaseService {
+  final String uid;
+  DatabaseService({required this.uid});
 
-//   // collection reference
-//   final CollectionReference brewCollection =
-//       FirebaseFirestore.instance.collection('brews');
+  // collection reference
+  // final CollectionReference food =
+  //     FirebaseFirestore.instance.collection('food');
+  final CollectionReference userDataCollection =
+      FirebaseFirestore.instance.collection('UserDataCollection');
 
-//   Future<void> updateUserData(String sugars, String name, int strength) async {
-//     return await brewCollection.doc(uid).set({
-//       'sugars': sugars,
-//       'name': name,
-//       'strength': strength,
-//     });
-//   }
+  Future<void> updateUserDataCollection(
+      String name, String email, int height, int age, int weight) async {
+    return await userDataCollection.doc(uid).set({
+      'name': name,
+      'email': email,
+      'age': age,
+      'height': height,
+      'weight': weight
+    });
+  }
 
-//   // brew list from snapshot
-//   List<Brew> _brewListFromSnapshot(QuerySnapshot snapshot) {
-//     return snapshot.docs.map((doc) {
-//       //print(doc.data);
-//       return Brew(
-//           name: doc.get('name') ?? '',
-//           strength: doc.get('strength') ?? 0,
-//           sugars: doc.get('sugars') ?? '0');
-//     }).toList();
-//   }
+  // // brew list from snapshot
+  // List<Child> _brewListFromSnapshot(QuerySnapshot snapshot) {
+  //   return snapshot.docs.map((doc) {
+  //     //print(doc.data);
+  //     return Child(
+  //       uid: doc.id,
+  //       name: doc.get('name') ?? '',
+  //       email: doc.get('email'),
+  //       age: doc.get('age') ?? 0,
+  //       height: doc.get('height') ?? '0',
+  //       weight: doc.get('weight') ?? 0,
+  //     );
+  //     // uid: doc.get('uid')
+  //   }).toList();
+  // }
 
-//   //userData from snapshot
-//   UserData _userDatafromSnapshot(DocumentSnapshot snapshot) {
-//     return UserData(
-//         uid: uid,
-//         name: snapshot.get('name'),
-//         strength: snapshot.get('strength'),
-//         sugars: snapshot.get('sugars'));
-//   }
+  //userDataCollection from snapshot
+  Child _userDataCollectionfromSnapshot(DocumentSnapshot snapshot) {
+    return Child(
+      uid: uid,
+      name: snapshot.get('name'),
+      email: snapshot.get('email'),
+      age: snapshot.get('age'),
+      height: snapshot.get('height'),
+      weight: snapshot.get('weight'),
+    );
+  }
 
-//   // get brews stream
-//   Stream<List<Brew>> get brews {
-//     return brewCollection.snapshots().map(_brewListFromSnapshot);
-//   }
+  // get brews stream
+  // Stream<List<Child>> get brews {
+  //   return brewCollection.snapshots().map(_brewListFromSnapshot);
+  // }
 
-//   //get user doc stream
+  //get user doc stream
 
-//   Stream<UserData> get userData {
-//     return brewCollection.doc(uid).snapshots().map(_userDatafromSnapshot);
-//   }
-// }
+  Stream<Child> get userData {
+    return userDataCollection
+        .doc(uid)
+        .snapshots()
+        .map(_userDataCollectionfromSnapshot);
+  }
+}
