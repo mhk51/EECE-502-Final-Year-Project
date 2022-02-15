@@ -9,7 +9,8 @@ class AuthService {
   // create user obj based on firebase user
   CustomUser? _userFromFirebaseUser(User? user) {
     if (user != null) {
-      return CustomUser(uid: user.uid, name: user.displayName);
+      return CustomUser(
+          uid: user.uid, name: user.displayName, email: user.email);
     } else {
       return null;
     }
@@ -74,6 +75,11 @@ class AuthService {
       print(error.toString());
       return null;
     }
+  }
+
+  Future resetPassowrd() async {
+    User? user = _auth.currentUser;
+    _auth.sendPasswordResetEmail(email: user!.email!);
   }
 
   // sign out
