@@ -71,70 +71,87 @@ class HomeScreen extends StatelessWidget {
               ),
               Text('Welcome ${user!.name}'),
               const LineChart(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              Container(
+                alignment: Alignment.center,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: const Text("Log Current Sugar Level"),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(340, 40),
+                    alignment: Alignment.center,
+                  ),
+                ),
+              ),
+              Text("Tip Of The Day:"),
+              Text("Choose food with low levels of added sugar"),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  const BorderBox(
-                    padding: EdgeInsets.all(8.0),
-                    width: 60,
-                    height: 60,
-                    child: Icon(
-                      Icons.home,
-                      color: Colors.black,
-                    ),
-                  ),
-                  const BorderBox(
-                    padding: EdgeInsets.all(8.0),
-                    width: 60,
-                    height: 60,
-                    child: Icon(
-                      Icons.list,
-                      color: Colors.black,
-                    ),
-                  ),
-                  const BorderBox(
-                    padding: EdgeInsets.all(8.0),
-                    width: 60,
-                    height: 60,
-                    child: Icon(
-                      Icons.add,
-                      color: Colors.black,
-                    ),
-                  ),
-                  BorderBox(
-                    padding: const EdgeInsets.all(8.0),
-                    width: 60,
-                    height: 60,
-                    child: TextButton(
-                      onPressed: () {},
-                      child: const Icon(
-                        Icons.search,
-                        color: Colors.black,
-                      ),
-                      style: TextButton.styleFrom(
-                        backgroundColor: Colors.white,
-                      ),
-                    ),
-                  ),
-                  BorderBox(
-                    padding: const EdgeInsets.all(8.0),
-                    width: 60,
-                    height: 60,
-                    child: TextButton(
-                      onPressed: () {
-                        _showSettingsPanel();
-                      },
-                      child: const Icon(
-                        Icons.settings,
-                        color: Colors.black,
-                      ),
-                      style: TextButton.styleFrom(
-                        backgroundColor: Colors.white,
-                      ),
-                    ),
-                  ),
+                  Positioned(
+                      bottom: 0,
+                      child: Container(
+                        alignment: Alignment.bottomCenter,
+                        child: Row(
+                          verticalDirection: VerticalDirection.down,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            const BorderBox(
+                              padding: EdgeInsets.all(8.0),
+                              width: 60,
+                              height: 60,
+                              child: Icon(
+                                Icons.home,
+                                color: Colors.black,
+                              ),
+                            ),
+                            const BorderBox(
+                              padding: EdgeInsets.all(8.0),
+                              width: 60,
+                              height: 60,
+                              child: Icon(
+                                Icons.list,
+                                color: Colors.black,
+                              ),
+                            ),
+                            const BorderBox(
+                              padding: EdgeInsets.all(8.0),
+                              width: 60,
+                              height: 60,
+                              child: Icon(
+                                Icons.add,
+                                color: Colors.black,
+                              ),
+                            ),
+                            const BorderBox(
+                              padding: EdgeInsets.all(8.0),
+                              width: 60,
+                              height: 60,
+                              child: Icon(
+                                Icons.graphic_eq,
+                                color: Colors.black,
+                              ),
+                            ),
+                            BorderBox(
+                              padding: const EdgeInsets.all(8.0),
+                              width: 60,
+                              height: 60,
+                              child: TextButton(
+                                onPressed: () {
+                                  _showSettingsPanel();
+                                },
+                                child: const Icon(Icons.settings,
+                                    color: Colors.black),
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )),
                 ],
-              )
+              ),
             ],
           ),
         ),
