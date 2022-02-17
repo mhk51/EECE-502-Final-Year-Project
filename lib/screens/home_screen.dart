@@ -56,6 +56,79 @@ class HomeScreen extends StatelessWidget {
             )
           ],
         ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const BorderBox(
+                padding: EdgeInsets.all(8.0),
+                width: 60,
+                height: 60,
+                child: Icon(
+                  Icons.home,
+                  color: Colors.black,
+                ),
+              ),
+              BorderBox(
+                padding: const EdgeInsets.all(8.0),
+                width: 60,
+                height: 60,
+                child: TextButton(
+                  onPressed: () async {
+                    await Navigator.pushNamed(context, '/ItemInfo');
+                  },
+                  child: const Icon(Icons.list, color: Colors.black),
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.white,
+                  ),
+                ),
+              ),
+              BorderBox(
+                padding: const EdgeInsets.all(8.0),
+                width: 60,
+                height: 60,
+                child: TextButton(
+                  onPressed: () async {
+                    await Navigator.pushNamed(context, '/DailyLogging');
+                  },
+                  child: const Icon(Icons.add, color: Colors.black),
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.white,
+                  ),
+                ),
+              ),
+              BorderBox(
+                padding: const EdgeInsets.all(8.0),
+                width: 60,
+                height: 60,
+                child: TextButton(
+                  onPressed: () async {
+                    await Navigator.pushNamed(context, '/Insights');
+                  },
+                  child: const Icon(Icons.graphic_eq, color: Colors.black),
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.white,
+                  ),
+                ),
+              ),
+              BorderBox(
+                padding: const EdgeInsets.all(8.0),
+                width: 60,
+                height: 60,
+                child: TextButton(
+                  onPressed: () {
+                    _showSettingsPanel();
+                  },
+                  child: const Icon(Icons.settings, color: Colors.black),
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
         body: SizedBox(
           width: size.width,
           height: size.height,
@@ -105,81 +178,6 @@ class HomeScreen extends StatelessWidget {
                         alignment: Alignment.bottomCenter,
                         child: Row(
                           verticalDirection: VerticalDirection.down,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            const BorderBox(
-                              padding: EdgeInsets.all(8.0),
-                              width: 60,
-                              height: 60,
-                              child: Icon(
-                                Icons.home,
-                                color: Colors.black,
-                              ),
-                            ),
-                            BorderBox(
-                              padding: const EdgeInsets.all(8.0),
-                              width: 60,
-                              height: 60,
-                              child: TextButton(
-                                onPressed: () async {
-                                  await Navigator.pushNamed(
-                                      context, '/ItemInfo');
-                                },
-                                child:
-                                    const Icon(Icons.list, color: Colors.black),
-                                style: TextButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                ),
-                              ),
-                            ),
-                            BorderBox(
-                              padding: const EdgeInsets.all(8.0),
-                              width: 60,
-                              height: 60,
-                              child: TextButton(
-                                onPressed: () async {
-                                  await Navigator.pushNamed(
-                                      context, '/DailyLogging');
-                                },
-                                child:
-                                    const Icon(Icons.add, color: Colors.black),
-                                style: TextButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                ),
-                              ),
-                            ),
-                            BorderBox(
-                              padding: const EdgeInsets.all(8.0),
-                              width: 60,
-                              height: 60,
-                              child: TextButton(
-                                onPressed: () async {
-                                  await Navigator.pushNamed(
-                                      context, '/Insights');
-                                },
-                                child: const Icon(Icons.graphic_eq,
-                                    color: Colors.black),
-                                style: TextButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                ),
-                              ),
-                            ),
-                            BorderBox(
-                              padding: const EdgeInsets.all(8.0),
-                              width: 60,
-                              height: 60,
-                              child: TextButton(
-                                onPressed: () {
-                                  _showSettingsPanel();
-                                },
-                                child: const Icon(Icons.settings,
-                                    color: Colors.black),
-                                style: TextButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ],
                         ),
                       )),
                 ],
