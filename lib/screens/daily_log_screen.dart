@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../custom/border_box.dart';
+
 class DailyLogScreen extends StatelessWidget {
   const DailyLogScreen({Key? key}) : super(key: key);
 
@@ -13,7 +15,80 @@ class DailyLogScreen extends StatelessWidget {
             padding: EdgeInsets.all(8.0),
             child: Text("Daily Log"),
           ),
-          // centerTitle: true,
+          centerTitle: true,
+        ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const BorderBox(
+                padding: EdgeInsets.all(8.0),
+                width: 60,
+                height: 60,
+                child: Icon(
+                  Icons.home,
+                  color: Colors.black,
+                ),
+              ),
+              BorderBox(
+                padding: const EdgeInsets.all(8.0),
+                width: 60,
+                height: 60,
+                child: TextButton(
+                  onPressed: () async {
+                    await Navigator.pushNamed(context, '/DailyLogging');
+                  },
+                  child: const Icon(Icons.list, color: Colors.black),
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.white,
+                  ),
+                ),
+              ),
+              BorderBox(
+                padding: const EdgeInsets.all(8.0),
+                width: 60,
+                height: 60,
+                child: TextButton(
+                  onPressed: () async {
+                    await Navigator.pushNamed(context, '/LoggingFood');
+
+                    ///ItemInfo'
+                  },
+                  child: const Icon(Icons.add, color: Colors.black),
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.white,
+                  ),
+                ),
+              ),
+              BorderBox(
+                padding: const EdgeInsets.all(8.0),
+                width: 60,
+                height: 60,
+                child: TextButton(
+                  onPressed: () async {
+                    await Navigator.pushNamed(context, '/Insights');
+                  },
+                  child: const Icon(Icons.graphic_eq, color: Colors.black),
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.white,
+                  ),
+                ),
+              ),
+              BorderBox(
+                padding: const EdgeInsets.all(8.0),
+                width: 60,
+                height: 60,
+                child: TextButton(
+                  onPressed: () {},
+                  child: const Icon(Icons.settings, color: Colors.black),
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
         body: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -76,7 +76,7 @@ class HomeScreen extends StatelessWidget {
                 height: 60,
                 child: TextButton(
                   onPressed: () async {
-                    await Navigator.pushNamed(context, '/ItemInfo');
+                    await Navigator.pushNamed(context, '/DailyLogging');
                   },
                   child: const Icon(Icons.list, color: Colors.black),
                   style: TextButton.styleFrom(
@@ -90,7 +90,9 @@ class HomeScreen extends StatelessWidget {
                 height: 60,
                 child: TextButton(
                   onPressed: () async {
-                    await Navigator.pushNamed(context, '/DailyLogging');
+                    await Navigator.pushNamed(context, '/LoggingFood');
+
+                    ///ItemInfo'
                   },
                   child: const Icon(Icons.add, color: Colors.black),
                   style: TextButton.styleFrom(
@@ -138,14 +140,13 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text("Blood Sugar Graph:"),
-              ),
               const SizedBox(
                 height: 10,
               ),
-              Text('Welcome ${user!.name}'),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('Welcome ${user!.name}'),
+              ),
               const LineChart(),
               Container(
                 alignment: Alignment.center,
@@ -163,11 +164,17 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const Text("Tip Of The Day:"),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text("Tip Of The Day:"),
+              ),
               const SizedBox(
                 height: 20,
               ),
-              const Text("Choose food with low levels of added sugar"),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text("Choose food with low levels of added sugar"),
+              ),
               const SizedBox(
                 height: 20,
               ),
