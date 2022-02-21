@@ -131,7 +131,9 @@ class NavDrawer extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            onTap: () => {_auth.signOut()},
+            onTap: () async {
+              await _auth.signOut();
+            },
           ),
         ],
       ),

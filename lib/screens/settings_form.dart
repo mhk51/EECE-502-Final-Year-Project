@@ -40,7 +40,19 @@ class _SettingsFormState extends State<SettingsForm> {
                 drawer: NavDrawer(),
                 appBar: AppBar(
                   backgroundColor: Colors.blue[800],
-                  title: const Text('Settings'),
+                  title: const Text('Profile & Settings'),
+                  centerTitle: true,
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, '/Home');
+                      },
+                      child: const Icon(Icons.check),
+                      style: TextButton.styleFrom(
+                        primary: Colors.white,
+                      ),
+                    )
+                  ],
                 ),
                 body: Padding(
                   padding: const EdgeInsets.all(20),
