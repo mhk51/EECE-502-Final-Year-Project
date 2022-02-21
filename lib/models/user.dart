@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 class CustomUser {
   final String uid;
   final String? name;
@@ -10,6 +12,8 @@ class Parent extends CustomUser {
   Parent({required String uid, String? name, String? email})
       : super(uid: uid, name: name, email: email);
 }
+
+enum gender { Male, Female }
 
 class Child extends CustomUser {
   final int age;
