@@ -120,7 +120,10 @@ class HomeScreen extends StatelessWidget {
                   onPressed: () {
                     _showSettingsPanel();
                   },
-                  child: const Icon(Icons.settings, color: Colors.black),
+                  child: const Icon(
+                    Icons.settings,
+                    color: Colors.black,
+                  ),
                   style: TextButton.styleFrom(
                     backgroundColor: Colors.white,
                   ),
