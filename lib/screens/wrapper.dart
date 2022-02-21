@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/Authentication/authenticate.dart';
 import 'package:flutter_application_1/screens/home_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_application_1/screens/signupConfigs2.dart';
 
 class Wrapper extends StatefulWidget {
   const Wrapper({Key? key}) : super(key: key);

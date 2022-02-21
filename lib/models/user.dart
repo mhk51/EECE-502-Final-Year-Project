@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 class CustomUser {
   final String uid;
   final String? name;
@@ -11,16 +13,21 @@ class Parent extends CustomUser {
       : super(uid: uid, name: name, email: email);
 }
 
+enum gender { Male, Female }
+
 class Child extends CustomUser {
   final int age;
   final int weight;
   final int height;
-  Child(
-      {required String uid,
-      String? name,
-      String? email,
-      required this.age,
-      required this.height,
-      required this.weight})
-      : super(uid: uid, name: name, email: email);
+  //final gender gend;
+
+  Child({
+    required String uid,
+    String? name,
+    String? email,
+    required this.age,
+    required this.height,
+    required this.weight,
+    //required this.gend
+  }) : super(uid: uid, name: name, email: email);
 }
