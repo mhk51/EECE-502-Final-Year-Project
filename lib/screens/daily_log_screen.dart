@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/navdrawer.dart';
 
 import '../custom/border_box.dart';
 
@@ -9,6 +10,7 @@ class DailyLogScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        drawer: NavDrawer(),
         appBar: AppBar(
           backgroundColor: Colors.blue[800],
           title: const Padding(

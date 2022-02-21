@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/custom/line_chart.dart';
+import 'package:flutter_application_1/screens/navdrawer.dart';
 
 class WeeklyInsightsScreen extends StatelessWidget {
   const WeeklyInsightsScreen({Key? key}) : super(key: key);
@@ -8,6 +9,7 @@ class WeeklyInsightsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        drawer: NavDrawer(),
         appBar: AppBar(
           backgroundColor: Colors.blue[800],
           title: const Padding(

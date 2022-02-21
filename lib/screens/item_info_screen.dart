@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/custom/constants.dart';
+import 'package:flutter_application_1/screens/navdrawer.dart';
 
 class ItemInfoScreen extends StatelessWidget {
   const ItemInfoScreen({Key? key}) : super(key: key);
@@ -9,6 +9,7 @@ class ItemInfoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        drawer: NavDrawer(),
         appBar: AppBar(
           backgroundColor: Colors.blue[800],
           title: const Padding(
@@ -36,10 +37,10 @@ class ItemInfoScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Table(
                     border: TableBorder.all(),
-                    children: [
+                    children: const [
                       TableRow(
                         children: [
-                          Container(
+                          SizedBox(
                             height: 48,
                             child: Text("Food Name"),
                           ),
@@ -47,7 +48,7 @@ class ItemInfoScreen extends StatelessWidget {
                       ),
                       TableRow(
                         children: [
-                          Container(
+                          SizedBox(
                             height: 48,
                             child: Text("Carbs: "),
                           ),
@@ -55,7 +56,7 @@ class ItemInfoScreen extends StatelessWidget {
                       ),
                       TableRow(
                         children: [
-                          Container(
+                          SizedBox(
                             height: 48,
                             child: Text("Protien: "),
                           ),
@@ -63,7 +64,7 @@ class ItemInfoScreen extends StatelessWidget {
                       ),
                       TableRow(
                         children: [
-                          Container(
+                          SizedBox(
                             height: 48,
                             child: Text("Fat: "),
                           ),
@@ -71,7 +72,7 @@ class ItemInfoScreen extends StatelessWidget {
                       ),
                       TableRow(
                         children: [
-                          Container(
+                          SizedBox(
                             height: 48,
                             child: Text("Sugar: "),
                           ),
