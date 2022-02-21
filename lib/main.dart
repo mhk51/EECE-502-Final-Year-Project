@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/daily_log_screen.dart';
+import 'package:flutter_application_1/screens/home_screen.dart';
 import 'package:flutter_application_1/screens/item_info_screen.dart';
 import 'package:flutter_application_1/screens/logging_food_screen.dart';
 import 'package:flutter_application_1/screens/weekly_insights_screen.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (context) => const Wrapper(),
+          '/Home': (context) => HomeScreen(),
           '/Insights': (context) => const WeeklyInsightsScreen(),
           '/ItemInfo': (context) => const ItemInfoScreen(),
           '/LoggingFood': (context) => const LoggingFoodScreen(),
