@@ -67,6 +67,7 @@ class AuthService {
       // if (!user!.emailVerified) {
       //   await user.sendEmailVerification();
       // }
+      // _auth.
       await DatabaseService(uid: user!.uid)
           .updateUserDataCollection(username, email, 0, 0, 0);
       // create a new document for the user with the uid
