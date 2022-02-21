@@ -14,7 +14,7 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<CustomUser?>(context);
+    final user = Provider.of<Child?>(context);
 
     // return either the Home or Authenticate widget
     if (user == null) {

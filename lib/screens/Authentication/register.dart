@@ -11,7 +11,9 @@ class Register extends StatefulWidget {
   _RegisterState createState() => _RegisterState();
 }
 
-class _RegisterState extends State<Register> {
+class _RegisterState extends State<Register>
+    with SingleTickerProviderStateMixin {
+  late final _tabController = TabController(length: 3, vsync: this);
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   String error = '';
@@ -30,6 +32,23 @@ class _RegisterState extends State<Register> {
         : Scaffold(
             backgroundColor: Colors.indigo[100],
             appBar: AppBar(
+              bottom: TabBar(
+                controller: _tabController,
+                tabs: const <Widget>[
+                  Tab(
+                    icon: Icon(Icons.radio_button_on, color: Colors.white),
+                    text: 'Experience',
+                  ),
+                  Tab(
+                    icon: Icon(Icons.check_box, color: Colors.white),
+                    text: 'Skills',
+                  ),
+                  Tab(
+                    icon: Icon(Icons.send, color: Colors.white),
+                    text: 'Submit',
+                  ),
+                ],
+              ),
               backgroundColor: Colors.indigo[800],
               elevation: 0.0,
               title: const Text('Sign up'),

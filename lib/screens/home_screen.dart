@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<CustomUser?>(context);
+    final user = Provider.of<Child?>(context);
     // print(user!.name);
     // void _showSettingsPanel() {
     //   showModalBottomSheet(

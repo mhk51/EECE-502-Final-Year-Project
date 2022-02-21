@@ -8,17 +8,23 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // create user obj based on firebase user
-  CustomUser? _userFromFirebaseUser(User? user) {
+  Child? _userFromFirebaseUser(User? user) {
     if (user != null) {
-      return CustomUser(
-          uid: user.uid, name: user.displayName, email: user.email);
+      return Child(
+          uid: user.uid,
+          name: user.displayName,
+          email: user.email,
+          gender: 'male',
+          weight: 0,
+          height: 0,
+          age: 0);
     } else {
       return null;
     }
   }
 
   // auth change user stream
-  Stream<CustomUser?> get user {
+  Stream<Child?> get user {
     // _auth.userChanges()
     //.map((FirebaseUser user) => _userFromFirebaseUser(user));
     return _auth.userChanges().map(_userFromFirebaseUser);
@@ -69,7 +75,7 @@ class AuthService {
       // }
       // _auth.
       await DatabaseService(uid: user!.uid)
-          .updateUserDataCollection(username, email, 0, 0, 0);
+          .updateUserDataCollection(username, email, 0, 0, 0, 'male');
       // create a new document for the user with the uid
       // await DatabaseService(uid: user!.uid)
       //     .updateUserData('0', 'new crew member', 100);

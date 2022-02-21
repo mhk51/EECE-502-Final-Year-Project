@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<CustomUser?>.value(
+    return StreamProvider<Child?>.value(
       value: AuthService().user,
       initialData: null,
       child: MaterialApp(

@@ -11,14 +11,15 @@ class DatabaseService {
   final CollectionReference userDataCollection =
       FirebaseFirestore.instance.collection('UserDataCollection');
 
-  Future<void> updateUserDataCollection(
-      String name, String email, int height, int age, int weight) async {
+  Future<void> updateUserDataCollection(String name, String email, int height,
+      int age, int weight, String gender) async {
     return await userDataCollection.doc(uid).set({
       'name': name,
       'email': email,
       'age': age,
       'height': height,
-      'weight': weight
+      'weight': weight,
+      'gender': gender,
     });
   }
 
@@ -47,6 +48,7 @@ class DatabaseService {
       age: snapshot.get('age'),
       height: snapshot.get('height'),
       weight: snapshot.get('weight'),
+      gender: snapshot.get('gender'),
     );
   }
 

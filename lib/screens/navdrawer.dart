@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/user.dart';
 import 'package:flutter_application_1/services/auth.dart';
+import 'package:provider/provider.dart';
 
 class NavDrawer extends StatelessWidget {
   final AuthService _auth = AuthService();
@@ -7,6 +9,7 @@ class NavDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<Child?>(context);
     String? pageRouteName = ModalRoute.of(context)?.settings.name;
     return Drawer(
       backgroundColor: Colors.grey[800],
@@ -14,9 +17,22 @@ class NavDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
-            child: const Text(
-              'Side menu',
-              style: TextStyle(color: Colors.white, fontSize: 25),
+            child: Column(
+              children: [
+                CircleAvatar(
+                  radius: 40,
+                  backgroundImage: user!.gender == 'male'
+                      ? const AssetImage('assets/male.jpg')
+                      : const AssetImage('assets/female.jpg'),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Text(
+                  ('${user.name}'),
+                  style: const TextStyle(color: Colors.white, fontSize: 25),
+                ),
+              ],
             ),
             decoration: BoxDecoration(
               color: Colors.indigo[800],

@@ -163,8 +163,13 @@ class _SettingsFormState extends State<SettingsForm> {
                           if (_formKey.currentState!.validate()) {
                             await _auth.updateDisplayName(username);
                             await DatabaseService(uid: user.uid)
-                                .updateUserDataCollection(username,
-                                    childData.email!, height, age, weight);
+                                .updateUserDataCollection(
+                                    username,
+                                    childData.email!,
+                                    height,
+                                    age,
+                                    weight,
+                                    'male');
                             Navigator.pop(context);
                           }
                         },
