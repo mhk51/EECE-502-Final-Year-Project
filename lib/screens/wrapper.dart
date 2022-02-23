@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/Authentication/authenticate.dart';
 import 'package:flutter_application_1/screens/home_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_application_1/screens/signupConfigs2.dart';
 
 class Wrapper extends StatefulWidget {
   const Wrapper({Key? key}) : super(key: key);
@@ -15,7 +14,7 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<Child?>(context);
+    final user = Provider.of<CustomUser?>(context, listen: true);
 
     // return either the Home or Authenticate widget
     if (user == null) {

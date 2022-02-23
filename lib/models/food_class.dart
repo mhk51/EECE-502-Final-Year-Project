@@ -1,4 +1,4 @@
-abstract class food_class {
+abstract class FoodClass {
   String foodName = "";
   double calories = 0;
   double carbs = 0;

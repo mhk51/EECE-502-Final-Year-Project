@@ -5,9 +5,6 @@ class DatabaseService {
   final String uid;
   DatabaseService({required this.uid});
 
-  // collection reference
-  // final CollectionReference food =
-  //     FirebaseFirestore.instance.collection('food');
   final CollectionReference userDataCollection =
       FirebaseFirestore.instance.collection('UserDataCollection');
 
@@ -23,22 +20,6 @@ class DatabaseService {
     });
   }
 
-  // // brew list from snapshot
-  // List<Child> _brewListFromSnapshot(QuerySnapshot snapshot) {
-  //   return snapshot.docs.map((doc) {
-  //     //print(doc.data);
-  //     return Child(
-  //       uid: doc.id,
-  //       name: doc.get('name') ?? '',
-  //       email: doc.get('email'),
-  //       age: doc.get('age') ?? 0,
-  //       height: doc.get('height') ?? '0',
-  //       weight: doc.get('weight') ?? 0,
-  //     );
-  //     // uid: doc.get('uid')
-  //   }).toList();
-  // }
-
   //userDataCollection from snapshot
   Child _userDataCollectionfromSnapshot(DocumentSnapshot snapshot) {
     return Child(
@@ -51,13 +32,6 @@ class DatabaseService {
       gender: snapshot.get('gender'),
     );
   }
-
-  // get brews stream
-  // Stream<List<Child>> get brews {
-  //   return brewCollection.snapshots().map(_brewListFromSnapshot);
-  // }
-
-  //get user doc stream
 
   Stream<Child> get userData {
     return userDataCollection

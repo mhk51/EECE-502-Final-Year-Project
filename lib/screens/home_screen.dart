@@ -1,20 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/custom/border_box.dart';
 import 'package:flutter_application_1/custom/line_chart.dart';
 import 'package:flutter_application_1/models/user.dart';
 import 'package:flutter_application_1/screens/navdrawer.dart';
-import 'package:flutter_application_1/screens/settings_form.dart';
 import 'package:flutter_application_1/services/auth.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final AuthService _auth = AuthService();
-  HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<Child?>(context);
+    final user = Provider.of<CustomUser?>(context);
     // print(user!.name);
     // void _showSettingsPanel() {
     //   showModalBottomSheet(
