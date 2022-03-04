@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/custom/line_chart.dart';
 import 'package:flutter_application_1/models/user.dart';
@@ -35,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.blue[800],
@@ -56,6 +58,23 @@ class _HomeScreenState extends State<HomeScreen> {
           //     ),
           //   )
           // ],
+          actions: [
+            TextButton.icon(
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, "/Search");
+              },
+              icon: const Icon(
+                Icons.search,
+                color: Colors.white,
+              ),
+              label: const Text(
+                "Search",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            )
+          ],
         ),
         drawer: NavDrawer(),
         // bottomNavigationBar: Padding(

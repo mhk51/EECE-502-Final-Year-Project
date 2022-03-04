@@ -118,7 +118,7 @@ class NavDrawer extends StatelessWidget {
                   ),
                   ListTile(
                     leading: const Icon(
-                      Icons.border_color,
+                      Icons.restaurant_outlined,
                       color: Colors.white,
                     ),
                     title: const Text(

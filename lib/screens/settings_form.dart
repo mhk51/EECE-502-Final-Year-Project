@@ -34,7 +34,7 @@ class _SettingsFormState extends State<SettingsForm> {
     //   Navigator.pushReplacementNamed(context, '/');
     // }
     return user == null
-        ? Loading()
+        ? const Loading()
         : StreamBuilder<Child?>(
             stream: DatabaseService(uid: user.uid).userData,
             builder: (context, snapshot) {

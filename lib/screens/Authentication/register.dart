@@ -1,3 +1,4 @@
+import 'package:flutter/animation.dart';
 import 'package:flutter_application_1/services/auth.dart';
 import 'package:flutter_application_1/custom/constants.dart';
 import 'package:flutter_application_1/custom/loading.dart';
@@ -12,8 +13,11 @@ class Register extends StatefulWidget {
   _RegisterState createState() => _RegisterState();
 }
 
+enum SingingCharacter { lafayette, jefferson }
+
 class _RegisterState extends State<Register>
     with SingleTickerProviderStateMixin {
+  SingingCharacter? _character = SingingCharacter.lafayette;
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   String error = '';
@@ -25,6 +29,7 @@ class _RegisterState extends State<Register>
   String confirmPass = '';
   String username = '';
   int _bottomBarIndex = 0;
+  bool isGenderMale = false;
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -32,6 +37,7 @@ class _RegisterState extends State<Register>
     return loading
         ? const Loading()
         : Scaffold(
+            resizeToAvoidBottomInset: false,
             backgroundColor: Colors.indigo[100],
             appBar: AppBar(
               backgroundColor: Colors.indigo[800],
@@ -83,7 +89,7 @@ class _RegisterState extends State<Register>
               ),
             ),
             body: PageView(
-              // physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               controller: controller,
               children: [
                 Container(
@@ -145,16 +151,23 @@ class _RegisterState extends State<Register>
                           ),
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              setState(() => loading = true);
-                              dynamic result =
-                                  await _auth.registerWithEmailAndPassword(
-                                      email, password, username);
-                              if (result == null) {
-                                setState(() {
-                                  loading = false;
-                                  error = 'Please supply a valid email';
-                                });
-                              }
+                              // setState(() => loading = true);
+                              // dynamic result =
+                              //     await _auth.registerWithEmailAndPassword(
+                              //         email, password, username);
+                              // if (result == null) {
+                              //   setState(() {
+                              //     loading = false;
+                              //     error = 'Please supply a valid email';
+                              // }
+                              // );
+                              // }
+                              controller.nextPage(
+                                  duration: const Duration(seconds: 1),
+                                  curve: Curves.decelerate);
+                              setState(() {
+                                _bottomBarIndex++;
+                              });
                             }
                           },
                           style: ElevatedButton.styleFrom(
@@ -185,7 +198,7 @@ class _RegisterState extends State<Register>
                     ),
                     const Padding(
                       padding: EdgeInsets.all(8.0),
-                      child: const Text(
+                      child: Text(
                         "We need to know you better before getting started...",
                         style: TextStyle(
                           fontSize: 20,
@@ -195,16 +208,14 @@ class _RegisterState extends State<Register>
                     Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
-                        // ignore: prefer_const_literals_to_create_immutables
-                        children: [
-                          const Text(
+                        children: const [
+                          Text(
                             "What is Your Name",
                             style: TextStyle(fontSize: 20),
                           ),
-                          const Padding(
+                          Padding(
                             padding: EdgeInsets.all(8.0),
-                            // ignore: unnecessary_const
-                            child: const TextField(
+                            child: TextField(
                               decoration: InputDecoration(
                                 hintText: "Enter Full Name:",
                                 border: OutlineInputBorder(),
@@ -218,7 +229,6 @@ class _RegisterState extends State<Register>
                     Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
-                        // ignore: prefer_const_literals_to_create_immutables
                         children: [
                           const Text(
                             "What Do you want us to call you?",
@@ -226,8 +236,8 @@ class _RegisterState extends State<Register>
                           ),
                           const Padding(
                             padding: EdgeInsets.all(8.0),
-                            child: const TextField(
-                              decoration: const InputDecoration(
+                            child: TextField(
+                              decoration: InputDecoration(
                                 hintText: "Enter UserName:",
                                 border: OutlineInputBorder(),
                               ),
@@ -237,7 +247,14 @@ class _RegisterState extends State<Register>
                           Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                controller.nextPage(
+                                    duration: const Duration(seconds: 1),
+                                    curve: Curves.slowMiddle);
+                                setState(() {
+                                  _bottomBarIndex++;
+                                });
+                              },
                               child: const Text(
                                 "Next",
                                 style: TextStyle(fontSize: 20),
@@ -255,12 +272,9 @@ class _RegisterState extends State<Register>
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Column(
-                      // ignore: prefer_const_literals_to_create_immutables
-                      children: [
-                        // ignore: prefer_const_constructors
+                      children: const [
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          // ignore: prefer_const_constructors
+                          padding: EdgeInsets.all(8.0),
                           child: Text(
                             "Hey (USRNAME)!",
                             style: TextStyle(fontSize: 20),
@@ -287,23 +301,66 @@ class _RegisterState extends State<Register>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              isGenderMale = true;
+                            });
+                          },
                           child: const Text(
                             " Male ",
                             style: TextStyle(fontSize: 20),
                           ),
+                          style: ElevatedButton.styleFrom(
+                              primary: isGenderMale ? Colors.red : Colors.blue),
+                        ),
+                        const SizedBox(
+                          width: 20,
                         ),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              isGenderMale = false;
+                            });
+                          },
                           child: const Text(
                             "Female",
                             style: TextStyle(fontSize: 20),
                           ),
+                          style: ElevatedButton.styleFrom(
+                              primary: isGenderMale ? Colors.blue : Colors.red),
                         ),
                       ],
                     ),
+                    // Column(
+                    //   children: <Widget>[
+                    //     ListTile(
+                    //       title: const Text('Male'),
+                    //       leading: Radio<SingingCharacter>(
+                    //         value: SingingCharacter.lafayette,
+                    //         groupValue: _character,
+                    //         onChanged: (SingingCharacter? value) {
+                    //           setState(() {
+                    //             _character = value;
+                    //           });
+                    //         },
+                    //       ),
+                    //     ),
+                    //     ListTile(
+                    //       title: const Text('Female'),
+                    //       leading: Radio<SingingCharacter>(
+                    //         value: SingingCharacter.jefferson,
+                    //         groupValue: _character,
+                    //         onChanged: (SingingCharacter? value) {
+                    //           setState(() {
+                    //             _character = value;
+                    //           });
+                    //         },
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                     Padding(
-                      padding: const EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: Column(
                         // ignore: prefer_const_literals_to_create_immutables
                         children: [
@@ -326,7 +383,7 @@ class _RegisterState extends State<Register>
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: Column(
                         // ignore: prefer_const_literals_to_create_immutables
                         children: [
@@ -349,7 +406,7 @@ class _RegisterState extends State<Register>
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: Column(
                         // ignore: prefer_const_literals_to_create_immutables
                         children: [
@@ -372,7 +429,7 @@ class _RegisterState extends State<Register>
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: ElevatedButton(
                         onPressed: () {},
                         child: const Text(

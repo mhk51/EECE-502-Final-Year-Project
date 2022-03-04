@@ -1,7 +1,10 @@
 import 'package:flutter_application_1/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/Authentication/authenticate.dart';
+import 'package:flutter_application_1/screens/daily_log_screen.dart';
 import 'package:flutter_application_1/screens/home_screen.dart';
+import 'package:flutter_application_1/screens/search.dart';
+import 'package:flutter_application_1/screens/settings_form.dart';
 import 'package:provider/provider.dart';
 
 class Wrapper extends StatefulWidget {
@@ -20,7 +23,7 @@ class _WrapperState extends State<Wrapper> {
     if (user == null) {
       return const Authenticate();
     } else {
-      return HomeScreen();
+      return const HomeScreen();
     }
   }
 }
