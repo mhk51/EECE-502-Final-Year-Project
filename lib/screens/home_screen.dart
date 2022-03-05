@@ -178,7 +178,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text('Welcome ${user!.name}'),
+                child: Text('Welcome ${user!.name}',
+                    style: TextStyle(fontSize: 20)),
               ),
               const LineChart(),
               Container(
