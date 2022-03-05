@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_1/models/food_class.dart';
 import 'package:flutter_application_1/screens/logging_food/food_tile.dart';
+import 'package:flutter_application_1/screens/logging_food/empty_tile.dart';
 
 class FoodSearchWidget extends StatefulWidget {
   const FoodSearchWidget({
@@ -24,6 +25,14 @@ class _FoodSearchWidgetState extends State<FoodSearchWidget> {
         protien: document.get("Protein") + 0.0,
         carbs: document.get("Carbohydrate") + 0.0,
         bloodSugarInc: 1);
+  }
+
+  List<EmptyTile> generateEmptyTiles() {
+    List<EmptyTile> list = [];
+    for (int i = 0; i < 10; i++) {
+      list.add(const EmptyTile());
+    }
+    return list;
   }
 
   @override
@@ -51,7 +60,7 @@ class _FoodSearchWidgetState extends State<FoodSearchWidget> {
               }
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
-                  return const Text('Loading...');
+                  return ListView(children: generateEmptyTiles());
                 default:
                   return ListView(
                     scrollDirection: Axis.vertical,

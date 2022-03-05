@@ -6,14 +6,14 @@ import 'package:flutter_application_1/services/database.dart';
 import 'package:provider/provider.dart';
 
 class NavDrawer extends StatelessWidget {
-  final AuthService _auth = AuthService();
   NavDrawer({Key? key}) : super(key: key);
+
+  final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<CustomUser?>(context);
     String? pageRouteName = ModalRoute.of(context)?.settings.name;
-
     return StreamBuilder<Child?>(
         stream: DatabaseService(uid: user!.uid).userData,
         builder: (context, snapshot) {
@@ -164,14 +164,17 @@ class NavDrawer extends StatelessWidget {
                     ),
                     onTap: () async {
                       await _auth.signOut();
-                      Navigator.pushReplacementNamed(context, '/');
+                      await Navigator.pushReplacementNamed(context, '/');
+                      await Future.delayed(const Duration(seconds: 1), () {
+                        //your code goes here
+                      });
                     },
                   ),
                 ],
               ),
             );
           } else {
-            return Loading();
+            return const Loading();
           }
         });
   }
