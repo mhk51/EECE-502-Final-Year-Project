@@ -1,0 +1,101 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/food_class.dart';
+
+class FoodTile extends StatefulWidget {
+  final FoodClass food;
+  const FoodTile({Key? key, required this.food}) : super(key: key);
+
+  @override
+  State<FoodTile> createState() => _FoodTileState();
+}
+
+class _FoodTileState extends State<FoodTile> {
+  final double fontSize = 11;
+  bool addButtonSelected = false;
+  bool starButtonSelected = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: Card(
+        color: Colors.grey[200],
+        margin: const EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
+        child: ListTile(
+          title: Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: Text(widget.food.foodName),
+          ),
+          // subtitle: Text('Carbs: ${food.carbs}g'),
+          subtitle: RichText(
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.start,
+            maxLines: 4,
+            text: TextSpan(
+              children: <TextSpan>[
+                TextSpan(
+                  text: 'Carbs: ',
+                  style: TextStyle(color: Colors.black, fontSize: fontSize),
+                ),
+                TextSpan(
+                  text: '${widget.food.carbs}',
+                  style: TextStyle(color: Colors.blue, fontSize: fontSize),
+                ),
+                TextSpan(
+                  text: ' - Prot: ',
+                  style: TextStyle(color: Colors.black, fontSize: fontSize),
+                ),
+                TextSpan(
+                  text: '${widget.food.protien}',
+                  style: TextStyle(color: Colors.blue, fontSize: fontSize),
+                ),
+                TextSpan(
+                  text: ' - Fat: ',
+                  style: TextStyle(color: Colors.black, fontSize: fontSize),
+                ),
+                TextSpan(
+                  text: '${widget.food.fat}',
+                  style: TextStyle(color: Colors.blue, fontSize: fontSize),
+                )
+              ],
+            ),
+          ),
+          trailing: SizedBox(
+            height: 100,
+            width: 100,
+            child: Row(
+              children: [
+                IconButton(
+                  icon: Icon(
+                    Icons.add_circle,
+                    color: addButtonSelected ? Colors.blue : Colors.grey[600],
+                    size: 25,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      addButtonSelected = !addButtonSelected;
+                    });
+                  },
+                  iconSize: 5,
+                ),
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      starButtonSelected = !starButtonSelected;
+                    });
+                  },
+                  icon: Icon(
+                    Icons.star,
+                    color: starButtonSelected ? Colors.amber : Colors.grey[600],
+                    size: 25,
+                  ),
+                  iconSize: 5,
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

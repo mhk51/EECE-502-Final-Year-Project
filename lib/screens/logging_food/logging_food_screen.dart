@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/custom/app_icons_icons.dart';
 import 'package:flutter_application_1/custom/constants.dart';
+import 'package:flutter_application_1/models/food_class.dart';
+import 'package:flutter_application_1/screens/logging_food/food_search_list.dart';
 import 'package:flutter_application_1/screens/navdrawer.dart';
-import 'package:flutter_application_1/screens/search.dart';
 
 class LoggingFoodScreen extends StatefulWidget {
   const LoggingFoodScreen({Key? key}) : super(key: key);
@@ -14,6 +16,8 @@ class LoggingFoodScreen extends StatefulWidget {
 
 class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
   var msgController = TextEditingController();
+  String tempSearchWord = "";
+  String searchWord = "";
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -35,6 +39,29 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
               height: 40,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    onPressed: () {}, child: const Text("All Results")),
+                const SizedBox(width: 20),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: const Text("Favorites"),
+                ),
+                // Expanded(child: Search()),
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              child: const Text("Input New Recipe"),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 const SizedBox(
@@ -45,26 +72,36 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                     controller: msgController,
                     decoration: textInputDecoration.copyWith(
                       hintText: 'Search Food',
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.grey,
+                          width: 2.5,
+                        ),
+                      ),
                       suffixIcon: IconButton(
                         onPressed: () {
                           msgController.clear();
                         },
                         icon: const Icon(
                           Icons.cancel,
-                          color: Colors.blue,
+                          color: Colors.red,
                         ),
                       ),
                     ),
                     validator: (val) =>
-                        val!.isEmpty ? 'Enter a Username' : null,
+                        val!.isEmpty ? 'Enter a Search Word' : null,
                     onChanged: (val) {
-                      setState(() => val);
+                      tempSearchWord = val;
                     },
                   ),
                 ),
                 const SizedBox(width: 20),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      searchWord = tempSearchWord;
+                    });
+                  },
                   icon: const Icon(
                     Icons.search,
                     color: Colors.blue,
@@ -95,76 +132,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
             const SizedBox(
               height: 20,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                    onPressed: () {}, child: const Text("All Results")),
-                const SizedBox(width: 20),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text("Favorites"),
-                ),
-                // Expanded(child: Search()),
-              ],
-            ),
-
-            // Column(
-            //   children: [
-            //     Padding(
-            //       padding: const EdgeInsets.all(8.0),
-            //       child: Table(
-            //         border: TableBorder.all(),
-            //         children: const [
-            //           TableRow(
-            //             children: [
-            //               SizedBox(
-            //                 height: 48,
-            //                 child: Text("Option 1"),
-            //               ),
-            //             ],
-            //           ),
-            //           TableRow(
-            //             children: [
-            //               SizedBox(
-            //                 height: 48,
-            //                 child: Text("Option 2"),
-            //               ),
-            //             ],
-            //           ),
-            //           TableRow(
-            //             children: [
-            //               SizedBox(
-            //                 height: 48,
-            //                 child: Text("Option 3"),
-            //               ),
-            //             ],
-            //           ),
-            //           TableRow(
-            //             children: [
-            //               SizedBox(
-            //                 height: 48,
-            //                 child: Text("Option 4"),
-            //               ),
-            //             ],
-            //           ),
-            //           TableRow(
-            //             children: [
-            //               SizedBox(
-            //                 height: 48,
-            //                 child: Text("Option 5"),
-            //               ),
-            //             ],
-            //           ),
-            //         ],
-            //       ),
-            //     ),
-            //   ],
-            // ),
-            ElevatedButton(
-              onPressed: () {},
-              child: const Text("Input New Recipe"),
-            )
+            FoodSearchWidget(searchWord: searchWord),
           ],
         ),
       ),
