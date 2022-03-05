@@ -104,7 +104,7 @@ class NavDrawer extends StatelessWidget {
                       color: Colors.white,
                     ),
                     title: const Text(
-                      'Daily Logging',
+                      'Daily Summary',
                       style: TextStyle(
                         color: Colors.white,
                       ),

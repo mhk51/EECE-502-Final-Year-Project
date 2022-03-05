@@ -100,10 +100,10 @@ class _HomeScreenState extends State<HomeScreen> {
           actions: [
             TextButton.icon(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, "/Search");
+                Navigator.pushReplacementNamed(context, "/LoggingFood");
               },
               icon: const Icon(
-                Icons.search,
+                Icons.restaurant_outlined,
                 color: Colors.white,
               ),
               label: const Text(
