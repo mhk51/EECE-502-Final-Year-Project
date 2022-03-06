@@ -1,5 +1,4 @@
-import 'package:flutter/animation.dart';
-import 'package:flutter_application_1/services/auth.dart';
+// import 'package:flutter_application_1/services/auth.dart';
 import 'package:flutter_application_1/custom/constants.dart';
 import 'package:flutter_application_1/custom/loading.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +16,7 @@ enum SingingCharacter { lafayette, jefferson }
 
 class _RegisterState extends State<Register>
     with SingleTickerProviderStateMixin {
-  SingingCharacter? _character = SingingCharacter.lafayette;
-  final AuthService _auth = AuthService();
+  // final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   String error = '';
   bool loading = false;

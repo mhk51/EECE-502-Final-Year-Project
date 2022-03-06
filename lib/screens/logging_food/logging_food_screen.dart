@@ -1,9 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/custom/app_icons_icons.dart';
 import 'package:flutter_application_1/custom/constants.dart';
-import 'package:flutter_application_1/models/food_class.dart';
 import 'package:flutter_application_1/screens/logging_food/food_search_list.dart';
 import 'package:flutter_application_1/screens/navdrawer.dart';
 
