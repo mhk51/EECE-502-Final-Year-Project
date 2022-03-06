@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_application_1/custom/line_chart.dart';
 import 'package:flutter_application_1/models/user.dart';
 import 'package:flutter_application_1/screens/navdrawer.dart';
-import 'package:flutter_application_1/services/auth.dart';
+// import 'package:flutter_application_1/services/auth.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -15,7 +14,45 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final AuthService _auth = AuthService();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  Future<void> showInformationDialog(BuildContext context) async {
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          final TextEditingController _textEditingController =
+              TextEditingController();
+          return AlertDialog(
+            content: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextFormField(
+                      validator: (value) {
+                        return value!.isNotEmpty ? null : "Invalid Field";
+                      },
+                      decoration:
+                          const InputDecoration(hintText: "Enter Sugar Level"),
+                      controller: _textEditingController,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    ),
+                  ],
+                )),
+            actions: <Widget>[
+              TextButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  child: const Text("Submit"))
+            ],
+          );
+        });
+  }
+
+  // final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -61,10 +98,10 @@ class _HomeScreenState extends State<HomeScreen> {
           actions: [
             TextButton.icon(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, "/Search");
+                Navigator.pushReplacementNamed(context, "/LoggingFood");
               },
               icon: const Icon(
-                Icons.search,
+                Icons.restaurant_outlined,
                 color: Colors.white,
               ),
               label: const Text(
@@ -179,14 +216,15 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text('Welcome ${user!.name}',
-                    style: TextStyle(fontSize: 20)),
+                    style: const TextStyle(fontSize: 20)),
               ),
               const LineChart(),
               Container(
                 alignment: Alignment.center,
                 child: ElevatedButton(
                   onPressed: () async {
-                    await Navigator.pushNamed(context, '/LoggingFood');
+                    await showInformationDialog(
+                        context); // Navigator.pushNamed(context, '/LoggingFood');
                   },
                   child: const Text("Log Current Sugar Level"),
                   style: ElevatedButton.styleFrom(

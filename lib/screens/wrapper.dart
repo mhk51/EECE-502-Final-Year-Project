@@ -16,7 +16,6 @@ class _WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<CustomUser?>(context, listen: true);
-
     // return either the Home or Authenticate widget
     if (user == null) {
       return const Authenticate();

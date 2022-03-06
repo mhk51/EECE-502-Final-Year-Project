@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+// import 'package:flutter_application_1/models/food_class.dart';
 import 'package:flutter_application_1/screens/navdrawer.dart';
 
 import '../custom/border_box.dart';
+// import '../models/daily_logs_class.dart';
 
 class DailyLogScreen extends StatelessWidget {
   const DailyLogScreen({Key? key}) : super(key: key);

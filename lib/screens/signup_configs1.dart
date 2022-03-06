@@ -16,7 +16,6 @@ class SignupConfig1 extends StatelessWidget {
         children: [
           const Padding(
             padding: EdgeInsets.all(10),
-            // ignore: unnecessary_const
             child: const Text(
               "Welcome to (AppName)",
               style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
@@ -42,7 +41,6 @@ class SignupConfig1 extends StatelessWidget {
                 ),
                 const Padding(
                   padding: EdgeInsets.all(8.0),
-                  // ignore: unnecessary_const
                   child: const TextField(
                     decoration: InputDecoration(
                       hintText: "Enter Full Name:",
