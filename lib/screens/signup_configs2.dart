@@ -14,26 +14,23 @@ class SignupConfigs2 extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Column(
-              // ignore: prefer_const_literals_to_create_immutables
-              children: [
-                // ignore: prefer_const_constructors
+              children: const [
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  // ignore: prefer_const_constructors
+                  padding: EdgeInsets.all(8.0),
                   child: Text(
                     "Hey (USRNAME)!",
                     style: TextStyle(fontSize: 20),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.0),
                   child: Text(
                     "You are almost Done...",
                     style: TextStyle(fontSize: 20),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.0),
                   child: Text(
                     "Just fill the information below and you are ready to go!",
                     style: TextStyle(fontSize: 20),
