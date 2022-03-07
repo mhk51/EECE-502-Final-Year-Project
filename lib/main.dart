@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/camera_screen.dart';
 import 'package:flutter_application_1/screens/daily_log_screen.dart';
 import 'package:flutter_application_1/screens/home_screen.dart';
 import 'package:flutter_application_1/screens/item_info_screen.dart';
@@ -37,6 +38,8 @@ class MyApp extends StatelessWidget {
           '/LoggingFood': (context) => const LoggingFoodScreen(),
           '/DailyLogging': (context) => const DailyLogScreen(),
           '/Settings': (context) => const SettingsForm(),
+          //Henri:
+          '/CameraScreen': (context) => CameraScreen(),
         },
       ),
     );
