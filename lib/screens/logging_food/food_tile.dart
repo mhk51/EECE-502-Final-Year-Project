@@ -46,7 +46,7 @@ class _FoodTileState extends State<FoodTile> {
                   style: TextStyle(color: Colors.black, fontSize: fontSize),
                 ),
                 TextSpan(
-                  text: '${widget.food.protien}',
+                  text: '${widget.food.protein}',
                   style: TextStyle(color: Colors.blue, fontSize: fontSize),
                 ),
                 TextSpan(
