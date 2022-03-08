@@ -1,7 +1,6 @@
 import 'package:flutter_application_1/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/Authentication/authenticate.dart';
-import 'package:flutter_application_1/screens/camera_screen.dart';
 import 'package:flutter_application_1/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +19,7 @@ class _WrapperState extends State<Wrapper> {
     if (user == null) {
       return const Authenticate();
     } else {
-      return CameraScreen();
+      return const HomeScreen();
     }
   }
 }

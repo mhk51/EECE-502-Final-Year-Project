@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_application_1/custom/line_chart.dart';
 import 'package:flutter_application_1/models/user.dart';
 import 'package:flutter_application_1/screens/navdrawer.dart';
-// import 'package:flutter_application_1/services/auth.dart';
+import 'package:flutter_application_1/services/auth.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -69,7 +69,6 @@ class _HomeScreenState extends State<HomeScreen> {
     //         );
     //       });
     // }
-
     final Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -77,24 +76,6 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.blue[800],
-          // centerTitle: true,
-          // actions: [
-          //   TextButton.icon(
-          //     onPressed: () async {
-          //       await _auth.signOut();
-          //     },
-          //     icon: const Icon(
-          //       Icons.person,
-          //       color: Colors.white,
-          //     ),
-          //     label: const Text(
-          //       "Log Out",
-          //       style: TextStyle(
-          //         color: Colors.white,
-          //       ),
-          //     ),
-          //   )
-          // ],
           actions: [
             TextButton.icon(
               onPressed: () {
@@ -223,8 +204,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 alignment: Alignment.center,
                 child: ElevatedButton(
                   onPressed: () async {
-                    await showInformationDialog(
-                        context); // Navigator.pushNamed(context, '/LoggingFood');
+                    // await showInformationDialog(
+                    //     context); // Navigator.pushNamed(context, '/LoggingFood');
                   },
                   child: const Text("Log Current Sugar Level"),
                   style: ElevatedButton.styleFrom(

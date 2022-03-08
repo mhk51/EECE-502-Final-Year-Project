@@ -22,8 +22,8 @@ class Child extends CustomUser {
   final String gender;
   Child(
       {required String uid,
-      String? name,
-      String? email,
+      required String? name,
+      required String? email,
       required this.age,
       required this.height,
       required this.weight,
