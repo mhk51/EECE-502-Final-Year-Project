@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/custom/line_chart.dart';
@@ -14,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Future<void> showInformationDialog(BuildContext context) async {
     return await showDialog(
         context: context,
@@ -46,13 +48,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.of(context).pop();
                     }
                   },
-                  child: const Text("Submit"))
+                  child: Text("Submit"))
             ],
           );
         });
   }
 
-  // final AuthService _auth = AuthService();
+  final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -197,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text('Welcome ${user!.name}',
-                    style: const TextStyle(fontSize: 20)),
+                    style: TextStyle(fontSize: 20)),
               ),
               const LineChart(),
               Container(
