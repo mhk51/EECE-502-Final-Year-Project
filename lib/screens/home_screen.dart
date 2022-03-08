@@ -58,6 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final _auth = AuthService();
     final user = Provider.of<CustomUser?>(context);
     // print(user!.name);
     // void _showSettingsPanel() {
@@ -81,6 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
           actions: [
             TextButton.icon(
               onPressed: () {
+                // _auth.signOut();
                 Navigator.pushReplacementNamed(context, "/LoggingFood");
               },
               icon: const Icon(

@@ -95,7 +95,7 @@ class _RegisterState extends State<Register>
               ),
             ),
             body: PageView(
-              // physics: const NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               controller: controller,
               children: [
                 Container(
@@ -376,7 +376,6 @@ class _RegisterState extends State<Register>
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            // ignore: unnecessary_const
                             child: TextField(
                               onChanged: (value) {
                                 weight = int.parse(value);
