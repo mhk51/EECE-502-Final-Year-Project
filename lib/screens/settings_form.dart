@@ -170,12 +170,13 @@ class _SettingsFormState extends State<SettingsForm> {
                                 await _auth.updateDisplayName(username);
                                 await DatabaseService(uid: user.uid)
                                     .updateUserDataCollection(
-                                        username,
-                                        childData.email!,
-                                        height,
-                                        age,
-                                        weight,
-                                        'male');
+                                  username,
+                                  childData.email!,
+                                  height,
+                                  age,
+                                  weight,
+                                  'male',
+                                );
                                 Navigator.pop(context);
                               }
                             },

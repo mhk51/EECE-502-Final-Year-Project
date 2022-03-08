@@ -64,6 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final _auth = AuthService();
     final user = Provider.of<CustomUser?>(context);
     // print(user!.name);
     // void _showSettingsPanel() {
@@ -77,7 +78,6 @@ class _HomeScreenState extends State<HomeScreen> {
     //         );
     //       });
     // }
-
     final Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -85,27 +85,10 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.blue[800],
-          // centerTitle: true,
-          // actions: [
-          //   TextButton.icon(
-          //     onPressed: () async {
-          //       await _auth.signOut();
-          //     },
-          //     icon: const Icon(
-          //       Icons.person,
-          //       color: Colors.white,
-          //     ),
-          //     label: const Text(
-          //       "Log Out",
-          //       style: TextStyle(
-          //         color: Colors.white,
-          //       ),
-          //     ),
-          //   )
-          // ],
           actions: [
             TextButton.icon(
               onPressed: () {
+                // _auth.signOut();
                 Navigator.pushReplacementNamed(context, "/LoggingFood");
               },
               icon: const Icon(
