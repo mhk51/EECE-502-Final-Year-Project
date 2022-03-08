@@ -45,6 +45,12 @@ class _HomeScreenState extends State<HomeScreen> {
               TextButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
+                      TimeOfDay now = TimeOfDay.now();
+                      LoggedBSL currentBSL = LoggedBSL(
+                          double.parse(_textEditingController.text), now);
+                      LoggedBSL.chartData.add(currentBSL);
+                      print(currentBSL.level);
+
                       Navigator.of(context).pop();
                     }
                   },
@@ -220,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text('Welcome ${user!.name}',
                     style: TextStyle(fontSize: 20)),
               ),
-              const LineChart(),
+              LineChart(),
               Container(
                 alignment: Alignment.center,
                 child: ElevatedButton(
