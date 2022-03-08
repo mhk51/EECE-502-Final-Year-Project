@@ -208,8 +208,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 alignment: Alignment.center,
                 child: ElevatedButton(
                   onPressed: () async {
-                    // await showInformationDialog(
-                    //     context); // Navigator.pushNamed(context, '/LoggingFood');
+                    await showInformationDialog(
+                        context); // Navigator.pushNamed(context, '/LoggingFood');
                   },
                   child: const Text("Log Current Sugar Level"),
                   style: ElevatedButton.styleFrom(
