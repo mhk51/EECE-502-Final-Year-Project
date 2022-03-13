@@ -26,7 +26,7 @@ class _LineChartState extends State<LineChart> {
         series: [
           LineSeries(
               dataSource: LoggedBSL.chartData,
-              xValueMapper: (LoggedBSL logg, _) => logg.time,
+              xValueMapper: (LoggedBSL logg, _) => logg.time.minute,
               yValueMapper: (LoggedBSL logg, _) => logg.level)
         ],
       ),
