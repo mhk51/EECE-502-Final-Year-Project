@@ -71,7 +71,9 @@ class _FoodTileState extends State<FoodTile> {
                     color: addButtonSelected ? Colors.blue : Colors.grey[600],
                     size: 25,
                   ),
-                  onPressed: () {
+                  onPressed: () async {
+                    await Navigator.pushNamed(context, '/ItemInfo',
+                        arguments: widget.food);
                     setState(() {
                       addButtonSelected = !addButtonSelected;
                     });
