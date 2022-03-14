@@ -160,7 +160,9 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _showChoiceDialog(context);
+                  },
                   icon: const Icon(
                     AppIcons.barcode_2,
                     color: Colors.blue,
