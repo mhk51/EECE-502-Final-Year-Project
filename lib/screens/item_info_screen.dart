@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/custom/constants.dart';
 import 'package:flutter_application_1/models/daily_logs_class.dart';
 import 'package:flutter_application_1/models/food_class.dart';
-import 'package:flutter_application_1/screens/navdrawer.dart';
 import 'package:flutter_application_1/services/auth.dart';
-import 'package:flutter_application_1/services/foodDatabase.dart';
+import 'package:flutter_application_1/services/food_database.dart';
 
 class ItemInfoScreen extends StatefulWidget {
   // final FoodClass food;
@@ -55,7 +54,7 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
                   try {
                     numberofServings = int.parse(value);
                   } catch (e) {
-                    print("empty string");
+                    numberofServings;
                   }
                 });
               },
@@ -127,11 +126,11 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
             ElevatedButton(
               onPressed: () async {
                 final uid = _auth.getUID();
-                DailyLogsClass logsClass = DailyLogsClass();
-                logsClass.breakfastList.add(food);
-                await FoodDatabaseService(uid: uid)
-                    .updateUserDataCollection(logsClass);
-                // Navigator.pop(context);
+                // DailyLogsClass logsClass = DailyLogsClass();
+                // logsClass.breakfastList.add(food);
+                await FoodDatabaseService(uid: uid).updateUserDataCollection(
+                    food, numberofServings, defaultPortion);
+                Navigator.pop(context);
               },
               child: const Text("Add"),
             )

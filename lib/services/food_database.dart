@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_application_1/models/daily_logs_class.dart';
 import 'package:flutter_application_1/models/food_class.dart';
-import 'package:flutter_application_1/models/user.dart';
 
 class FoodDatabaseService {
   final String uid;
@@ -10,13 +10,29 @@ class FoodDatabaseService {
   final CollectionReference userDataCollection =
       FirebaseFirestore.instance.collection('UserFoodCollection');
 
-  String _foodnamefromFoodClass(FoodClass food) {
-    return food.foodName;
+  Map<String, dynamic> _foodnamefromFoodClass(
+      FoodClass food, int serving, int portion) {
+    return {
+      'foodName': food.foodName,
+      'serving': serving,
+      'portion': portion,
+    };
   }
 
-  Future<void> updateUserDataCollection(DailyLogsClass logsClass) async {
-    return await userDataCollection.doc(uid).set({
-      'logsClass': logsClass.breakfastList.map(_foodnamefromFoodClass).toList(),
+  Future<void> updateUserDataCollection(
+      FoodClass food, int serving, int portion) async {
+    DocumentSnapshot a = await userDataCollection.doc(uid).get();
+    List<dynamic> list = a.get('logsClass');
+    list.add({
+      'foodName': food.foodName,
+      'serving': serving,
+      'portion': portion,
+    });
+    return await userDataCollection.doc(uid).update({
+      // 'logsClass': logsClass.breakfastList
+      //     .map((food) => _foodnamefromFoodClass(food, serving, portion))
+      //     .toList(),
+      'logsClass': list
     });
   }
 
