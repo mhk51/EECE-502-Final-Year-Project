@@ -46,7 +46,7 @@ class _FoodTileState extends State<FoodTile> {
                   style: TextStyle(color: Colors.black, fontSize: fontSize),
                 ),
                 TextSpan(
-                  text: '${widget.food.protien}',
+                  text: '${widget.food.protein}',
                   style: TextStyle(color: Colors.blue, fontSize: fontSize),
                 ),
                 TextSpan(
@@ -71,7 +71,9 @@ class _FoodTileState extends State<FoodTile> {
                     color: addButtonSelected ? Colors.blue : Colors.grey[600],
                     size: 25,
                   ),
-                  onPressed: () {
+                  onPressed: () async {
+                    await Navigator.pushNamed(context, '/ItemInfo',
+                        arguments: widget.food);
                     setState(() {
                       addButtonSelected = !addButtonSelected;
                     });

@@ -22,8 +22,6 @@ class AuthService {
 
   // auth change user stream
   Stream<CustomUser?> get user {
-    // _auth.userChanges()
-    //.map((FirebaseUser user) => _userFromFirebaseUser(user));
     return _auth.userChanges().map(_userFromFirebaseUser);
   }
 
@@ -60,6 +58,11 @@ class AuthService {
     return user;
   }
 
+  Future<bool> isEmailVerified() async {
+    User? user = _auth.currentUser;
+    return user!.emailVerified;
+  }
+
   // register with email and password
   Future registerWithEmailAndPassword(
       String email, String password, String username) async {
@@ -89,6 +92,11 @@ class AuthService {
     await _auth.sendPasswordResetEmail(email: user!.email!);
   }
 
+  Future sentVerificationEmail() async {
+    User? user = _auth.currentUser;
+    await user!.sendEmailVerification();
+  }
+
   // sign out
   Future signOut() async {
     try {
@@ -97,5 +105,9 @@ class AuthService {
       print(error.toString());
       return null;
     }
+  }
+
+  String getUID() {
+    return _auth.currentUser!.uid;
   }
 }

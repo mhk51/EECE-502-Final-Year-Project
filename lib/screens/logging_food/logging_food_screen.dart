@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/custom/app_icons_icons.dart';
 import 'package:flutter_application_1/custom/constants.dart';
 import 'package:flutter_application_1/screens/logging_food/food_search_list.dart';
 import 'package:flutter_application_1/screens/navdrawer.dart';
+import 'package:image_picker/image_picker.dart';
 
 class LoggingFoodScreen extends StatefulWidget {
   const LoggingFoodScreen({Key? key}) : super(key: key);
@@ -12,6 +15,47 @@ class LoggingFoodScreen extends StatefulWidget {
 }
 
 class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
+  //dialog for camera and image picker
+  late File imageFile;
+  _openGallery(BuildContext context) async {
+    imageFile =
+        (await ImagePicker().pickImage(source: ImageSource.gallery)) as File;
+    Navigator.of(context).pop();
+  }
+
+  _openCamera(BuildContext context) async {
+    imageFile =
+        (await ImagePicker().pickImage(source: ImageSource.camera)) as File;
+    Navigator.of(context).pop();
+  }
+
+  Future<void> _showChoiceDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: SingleChildScrollView(
+                child: ListBody(
+              children: <Widget>[
+                GestureDetector(
+                  child: Text("Gallery"),
+                  onTap: () {
+                    _openGallery(context);
+                  },
+                ),
+                Padding(padding: EdgeInsets.all(8.0)),
+                GestureDetector(
+                  child: const Text("Camera"),
+                  onTap: () {
+                    _openCamera(context);
+                  },
+                )
+              ],
+            )),
+          );
+        });
+  }
+
   var msgController = TextEditingController();
   String tempSearchWord = "";
   String searchWord = "";
@@ -106,7 +150,9 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _showChoiceDialog(context);
+                  },
                   icon: const Icon(
                     Icons.center_focus_strong,
                     color: Colors.blue,
@@ -114,7 +160,9 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _showChoiceDialog(context);
+                  },
                   icon: const Icon(
                     AppIcons.barcode_2,
                     color: Colors.blue,

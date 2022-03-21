@@ -2,6 +2,9 @@
 import 'package:flutter_application_1/custom/constants.dart';
 import 'package:flutter_application_1/custom/loading.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/user.dart';
+import 'package:flutter_application_1/services/auth.dart';
+import 'package:flutter_application_1/services/database.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 class Register extends StatefulWidget {
@@ -16,7 +19,7 @@ enum SingingCharacter { lafayette, jefferson }
 
 class _RegisterState extends State<Register>
     with SingleTickerProviderStateMixin {
-  // final AuthService _auth = AuthService();
+  final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   String error = '';
   bool loading = false;
@@ -26,6 +29,11 @@ class _RegisterState extends State<Register>
   String password = '';
   String confirmPass = '';
   String username = '';
+  String fullname = '';
+  String userUID = '';
+  int age = 0;
+  int height = 0;
+  int weight = 0;
   int _bottomBarIndex = 0;
   bool isGenderMale = false;
   @override
@@ -100,16 +108,6 @@ class _RegisterState extends State<Register>
                         const SizedBox(height: 20.0),
                         TextFormField(
                           decoration: textInputDecoration.copyWith(
-                              hintText: 'Username...'),
-                          validator: (val) =>
-                              val!.isEmpty ? 'Enter a Username' : null,
-                          onChanged: (val) {
-                            setState(() => username = val);
-                          },
-                        ),
-                        const SizedBox(height: 20.0),
-                        TextFormField(
-                          decoration: textInputDecoration.copyWith(
                               hintText: 'Email...'),
                           validator: (val) =>
                               val!.isEmpty ? 'Enter an email' : null,
@@ -150,15 +148,13 @@ class _RegisterState extends State<Register>
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               // setState(() => loading = true);
-                              // dynamic result =
+                              // CustomUser? result =
                               //     await _auth.registerWithEmailAndPassword(
                               //         email, password, username);
                               // if (result == null) {
                               //   setState(() {
-                              //     loading = false;
                               //     error = 'Please supply a valid email';
-                              // }
-                              // );
+                              //   });
                               // }
                               controller.nextPage(
                                   duration: const Duration(seconds: 1),
@@ -187,8 +183,7 @@ class _RegisterState extends State<Register>
                   children: [
                     const Padding(
                       padding: EdgeInsets.all(10),
-                      // ignore: unnecessary_const
-                      child: const Text(
+                      child: Text(
                         "Welcome to (AppName)",
                         style: TextStyle(
                             fontSize: 40, fontWeight: FontWeight.bold),
@@ -206,15 +201,18 @@ class _RegisterState extends State<Register>
                     Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
-                        children: const [
-                          Text(
+                        children: [
+                          const Text(
                             "What is Your Name",
                             style: TextStyle(fontSize: 20),
                           ),
                           Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: TextField(
-                              decoration: InputDecoration(
+                              onChanged: (val) {
+                                fullname = val;
+                              },
+                              decoration: const InputDecoration(
                                 hintText: "Enter Full Name:",
                                 border: OutlineInputBorder(),
                               ),
@@ -232,10 +230,13 @@ class _RegisterState extends State<Register>
                             "What Do you want us to call you?",
                             style: TextStyle(fontSize: 20),
                           ),
-                          const Padding(
-                            padding: EdgeInsets.all(8.0),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
                             child: TextField(
-                              decoration: InputDecoration(
+                              onChanged: (value) {
+                                username = value;
+                              },
+                              decoration: const InputDecoration(
                                 hintText: "Enter UserName:",
                                 border: OutlineInputBorder(),
                               ),
@@ -245,7 +246,7 @@ class _RegisterState extends State<Register>
                           Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: ElevatedButton(
-                              onPressed: () {
+                              onPressed: () async {
                                 controller.nextPage(
                                     duration: const Duration(seconds: 1),
                                     curve: Curves.slowMiddle);
@@ -270,28 +271,14 @@ class _RegisterState extends State<Register>
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Column(
-                      children: const [
+                      children: [
                         Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            "Hey (USRNAME)!",
-                            style: TextStyle(fontSize: 20),
+                            "Hey $username!",
+                            style: const TextStyle(fontSize: 20),
                           ),
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   child: Text(
-                        //     "You are almost Done...",
-                        //     style: TextStyle(fontSize: 20),
-                        //   ),
-                        // ),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   child: Text(
-                        //     "Just fill the information below and you are ready to go!",
-                        //     style: TextStyle(fontSize: 20),
-                        //   ),
-                        // )
                       ],
                     ),
                     Row(
@@ -329,34 +316,6 @@ class _RegisterState extends State<Register>
                         ),
                       ],
                     ),
-                    // Column(
-                    //   children: <Widget>[
-                    //     ListTile(
-                    //       title: const Text('Male'),
-                    //       leading: Radio<SingingCharacter>(
-                    //         value: SingingCharacter.lafayette,
-                    //         groupValue: _character,
-                    //         onChanged: (SingingCharacter? value) {
-                    //           setState(() {
-                    //             _character = value;
-                    //           });
-                    //         },
-                    //       ),
-                    //     ),
-                    //     ListTile(
-                    //       title: const Text('Female'),
-                    //       leading: Radio<SingingCharacter>(
-                    //         value: SingingCharacter.jefferson,
-                    //         groupValue: _character,
-                    //         onChanged: (SingingCharacter? value) {
-                    //           setState(() {
-                    //             _character = value;
-                    //           });
-                    //         },
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Column(
@@ -366,11 +325,14 @@ class _RegisterState extends State<Register>
                             "What is your age?",
                             style: TextStyle(fontSize: 20),
                           ),
-                          const Padding(
-                            padding: EdgeInsets.all(8.0),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
                             // ignore: unnecessary_const
-                            child: const TextField(
-                              decoration: InputDecoration(
+                            child: TextField(
+                              onChanged: (value) {
+                                age = int.parse(value);
+                              },
+                              decoration: const InputDecoration(
                                 hintText: "Enter Age:",
                                 border: OutlineInputBorder(),
                               ),
@@ -383,17 +345,18 @@ class _RegisterState extends State<Register>
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Column(
-                        // ignore: prefer_const_literals_to_create_immutables
                         children: [
                           const Text(
                             "How tall are you?",
                             style: TextStyle(fontSize: 20),
                           ),
-                          const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            // ignore: unnecessary_const
-                            child: const TextField(
-                              decoration: InputDecoration(
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              onChanged: (value) {
+                                height = int.parse(value);
+                              },
+                              decoration: const InputDecoration(
                                 hintText: "Enter height:",
                                 border: OutlineInputBorder(),
                               ),
@@ -406,17 +369,18 @@ class _RegisterState extends State<Register>
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Column(
-                        // ignore: prefer_const_literals_to_create_immutables
                         children: [
                           const Text(
                             "How much do you weigh?",
                             style: TextStyle(fontSize: 20),
                           ),
-                          const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            // ignore: unnecessary_const
-                            child: const TextField(
-                              decoration: InputDecoration(
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextField(
+                              onChanged: (value) {
+                                weight = int.parse(value);
+                              },
+                              decoration: const InputDecoration(
                                 hintText: "Enter weight:",
                                 border: OutlineInputBorder(),
                               ),
@@ -429,9 +393,33 @@ class _RegisterState extends State<Register>
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          // setState(() => loading = true);
+                          CustomUser? result =
+                              await _auth.registerWithEmailAndPassword(
+                                  email, password, username);
+                          if (result == null) {
+                            controller.animateToPage(0,
+                                duration: Duration(milliseconds: 500),
+                                curve: Curves.bounceIn);
+                            setState(() {
+                              loading = false;
+                              error = 'Please supply a valid email';
+                            });
+                          } else {
+                            await DatabaseService(uid: result.uid)
+                                .updateUserDataCollection(
+                              username,
+                              email,
+                              height,
+                              age,
+                              weight,
+                              isGenderMale ? 'male' : 'female',
+                            );
+                          }
+                        },
                         child: const Text(
-                          "Sign Up",
+                          "Submit",
                           style: TextStyle(fontSize: 20),
                         ),
                         style: ElevatedButton.styleFrom(

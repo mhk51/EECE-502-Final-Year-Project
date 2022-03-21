@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/custom/loading.dart';
 import 'package:flutter_application_1/models/user.dart';
+import 'package:flutter_application_1/screens/wrapper.dart';
 import 'package:flutter_application_1/services/auth.dart';
 import 'package:flutter_application_1/services/database.dart';
 import 'package:provider/provider.dart';
@@ -14,8 +15,11 @@ class NavDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<CustomUser?>(context);
     String? pageRouteName = ModalRoute.of(context)?.settings.name;
+    if (user == null) {
+      return const Wrapper();
+    }
     return StreamBuilder<Child?>(
-        stream: DatabaseService(uid: user!.uid).userData,
+        stream: DatabaseService(uid: user.uid).userData,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             Child? childData = snapshot.data;
@@ -64,23 +68,23 @@ class NavDrawer extends StatelessWidget {
                         ? Colors.grey[700]
                         : Colors.grey[800],
                   ),
-                  ListTile(
-                    leading: const Icon(
-                      Icons.info,
-                      color: Colors.white,
-                    ),
-                    title: const Text(
-                      'Item Info',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                    onTap: () =>
-                        {Navigator.pushReplacementNamed(context, '/ItemInfo')},
-                    tileColor: (pageRouteName == '/ItemInfo')
-                        ? Colors.grey[700]
-                        : Colors.grey[800],
-                  ),
+                  // ListTile(
+                  //   leading: const Icon(
+                  //     Icons.info,
+                  //     color: Colors.white,
+                  //   ),
+                  //   title: const Text(
+                  //     'Item Info',
+                  //     style: TextStyle(
+                  //       color: Colors.white,
+                  //     ),
+                  //   ),
+                  //   onTap: () =>
+                  //       {Navigator.pushReplacementNamed(context, '/ItemInfo')},
+                  //   tileColor: (pageRouteName == '/ItemInfo')
+                  //       ? Colors.grey[700]
+                  //       : Colors.grey[800],
+                  // ),
                   ListTile(
                     leading: const Icon(
                       Icons.insights_rounded,
@@ -165,9 +169,6 @@ class NavDrawer extends StatelessWidget {
                     onTap: () async {
                       await _auth.signOut();
                       await Navigator.pushReplacementNamed(context, '/');
-                      await Future.delayed(const Duration(seconds: 1), () {
-                        //your code goes here
-                      });
                     },
                   ),
                 ],

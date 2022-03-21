@@ -22,7 +22,7 @@ class _FoodSearchWidgetState extends State<FoodSearchWidget> {
         foodName: document.get("Description"),
         fat: document.get("Saturated Fat") + 0.0,
         sugar: document.get("Sugar Total") + 0.0,
-        protien: document.get("Protein") + 0.0,
+        protein: document.get("Protein") + 0.0,
         carbs: document.get("Carbohydrate") + 0.0,
         bloodSugarInc: 1);
   }

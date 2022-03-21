@@ -9,13 +9,13 @@ class LineChart extends StatefulWidget {
 }
 
 class _LineChartState extends State<LineChart> {
-  final List<LoggedBSL> chartData = [
-    LoggedBSL(22, 2018),
-    LoggedBSL(26, 2019),
-    LoggedBSL(38, 2020),
-    LoggedBSL(25, 2021),
-    LoggedBSL(27, 2022),
-  ];
+  //late List<LoggedBSL> chartData; // = [
+  //LoggedBSL(22, 2018),
+  //LoggedBSL(26, 2019),
+  //LoggedBSL(38, 2020),
+  //LoggedBSL(25, 2021),
+  //LoggedBSL(27, 2022),
+  // ];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,8 +25,8 @@ class _LineChartState extends State<LineChart> {
         title: ChartTitle(text: "Blood Sugar Data"),
         series: [
           LineSeries(
-              dataSource: chartData,
-              xValueMapper: (LoggedBSL logg, _) => logg.time,
+              dataSource: LoggedBSL.chartData,
+              xValueMapper: (LoggedBSL logg, _) => logg.time.minute,
               yValueMapper: (LoggedBSL logg, _) => logg.level)
         ],
       ),
@@ -35,8 +35,9 @@ class _LineChartState extends State<LineChart> {
 }
 
 class LoggedBSL {
-  final double level;
-  final int time;
+  static List<LoggedBSL> chartData = [];
+  late final double level;
+  late final TimeOfDay time;
 
   LoggedBSL(this.level, this.time);
 }

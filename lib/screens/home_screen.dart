@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/custom/line_chart.dart';
 import 'package:flutter_application_1/models/user.dart';
 import 'package:flutter_application_1/screens/navdrawer.dart';
-// import 'package:flutter_application_1/services/auth.dart';
+import 'package:flutter_application_1/services/auth.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Future<void> showInformationDialog(BuildContext context) async {
     return await showDialog(
         context: context,
@@ -43,19 +45,26 @@ class _HomeScreenState extends State<HomeScreen> {
               TextButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
+                      TimeOfDay now = TimeOfDay.now();
+                      LoggedBSL currentBSL = LoggedBSL(
+                          double.parse(_textEditingController.text), now);
+                      LoggedBSL.chartData.add(currentBSL);
+                      print(currentBSL.level);
+
                       Navigator.of(context).pop();
                     }
                   },
-                  child: const Text("Submit"))
+                  child: Text("Submit"))
             ],
           );
         });
   }
 
-  // final AuthService _auth = AuthService();
+  final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
+    final _auth = AuthService();
     final user = Provider.of<CustomUser?>(context);
     // print(user!.name);
     // void _showSettingsPanel() {
@@ -69,7 +78,6 @@ class _HomeScreenState extends State<HomeScreen> {
     //         );
     //       });
     // }
-
     final Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -77,27 +85,10 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.blue[800],
-          // centerTitle: true,
-          // actions: [
-          //   TextButton.icon(
-          //     onPressed: () async {
-          //       await _auth.signOut();
-          //     },
-          //     icon: const Icon(
-          //       Icons.person,
-          //       color: Colors.white,
-          //     ),
-          //     label: const Text(
-          //       "Log Out",
-          //       style: TextStyle(
-          //         color: Colors.white,
-          //       ),
-          //     ),
-          //   )
-          // ],
           actions: [
             TextButton.icon(
               onPressed: () {
+                // _auth.signOut();
                 Navigator.pushReplacementNamed(context, "/LoggingFood");
               },
               icon: const Icon(
@@ -216,9 +207,9 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text('Welcome ${user!.name}',
-                    style: const TextStyle(fontSize: 20)),
+                    style: TextStyle(fontSize: 20)),
               ),
-              const LineChart(),
+              LineChart(),
               Container(
                 alignment: Alignment.center,
                 child: ElevatedButton(

@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
 class CameraScreen extends StatefulWidget {
+  const CameraScreen({Key? key}) :
+
   @override
   State<StatefulWidget> createState() {
     return _CameraScreenState();
@@ -11,7 +13,7 @@ class CameraScreen extends StatefulWidget {
 }
 
 class _CameraScreenState extends State<CameraScreen> {
-  late File _image;
+  final _image = File('file.txt');
   ImagePicker picker = ImagePicker();
   Future getImage(bool isCamera) async {
     var image;
@@ -35,22 +37,22 @@ class _CameraScreenState extends State<CameraScreen> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Image Pick Demo'),
+          title: const Text('Image Pick Demo'),
         ),
         body: Center(
           child: Column(
             children: <Widget>[
               IconButton(
-                icon: Icon(Icons.insert_drive_file),
+                icon: const Icon(Icons.insert_drive_file),
                 onPressed: () {
                   getImage(false);
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10.0,
               ),
               IconButton(
-                icon: Icon(Icons.camera_alt),
+                icon: const Icon(Icons.camera_alt),
                 onPressed: () {
                   getImage(true);
                 },
