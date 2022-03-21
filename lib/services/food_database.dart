@@ -28,7 +28,7 @@ class FoodDatabaseService {
       'serving': serving,
       'portion': portion,
     });
-    return await userDataCollection.doc(uid).update({
+    return await userDataCollection.doc(uid).set({
       // 'logsClass': logsClass.breakfastList
       //     .map((food) => _foodnamefromFoodClass(food, serving, portion))
       //     .toList(),
