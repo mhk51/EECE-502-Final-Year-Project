@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
           '/DailyLogging': (context) => const DailyLogScreen(),
           '/Settings': (context) => const SettingsForm(),
           //Henri:
-          '/CameraScreen': (context) => CameraScreen(),
+          // '/CameraScreen': (context) => CameraScreen(),
         },
       ),
     );
