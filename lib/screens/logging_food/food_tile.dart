@@ -3,7 +3,9 @@ import 'package:flutter_application_1/models/food_class.dart';
 
 class FoodTile extends StatefulWidget {
   final FoodClass food;
-  const FoodTile({Key? key, required this.food}) : super(key: key);
+  const FoodTile({Key? key, required this.food, required this.fromenterrecipe})
+      : super(key: key);
+  final bool fromenterrecipe;
 
   @override
   State<FoodTile> createState() => _FoodTileState();
@@ -72,11 +74,19 @@ class _FoodTileState extends State<FoodTile> {
                     size: 25,
                   ),
                   onPressed: () async {
-                    await Navigator.pushNamed(context, '/ItemInfo',
-                        arguments: widget.food);
-                    setState(() {
-                      addButtonSelected = !addButtonSelected;
-                    });
+                    if (widget.fromenterrecipe == true) {
+                      await Navigator.pushNamed(context, '/RecipeItemInfo',
+                          arguments: widget.food);
+                      setState(() {
+                        addButtonSelected = !addButtonSelected;
+                      });
+                    } else if (widget.fromenterrecipe == false) {
+                      await Navigator.pushNamed(context, '/ItemInfo',
+                          arguments: widget.food);
+                      setState(() {
+                        addButtonSelected = !addButtonSelected;
+                      });
+                    }
                   },
                   iconSize: 5,
                 ),

@@ -5,15 +5,15 @@ import 'package:flutter_application_1/models/food_class.dart';
 import 'package:flutter_application_1/services/auth.dart';
 import 'package:flutter_application_1/services/food_database.dart';
 
-class ItemInfoScreen extends StatefulWidget {
+class RecipeItemInfoScreen extends StatefulWidget {
   // final FoodClass food;
-  const ItemInfoScreen({Key? key}) : super(key: key);
+  const RecipeItemInfoScreen({Key? key}) : super(key: key);
 
   @override
-  State<ItemInfoScreen> createState() => _ItemInfoScreenState();
+  State<RecipeItemInfoScreen> createState() => _RecipeItemInfoScreenState();
 }
 
-class _ItemInfoScreenState extends State<ItemInfoScreen> {
+class _RecipeItemInfoScreenState extends State<RecipeItemInfoScreen> {
   List<int> portions = [50, 100, 200, 300, 400, 500];
   int defaultPortion = 100;
   int numberofServings = 1;
@@ -128,11 +128,11 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
                 final uid = _auth.getUID();
                 // DailyLogsClass logsClass = DailyLogsClass();
                 // logsClass.breakfastList.add(food);
-                await FoodDatabaseService(uid: uid).updateUserDataCollection(
-                    food, numberofServings, defaultPortion);
+                // await FoodDatabaseService(uid: uid).updateUserDataCollection(
+                //     food, numberofServings, defaultPortion);
                 Navigator.pop(context);
               },
-              child: const Text("Log Food"),
+              child: const Text("Add Item"),
             ),
           ],
         ),

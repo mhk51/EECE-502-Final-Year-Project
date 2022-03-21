@@ -7,14 +7,14 @@ import 'package:flutter_application_1/screens/logging_food/food_search_list.dart
 import 'package:flutter_application_1/screens/navdrawer.dart';
 import 'package:image_picker/image_picker.dart';
 
-class LoggingFoodScreen extends StatefulWidget {
-  const LoggingFoodScreen({Key? key}) : super(key: key);
+class NewRecipeSearch extends StatefulWidget {
+  const NewRecipeSearch({Key? key}) : super(key: key);
 
   @override
-  State<LoggingFoodScreen> createState() => _LoggingFoodScreenState();
+  State<NewRecipeSearch> createState() => _NewRecipeSearchState();
 }
 
-class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
+class _NewRecipeSearchState extends State<NewRecipeSearch> {
   //dialog for camera and image picker
   late File imageFile;
   _openGallery(BuildContext context) async {
@@ -64,12 +64,11 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        drawer: NavDrawer(),
         appBar: AppBar(
           backgroundColor: Colors.blue[800],
           title: const Padding(
             padding: EdgeInsets.all(8.0),
-            child: Text("Logging Food"),
+            child: Text("Add Recipe Item"),
           ),
           // centerTitle: true,
         ),
@@ -79,30 +78,8 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
             const SizedBox(
               height: 40,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                    onPressed: () {}, child: const Text("All Results")),
-                const SizedBox(width: 20),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text("Favorites"),
-                ),
-                // Expanded(child: Search()),
-              ],
-            ),
             const SizedBox(
               height: 10,
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                await Navigator.pushNamed(context, '/InputNewRecipe');
-              },
-              child: const Text("Input New Recipe"),
-            ),
-            const SizedBox(
-              height: 20,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -181,7 +158,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
             ),
             FoodSearchWidget(
               searchWord: searchWord,
-              fromenterrecipe: false,
+              fromenterrecipe: true,
             ),
           ],
         ),
