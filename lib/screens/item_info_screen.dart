@@ -21,6 +21,7 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
   @override
   Widget build(BuildContext context) {
     final food = ModalRoute.of(context)!.settings.arguments as FoodClass;
+
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
