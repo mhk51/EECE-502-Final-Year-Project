@@ -5,12 +5,12 @@ import 'package:flutter_application_1/screens/logging_food/food_tile.dart';
 import 'package:flutter_application_1/screens/logging_food/empty_tile.dart';
 
 class FoodSearchWidget extends StatefulWidget {
-  const FoodSearchWidget({
-    Key? key,
-    required this.searchWord,
-  }) : super(key: key);
+  const FoodSearchWidget(
+      {Key? key, required this.searchWord, required this.fromenterrecipe})
+      : super(key: key);
 
   final String searchWord;
+  final bool fromenterrecipe;
 
   @override
   State<FoodSearchWidget> createState() => _FoodSearchWidgetState();
@@ -67,7 +67,10 @@ class _FoodSearchWidgetState extends State<FoodSearchWidget> {
                     shrinkWrap: true,
                     children:
                         snapshot.data!.docs.map((DocumentSnapshot document) {
-                      return FoodTile(food: documentToFoodClass(document));
+                      return FoodTile(
+                        food: documentToFoodClass(document),
+                        fromenterrecipe: widget.fromenterrecipe,
+                      );
                     }).toList(),
                   );
               }

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/camera_screen.dart';
 import 'package:flutter_application_1/screens/daily_log_screen.dart';
 import 'package:flutter_application_1/screens/home_screen.dart';
+import 'package:flutter_application_1/screens/input_new_recipe.dart';
 import 'package:flutter_application_1/screens/item_info_screen.dart';
 import 'package:flutter_application_1/screens/logging_food/logging_food_screen.dart';
+import 'package:flutter_application_1/screens/logging_food/new_recipe_search.dart';
+import 'package:flutter_application_1/screens/recipe_item_info.dart';
 import 'package:flutter_application_1/screens/settings_form.dart';
 import 'package:flutter_application_1/screens/weekly_insights_screen.dart';
 import 'package:flutter_application_1/screens/wrapper.dart';
@@ -35,7 +38,11 @@ class MyApp extends StatelessWidget {
           '/Home': (context) => const HomeScreen(),
           '/Insights': (context) => const WeeklyInsightsScreen(),
           '/ItemInfo': (context) => const ItemInfoScreen(),
+          '/RecipeItemInfo': (context) => const RecipeItemInfoScreen(),
           '/LoggingFood': (context) => const LoggingFoodScreen(),
+          '/NewRecipeSearch': (context) => const NewRecipeSearch(),
+          '/InputNewRecipe': (context) => const inputNewRecipe(),
+
           '/DailyLogging': (context) => const DailyLogScreen(),
           '/Settings': (context) => const SettingsForm(),
           //Henri:

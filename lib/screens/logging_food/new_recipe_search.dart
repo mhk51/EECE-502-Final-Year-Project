@@ -6,73 +6,28 @@ import 'package:flutter_application_1/custom/constants.dart';
 import 'package:flutter_application_1/screens/logging_food/food_search_list.dart';
 import 'package:flutter_application_1/screens/navdrawer.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tflite/tflite.dart';
 
-class LoggingFoodScreen extends StatefulWidget {
-  const LoggingFoodScreen({Key? key}) : super(key: key);
+class NewRecipeSearch extends StatefulWidget {
+  const NewRecipeSearch({Key? key}) : super(key: key);
 
   @override
-  State<LoggingFoodScreen> createState() => _LoggingFoodScreenState();
+  State<NewRecipeSearch> createState() => _NewRecipeSearchState();
 }
 
-class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
+class _NewRecipeSearchState extends State<NewRecipeSearch> {
   //dialog for camera and image picker
-  late XFile imageFile;
-
-  //HenriVincent
-  bool isImageLoaded = false;
-
-  List _result = [];
-  String _name = "";
-  String _confidence = "";
-  String numbers = "";
-
+  late File imageFile;
   _openGallery(BuildContext context) async {
     imageFile =
-        (await ImagePicker().pickImage(source: ImageSource.gallery)) as XFile;
+        (await ImagePicker().pickImage(source: ImageSource.gallery)) as File;
     Navigator.of(context).pop();
-    applyModelOnImage(imageFile);
   }
 
   _openCamera(BuildContext context) async {
     imageFile =
-        (await ImagePicker().pickImage(source: ImageSource.camera)) as XFile;
+        (await ImagePicker().pickImage(source: ImageSource.camera)) as File;
     Navigator.of(context).pop();
-    applyModelOnImage(imageFile);
   }
-
-  loadMyModel() async {
-    var result = await Tflite.loadModel(
-      labels: "assets/labels.txt",
-      model: "assets/food11model.tflite",
-    );
-    print("Result: $result");
-  }
-
-  applyModelOnImage(XFile file) async {
-    var res = await Tflite.runModelOnImage(
-        path: file.path,
-        numResults: 11,
-        threshold: 0.5,
-        imageMean: 127.5,
-        imageStd: 127.5);
-    setState(() {
-      _result = res!;
-      String str = _result[0]["label"];
-      _name = str.substring(11);
-      _confidence = _result != null
-          ? (_result[0]["confidence"] * 100.0).toString().substring(0, 11) + "%"
-          : "";
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    loadMyModel();
-  }
-
-  _getResult() {}
 
   Future<void> _showChoiceDialog(BuildContext context) {
     return showDialog(
@@ -109,12 +64,11 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        drawer: NavDrawer(),
         appBar: AppBar(
           backgroundColor: Colors.blue[800],
           title: const Padding(
             padding: EdgeInsets.all(8.0),
-            child: Text("Logging Food"),
+            child: Text("Add Recipe Item"),
           ),
           // centerTitle: true,
         ),
@@ -124,30 +78,8 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
             const SizedBox(
               height: 40,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                    onPressed: () {}, child: const Text("All Results")),
-                const SizedBox(width: 20),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text("Favorites"),
-                ),
-                // Expanded(child: Search()),
-              ],
-            ),
             const SizedBox(
               height: 10,
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                await Navigator.pushNamed(context, '/InputNewRecipe');
-              },
-              child: const Text("Input New Recipe"),
-            ),
-            const SizedBox(
-              height: 20,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -226,7 +158,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
             ),
             FoodSearchWidget(
               searchWord: searchWord,
-              fromenterrecipe: false,
+              fromenterrecipe: true,
             ),
           ],
         ),
