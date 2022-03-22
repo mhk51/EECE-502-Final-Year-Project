@@ -36,7 +36,11 @@ class _inputNewRecipeState extends State<inputNewRecipe> {
                   child: const Text("Add Ingredients"),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    for (int i = 0; i < recipe.ingredients.length; i++) {
+                      print(recipe.ingredients[i].foodName);
+                    }
+                  },
                   child: const Text("Save Recipe"),
                 ),
               ],
