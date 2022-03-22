@@ -1,12 +1,12 @@
-import 'dart:io';
+// import 'dart:io
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/custom/app_icons_icons.dart';
 import 'package:flutter_application_1/custom/constants.dart';
 import 'package:flutter_application_1/screens/logging_food/food_search_list.dart';
 import 'package:flutter_application_1/screens/navdrawer.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:tflite/tflite.dart';
+// import 'package:image_picker/image_picker.dart';
+// import 'package:tflite/tflite.dart';
 
 class LoggingFoodScreen extends StatefulWidget {
   const LoggingFoodScreen({Key? key}) : super(key: key);
@@ -16,90 +16,91 @@ class LoggingFoodScreen extends StatefulWidget {
 }
 
 class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
-  //dialog for camera and image picker
-  late XFile imageFile;
+  // //dialog for camera and image picker
+  // late File imageFile;
 
-  //HenriVincent
-  bool isImageLoaded = false;
+  // //HenriVincent
+  // bool isImageLoaded = false;
 
-  List _result = [];
-  String _name = "";
-  String _confidence = "";
-  String numbers = "";
+  // List _result = [];
+  // String _name = "";
+  // String _confidence = "";
+  // String numbers = "";
 
-  _openGallery(BuildContext context) async {
-    imageFile =
-        (await ImagePicker().pickImage(source: ImageSource.gallery)) as XFile;
-    Navigator.of(context).pop();
-    applyModelOnImage(imageFile);
-  }
+  // _openGallery(BuildContext context) async {
+  //   imageFile =
+  //       await (ImagePicker().pickImage(source: ImageSource.gallery)) as File;
+  //   Navigator.of(context).pop();
+  //   applyModelOnImage(imageFile);
+  // }
 
-  _openCamera(BuildContext context) async {
-    imageFile =
-        (await ImagePicker().pickImage(source: ImageSource.camera)) as XFile;
-    Navigator.of(context).pop();
-    applyModelOnImage(imageFile);
-  }
+  // _openCamera(BuildContext context) async {
+  //   imageFile =
+  //       (await ImagePicker().pickImage(source: ImageSource.camera)) as File;
+  //   Navigator.of(context).pop();
+  //   applyModelOnImage(imageFile);
+  // }
 
-  loadMyModel() async {
-    var result = await Tflite.loadModel(
-      labels: "assets/labels.txt",
-      model: "assets/food11model.tflite",
-    );
-    print("Result: $result");
-  }
+  // loadMyModel() async {
+  //   var result = await Tflite.loadModel(
+  //     labels: "assets/labels.txt",
+  //     model: "assets/food11model.tflite",
+  //   );
+  //   print("Result: $result");
+  // }
 
-  applyModelOnImage(XFile file) async {
-    var res = await Tflite.runModelOnImage(
-        path: file.path,
-        numResults: 11,
-        threshold: 0.5,
-        imageMean: 127.5,
-        imageStd: 127.5);
-    setState(() {
-      _result = res!;
-      String str = _result[0]["label"];
-      _name = str.substring(11);
-      _confidence = _result != null
-          ? (_result[0]["confidence"] * 100.0).toString().substring(0, 11) + "%"
-          : "";
-    });
-  }
+  // applyModelOnImage(File file) async {
+  //   var res = await Tflite.runModelOnImage(
+  //       path: file.path,
+  //       numResults: 11,
+  //       threshold: 0.5,
+  //       imageMean: 127.5,
+  //       imageStd: 127.5);
+  // setState(() {
+  //   _result = res!;
+  //   String str = _result[0]["label"];
+  //   _name = str.substring(11);
+  //   _confidence = _result != null
+  //       ? (_result[0]["confidence"] * 100.0).toString().substring(0, 11) + "%"
+  //       : "";
+  // });
+  //   print(res);
+  // }
 
-  @override
-  void initState() {
-    super.initState();
-    loadMyModel();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   loadMyModel();
+  // }
 
-  _getResult() {}
-
-  Future<void> _showChoiceDialog(BuildContext context) {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            content: SingleChildScrollView(
-                child: ListBody(
-              children: <Widget>[
-                GestureDetector(
-                  child: Text("Gallery"),
-                  onTap: () {
-                    _openGallery(context);
-                  },
-                ),
-                Padding(padding: EdgeInsets.all(8.0)),
-                GestureDetector(
-                  child: const Text("Camera"),
-                  onTap: () {
-                    _openCamera(context);
-                  },
-                )
-              ],
-            )),
-          );
-        });
-  }
+  // Future<void> _showChoiceDialog(BuildContext context) {
+  //   return showDialog(
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         return AlertDialog(
+  //           content: SingleChildScrollView(
+  //               child: ListBody(
+  //             children: <Widget>[
+  //               GestureDetector(
+  //                 child: const Text("Gallery"),
+  //                 onTap: () {
+  //                   _openGallery(context);
+  //                 },
+  //               ),
+  //               const Padding(
+  //                 padding: EdgeInsets.all(8.0),
+  //               ),
+  //               GestureDetector(
+  //                 child: const Text("Camera"),
+  //                 onTap: () {
+  //                   _openCamera(context);
+  //                 },
+  //               )
+  //             ],
+  //           )),
+  //         );
+  //       });
+  // }
 
   var msgController = TextEditingController();
   String tempSearchWord = "";
@@ -197,8 +198,9 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {
-                    _showChoiceDialog(context);
+                  onPressed: () async {
+                    // _showChoiceDialog(context);
+                    await Navigator.pushNamed(context, '/CameraScreen');
                   },
                   icon: const Icon(
                     Icons.center_focus_strong,
@@ -208,7 +210,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                 ),
                 IconButton(
                   onPressed: () {
-                    _showChoiceDialog(context);
+                    // _showChoiceDialog(context);
                   },
                   icon: const Icon(
                     AppIcons.barcode_2,
