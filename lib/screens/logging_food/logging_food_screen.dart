@@ -3,10 +3,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/custom/app_icons_icons.dart';
 import 'package:flutter_application_1/custom/constants.dart';
+import 'package:flutter_application_1/models/food_class.dart';
 import 'package:flutter_application_1/screens/logging_food/food_search_list.dart';
 import 'package:flutter_application_1/screens/navdrawer.dart';
 // import 'package:image_picker/image_picker.dart';
 // import 'package:tflite/tflite.dart';
+
+class recipeIngredients {
+  List<FoodClass> ingredients = [];
+  recipeIngredients(this.ingredients);
+}
 
 class LoggingFoodScreen extends StatefulWidget {
   const LoggingFoodScreen({Key? key}) : super(key: key);
@@ -143,7 +149,11 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
             ),
             ElevatedButton(
               onPressed: () async {
-                await Navigator.pushNamed(context, '/InputNewRecipe');
+                List<FoodClass> ingredients = [];
+                recipeIngredients recipe = recipeIngredients(ingredients);
+
+                await Navigator.pushNamed(context, '/InputNewRecipe',
+                    arguments: recipe);
               },
               child: const Text("Input New Recipe"),
             ),
@@ -229,6 +239,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
             FoodSearchWidget(
               searchWord: searchWord,
               fromenterrecipe: false,
+              ingredients: [],
             ),
           ],
         ),
