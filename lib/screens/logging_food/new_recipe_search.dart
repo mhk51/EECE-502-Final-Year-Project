@@ -7,6 +7,8 @@ import 'package:flutter_application_1/screens/logging_food/food_search_list.dart
 import 'package:flutter_application_1/screens/navdrawer.dart';
 import 'package:image_picker/image_picker.dart';
 
+import 'logging_food_screen.dart';
+
 class NewRecipeSearch extends StatefulWidget {
   const NewRecipeSearch({Key? key}) : super(key: key);
 
@@ -61,6 +63,8 @@ class _NewRecipeSearchState extends State<NewRecipeSearch> {
   String searchWord = "";
   @override
   Widget build(BuildContext context) {
+    var recipe =
+        ModalRoute.of(context)!.settings.arguments as recipeIngredients;
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -159,6 +163,7 @@ class _NewRecipeSearchState extends State<NewRecipeSearch> {
             FoodSearchWidget(
               searchWord: searchWord,
               fromenterrecipe: true,
+              ingredients: recipe.ingredients,
             ),
           ],
         ),

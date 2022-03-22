@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/food_class.dart';
 
+class recipeItemInfoArgs {
+  FoodClass food;
+  List<FoodClass> ingredients;
+  recipeItemInfoArgs(this.food, this.ingredients);
+}
+
 class FoodTile extends StatefulWidget {
   final FoodClass food;
-  const FoodTile({Key? key, required this.food, required this.fromenterrecipe})
+  FoodTile(
+      {Key? key,
+      required this.food,
+      required this.fromenterrecipe,
+      required this.ingredients})
       : super(key: key);
   final bool fromenterrecipe;
-
+  List<FoodClass> ingredients;
   @override
   State<FoodTile> createState() => _FoodTileState();
 }
@@ -75,14 +85,19 @@ class _FoodTileState extends State<FoodTile> {
                   ),
                   onPressed: () async {
                     if (widget.fromenterrecipe == true) {
+                      recipeItemInfoArgs args =
+                          recipeItemInfoArgs(widget.food, widget.ingredients);
                       await Navigator.pushNamed(context, '/RecipeItemInfo',
-                          arguments: widget.food);
+                          arguments: args);
                       setState(() {
                         addButtonSelected = !addButtonSelected;
                       });
                     } else if (widget.fromenterrecipe == false) {
-                      await Navigator.pushNamed(context, '/ItemInfo',
-                          arguments: widget.food);
+                      await Navigator.pushNamed(
+                        context,
+                        '/ItemInfo',
+                        arguments: widget.food,
+                      );
                       setState(() {
                         addButtonSelected = !addButtonSelected;
                       });
