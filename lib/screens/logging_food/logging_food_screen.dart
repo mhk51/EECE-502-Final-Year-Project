@@ -17,7 +17,7 @@ class LoggingFoodScreen extends StatefulWidget {
 
 class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
   //dialog for camera and image picker
-  late File imageFile;
+  late XFile imageFile;
 
   //HenriVincent
   bool isImageLoaded = false;
@@ -29,14 +29,14 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
 
   _openGallery(BuildContext context) async {
     imageFile =
-        (await ImagePicker().pickImage(source: ImageSource.gallery)) as File;
+        (await ImagePicker().pickImage(source: ImageSource.gallery)) as XFile;
     Navigator.of(context).pop();
     applyModelOnImage(imageFile);
   }
 
   _openCamera(BuildContext context) async {
     imageFile =
-        (await ImagePicker().pickImage(source: ImageSource.camera)) as File;
+        (await ImagePicker().pickImage(source: ImageSource.camera)) as XFile;
     Navigator.of(context).pop();
     applyModelOnImage(imageFile);
   }
@@ -49,7 +49,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
     print("Result: $result");
   }
 
-  applyModelOnImage(File file) async {
+  applyModelOnImage(XFile file) async {
     var res = await Tflite.runModelOnImage(
         path: file.path,
         numResults: 11,

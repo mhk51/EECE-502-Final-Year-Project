@@ -20,6 +20,8 @@ class Child extends CustomUser {
   final int weight;
   final int height;
   final String gender;
+  String firstName = "-";
+  String lastName = "-";
   Child(
       {required String uid,
       required String? name,
