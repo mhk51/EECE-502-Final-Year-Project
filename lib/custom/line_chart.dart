@@ -23,10 +23,25 @@ class _LineChartState extends State<LineChart> {
       margin: const EdgeInsets.all(8.0),
       child: SfCartesianChart(
         title: ChartTitle(text: "Blood Sugar Data"),
+        primaryXAxis: DateTimeAxis(
+            minimum: DateTime.now()
+                .subtract(const Duration(hours: 5, minutes: 59, seconds: 59)),
+            intervalType: DateTimeIntervalType.hours,
+            desiredIntervals: 1,
+            interval: 1,
+            maximum: DateTime.now()
+                .add(const Duration(hours: 5, minutes: 59, seconds: 59))),
+        primaryYAxis: NumericAxis(
+            title: AxisTitle(
+              text: "Blood Glucose mmol/L",
+              // alignment: ChartAlignment.far,
+            ),
+            minimum: 1,
+            maximum: 15),
         series: [
           LineSeries(
               dataSource: LoggedBSL.chartData,
-              xValueMapper: (LoggedBSL logg, _) => logg.time.minute,
+              xValueMapper: (LoggedBSL logg, _) => logg.time,
               yValueMapper: (LoggedBSL logg, _) => logg.level)
         ],
       ),
@@ -37,7 +52,7 @@ class _LineChartState extends State<LineChart> {
 class LoggedBSL {
   static List<LoggedBSL> chartData = [];
   late final double level;
-  late final TimeOfDay time;
+  late final DateTime time;
 
   LoggedBSL(this.level, this.time);
 }

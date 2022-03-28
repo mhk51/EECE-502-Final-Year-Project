@@ -44,7 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     if (_formKey.currentState!.validate()) {
                       TimeOfDay now = TimeOfDay.now();
                       LoggedBSL currentBSL = LoggedBSL(
-                          double.parse(_textEditingController.text), now);
+                          double.parse(_textEditingController.text),
+                          DateTime.now());
                       LoggedBSL.chartData.add(currentBSL);
                       print(currentBSL.level);
 
