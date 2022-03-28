@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/food_class.dart';
 
-class recipeItemInfoArgs {
+class RecipeItemInfoArgs {
   FoodClass food;
   List<FoodClass> ingredients;
-  recipeItemInfoArgs(this.food, this.ingredients);
+  RecipeItemInfoArgs(this.food, this.ingredients);
 }
 
 class FoodTile extends StatefulWidget {
@@ -85,8 +85,8 @@ class _FoodTileState extends State<FoodTile> {
                   ),
                   onPressed: () async {
                     if (widget.fromenterrecipe == true) {
-                      recipeItemInfoArgs args =
-                          recipeItemInfoArgs(widget.food, widget.ingredients);
+                      RecipeItemInfoArgs args =
+                          RecipeItemInfoArgs(widget.food, widget.ingredients);
                       await Navigator.pushNamed(context, '/RecipeItemInfo',
                           arguments: args);
                       setState(() {

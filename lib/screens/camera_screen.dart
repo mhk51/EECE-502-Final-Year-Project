@@ -20,6 +20,7 @@ class _CameraScreenState extends State<CameraScreen> {
   String numbers = "";
 
   getImagefromGallery() async {
+    // ignore: deprecated_member_use
     var tempStore = await (ImagePicker().getImage(source: ImageSource.gallery));
     setState(() {
       pickedImage = File(tempStore!.path);

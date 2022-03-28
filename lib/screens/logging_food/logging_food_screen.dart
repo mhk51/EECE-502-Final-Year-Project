@@ -1,17 +1,20 @@
 // import 'dart:io
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_application_1/custom/app_icons_icons.dart';
 import 'package:flutter_application_1/custom/constants.dart';
 import 'package:flutter_application_1/models/food_class.dart';
 import 'package:flutter_application_1/screens/logging_food/food_search_list.dart';
 import 'package:flutter_application_1/screens/navdrawer.dart';
+import 'package:flutter_application_1/services/barcode_service.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 // import 'package:image_picker/image_picker.dart';
 // import 'package:tflite/tflite.dart';
 
-class recipeIngredients {
+class RecipeIngredients {
   List<FoodClass> ingredients = [];
-  recipeIngredients(this.ingredients);
+  RecipeIngredients(this.ingredients);
 }
 
 class LoggingFoodScreen extends StatefulWidget {
@@ -111,6 +114,28 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
   var msgController = TextEditingController();
   String tempSearchWord = "";
   String searchWord = "";
+  int _scanBarcode = 0;
+  Future<void> scanBarcodeNormal() async {
+    String barcodeScanRes;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6666', 'Cancel', true, ScanMode.BARCODE);
+    } on PlatformException {
+      barcodeScanRes = 'Failed to get platform version.';
+    }
+
+    if (!mounted) return;
+
+    setState(() {
+      try {
+        _scanBarcode = int.parse(barcodeScanRes);
+      }
+      // ignore: empty_catches
+      catch (e) {}
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -150,7 +175,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
             ElevatedButton(
               onPressed: () async {
                 List<FoodClass> ingredients = [];
-                recipeIngredients recipe = recipeIngredients(ingredients);
+                RecipeIngredients recipe = RecipeIngredients(ingredients);
 
                 await Navigator.pushNamed(context, '/InputNewRecipe',
                     arguments: recipe);
@@ -219,8 +244,16 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {
+                  onPressed: () async {
                     // _showChoiceDialog(context);
+                    await scanBarcodeNormal();
+                    // QuerySnapshot<Object?> result =
+                    //     await BarcodeService().barcodeResult(_scanBarcode);
+                    // print(result.docs.first.get('title'));
+                    FoodClass result =
+                        await BarcodeService().barcodeResult(_scanBarcode);
+                    await Navigator.pushNamed(context, '/ItemInfo',
+                        arguments: result);
                   },
                   icon: const Icon(
                     AppIcons.barcode_2,
@@ -239,7 +272,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
             FoodSearchWidget(
               searchWord: searchWord,
               fromenterrecipe: false,
-              ingredients: [],
+              ingredients: const [],
             ),
           ],
         ),

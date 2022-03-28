@@ -400,7 +400,7 @@ class _RegisterState extends State<Register>
                                   email, password, username);
                           if (result == null) {
                             controller.animateToPage(0,
-                                duration: Duration(milliseconds: 500),
+                                duration: const Duration(milliseconds: 500),
                                 curve: Curves.bounceIn);
                             setState(() {
                               loading = false;

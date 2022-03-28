@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/custom/constants.dart';
-import 'package:flutter_application_1/models/daily_logs_class.dart';
 import 'package:flutter_application_1/models/food_class.dart';
 import 'package:flutter_application_1/services/auth.dart';
 import 'package:flutter_application_1/services/food_database.dart';

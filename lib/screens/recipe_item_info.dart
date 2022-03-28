@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/custom/constants.dart';
-import 'package:flutter_application_1/models/daily_logs_class.dart';
-import 'package:flutter_application_1/models/food_class.dart';
 import 'package:flutter_application_1/screens/logging_food/food_tile.dart';
-import 'package:flutter_application_1/services/auth.dart';
-import 'package:flutter_application_1/services/food_database.dart';
 
 class RecipeItemInfoScreen extends StatefulWidget {
   // final FoodClass food;
@@ -19,11 +15,10 @@ class _RecipeItemInfoScreenState extends State<RecipeItemInfoScreen> {
   List<int> portions = [50, 100, 200, 300, 400, 500];
   int defaultPortion = 100;
   int numberofServings = 1;
-  final _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     //final food = ModalRoute.of(context)!.settings.arguments as FoodClass;
-    var args = ModalRoute.of(context)!.settings.arguments as recipeItemInfoArgs;
+    var args = ModalRoute.of(context)!.settings.arguments as RecipeItemInfoArgs;
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,

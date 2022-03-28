@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/custom/app_icons_icons.dart';
 import 'package:flutter_application_1/custom/constants.dart';
 import 'package:flutter_application_1/screens/logging_food/food_search_list.dart';
-import 'package:flutter_application_1/screens/navdrawer.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'logging_food_screen.dart';
@@ -40,12 +39,12 @@ class _NewRecipeSearchState extends State<NewRecipeSearch> {
                 child: ListBody(
               children: <Widget>[
                 GestureDetector(
-                  child: Text("Gallery"),
+                  child: const Text("Gallery"),
                   onTap: () {
                     _openGallery(context);
                   },
                 ),
-                Padding(padding: EdgeInsets.all(8.0)),
+                const Padding(padding: EdgeInsets.all(8.0)),
                 GestureDetector(
                   child: const Text("Camera"),
                   onTap: () {
@@ -64,7 +63,7 @@ class _NewRecipeSearchState extends State<NewRecipeSearch> {
   @override
   Widget build(BuildContext context) {
     var recipe =
-        ModalRoute.of(context)!.settings.arguments as recipeIngredients;
+        ModalRoute.of(context)!.settings.arguments as RecipeIngredients;
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,

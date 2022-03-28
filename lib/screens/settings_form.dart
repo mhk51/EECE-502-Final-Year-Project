@@ -1,9 +1,7 @@
-import 'package:flutter/services.dart';
 import 'package:flutter_application_1/models/user.dart';
 import 'package:flutter_application_1/screens/navdrawer.dart';
 import 'package:flutter_application_1/services/auth.dart';
 import 'package:flutter_application_1/services/database.dart';
-import 'package:flutter_application_1/custom/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/custom/loading.dart';
 import 'package:provider/provider.dart';

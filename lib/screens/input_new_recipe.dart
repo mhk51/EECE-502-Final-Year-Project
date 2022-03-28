@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_application_1/screens/logging_food/logging_food_screen.dart';
 
-class inputNewRecipe extends StatefulWidget {
-  const inputNewRecipe({Key? key}) : super(key: key);
+class InputNewRecipe extends StatefulWidget {
+  const InputNewRecipe({Key? key}) : super(key: key);
 
   @override
-  State<inputNewRecipe> createState() => _inputNewRecipeState();
+  State<InputNewRecipe> createState() => _InputNewRecipeState();
 }
 
-class _inputNewRecipeState extends State<inputNewRecipe> {
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+class _InputNewRecipeState extends State<InputNewRecipe> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Future<void> showInformationDialog(BuildContext context) async {
     return await showDialog(
         context: context,
@@ -47,7 +46,7 @@ class _inputNewRecipeState extends State<inputNewRecipe> {
   @override
   Widget build(BuildContext context) {
     var recipe =
-        ModalRoute.of(context)!.settings.arguments as recipeIngredients;
+        ModalRoute.of(context)!.settings.arguments as RecipeIngredients;
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
@@ -67,7 +66,7 @@ class _inputNewRecipeState extends State<inputNewRecipe> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(
+                    SizedBox(
                       height: 550,
                       child: ListView.builder(
                           padding: const EdgeInsets.all(8),
@@ -75,12 +74,12 @@ class _inputNewRecipeState extends State<inputNewRecipe> {
                           itemBuilder: (BuildContext context, int index) {
                             return Container(
                               height: 50,
-                              margin: EdgeInsets.all(2),
+                              margin: const EdgeInsets.all(2),
                               color: Colors.blue,
                               child: Center(
                                   child: Text(
-                                '${recipe.ingredients[index].foodName}',
-                                style: TextStyle(fontSize: 18),
+                                recipe.ingredients[index].foodName,
+                                style: const TextStyle(fontSize: 18),
                               )),
                             );
                           }),

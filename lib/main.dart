@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
           '/RecipeItemInfo': (context) => const RecipeItemInfoScreen(),
           '/LoggingFood': (context) => const LoggingFoodScreen(),
           '/NewRecipeSearch': (context) => const NewRecipeSearch(),
-          '/InputNewRecipe': (context) => const inputNewRecipe(),
+          '/InputNewRecipe': (context) => const InputNewRecipe(),
           '/DailyLogging': (context) => const DailyLogScreen(),
           '/Settings': (context) => const SettingsForm(),
           '/CameraScreen': (context) => const CameraScreen(),

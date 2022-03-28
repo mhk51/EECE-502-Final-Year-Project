@@ -5,7 +5,7 @@ import 'package:flutter_application_1/screens/logging_food/food_tile.dart';
 import 'package:flutter_application_1/screens/logging_food/empty_tile.dart';
 
 class FoodSearchWidget extends StatefulWidget {
-  FoodSearchWidget(
+  const FoodSearchWidget(
       {Key? key,
       required this.searchWord,
       required this.fromenterrecipe,
@@ -14,7 +14,7 @@ class FoodSearchWidget extends StatefulWidget {
 
   final String searchWord;
   final bool fromenterrecipe;
-  List<FoodClass> ingredients;
+  final List<FoodClass> ingredients;
 
   @override
   State<FoodSearchWidget> createState() => _FoodSearchWidgetState();

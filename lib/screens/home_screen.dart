@@ -1,11 +1,8 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/custom/line_chart.dart';
 import 'package:flutter_application_1/models/user.dart';
 import 'package:flutter_application_1/screens/navdrawer.dart';
-import 'package:flutter_application_1/services/auth.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,7 +13,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Future<void> showInformationDialog(BuildContext context) async {
     return await showDialog(
         context: context,
@@ -54,17 +51,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.of(context).pop();
                     }
                   },
-                  child: Text("Submit"))
+                  child: const Text("Submit"))
             ],
           );
         });
   }
 
-  final AuthService _auth = AuthService();
-
   @override
   Widget build(BuildContext context) {
-    final _auth = AuthService();
     final user = Provider.of<CustomUser?>(context);
     // print(user!.name);
     // void _showSettingsPanel() {
@@ -207,9 +201,9 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text('Welcome ${user!.name}',
-                    style: TextStyle(fontSize: 20)),
+                    style: const TextStyle(fontSize: 20)),
               ),
-              LineChart(),
+              const LineChart(),
               Container(
                 alignment: Alignment.center,
                 child: ElevatedButton(
