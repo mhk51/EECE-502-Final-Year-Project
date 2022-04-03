@@ -128,7 +128,7 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
                 final uid = _auth.getUID();
                 // DailyLogsClass logsClass = DailyLogsClass();
                 // logsClass.breakfastList.add(food);
-                await FoodDatabaseService(uid: uid).updateUserDataCollection(
+                await FoodDatabaseService(uid: uid).updateuserFoodCollection(
                     food, numberofServings, defaultPortion);
                 Navigator.pop(context);
               },

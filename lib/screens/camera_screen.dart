@@ -34,7 +34,7 @@ class _CameraScreenState extends State<CameraScreen> {
   loadMyModel() async {
     var result = await Tflite.loadModel(
       labels: "assets/labels.txt",
-      model: "assets/food11model.tflite",
+      model: "assets/food11model2.tflite",
     );
     // ignore: avoid_print
     print("Result after loading model: $result");
