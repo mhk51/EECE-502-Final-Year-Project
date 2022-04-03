@@ -6,7 +6,7 @@ class FoodDatabaseService {
   final String uid;
   FoodDatabaseService({required this.uid});
 
-  final CollectionReference userDataCollection =
+  final CollectionReference userFoodCollection =
       FirebaseFirestore.instance.collection('UserFoodCollection');
 
   Map<String, dynamic> _foodnamefromFoodClass(
@@ -18,20 +18,13 @@ class FoodDatabaseService {
     };
   }
 
-  Future<void> updateUserDataCollection(
+  Future<void> updateuserFoodCollection(
       FoodClass food, int serving, int portion) async {
-    DocumentSnapshot a = await userDataCollection.doc(uid).get();
-    List<dynamic> list = a.get('logsClass');
-    list.add({
+    await userFoodCollection.add({
       'foodName': food.foodName,
       'serving': serving,
       'portion': portion,
-    });
-    return await userDataCollection.doc(uid).set({
-      // 'logsClass': logsClass.breakfastList
-      //     .map((food) => _foodnamefromFoodClass(food, serving, portion))
-      //     .toList(),
-      'logsClass': list
+      'userID': uid
     });
   }
 
@@ -49,7 +42,7 @@ class FoodDatabaseService {
   }
 
   Stream<DailyLogsClass> get userData {
-    return userDataCollection
+    return userFoodCollection
         .doc(uid)
         .snapshots()
         .map(_userDataCollectionfromSnapshot);
