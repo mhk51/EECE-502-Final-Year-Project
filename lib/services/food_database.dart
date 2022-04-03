@@ -18,13 +18,15 @@ class FoodDatabaseService {
     };
   }
 
-  Future<void> updateuserFoodCollection(
-      FoodClass food, int serving, int portion) async {
+  Future<void> updateuserFoodCollection(FoodClass food, int serving,
+      int portion, String mealType, DateTime time) async {
     await userFoodCollection.add({
       'foodName': food.foodName,
       'serving': serving,
       'portion': portion,
-      'userID': uid
+      'userID': uid,
+      'mealType': mealType,
+      'timeAdded': time
     });
   }
 

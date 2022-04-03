@@ -145,7 +145,11 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
                 // DailyLogsClass logsClass = DailyLogsClass();
                 // logsClass.breakfastList.add(food);
                 await FoodDatabaseService(uid: uid).updateuserFoodCollection(
-                    food, numberofServings, defaultPortion);
+                    food,
+                    numberofServings,
+                    defaultPortion,
+                    defaultMeal,
+                    DateTime.now());
                 Navigator.pop(context);
               },
               child: const Text("Log Food"),
