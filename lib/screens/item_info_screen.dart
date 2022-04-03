@@ -14,6 +14,8 @@ class ItemInfoScreen extends StatefulWidget {
 
 class _ItemInfoScreenState extends State<ItemInfoScreen> {
   List<int> portions = [50, 100, 200, 300, 400, 500];
+  List<String> mealType = ["Breakfast", "Lunch", "Dinner", "Snack"];
+  String defaultMeal = "Breakfast";
   int defaultPortion = 100;
   int numberofServings = 1;
   final _auth = AuthService();
@@ -122,14 +124,37 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
                 ),
               ],
             ),
+            DropdownButtonFormField<String>(
+              value: defaultMeal,
+              decoration: textInputDecoration,
+              items: mealType.map((sugar) {
+                return DropdownMenuItem(
+                  value: sugar,
+                  child: Text(sugar),
+                );
+              }).toList(),
+              onChanged: (val) => setState(() => defaultMeal = val!),
+            ),
             const Text("Comment on food selected"),
+            //
+
+            //
             ElevatedButton(
               onPressed: () async {
                 final uid = _auth.getUID();
                 // DailyLogsClass logsClass = DailyLogsClass();
                 // logsClass.breakfastList.add(food);
+<<<<<<< HEAD
                 await FoodDatabaseService(uid: uid).updateuserFoodCollection(
                     food, numberofServings, defaultPortion);
+=======
+                await FoodDatabaseService(uid: uid).updateUserDataCollection(
+                    food,
+                    numberofServings,
+                    defaultPortion,
+                    defaultMeal,
+                    DateTime.now());
+>>>>>>> fb2f24153f6244850a66e0f0a4b153a7fc8d41a4
                 Navigator.pop(context);
               },
               child: const Text("Log Food"),
