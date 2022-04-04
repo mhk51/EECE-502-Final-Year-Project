@@ -114,6 +114,11 @@ class TodayMealList extends StatelessWidget {
                       print(document.get('mealType'));
                       if (date.isAfter(
                           DateTime.now().subtract(Duration(days: 1)))) {
+                        DocumentReference food = FirebaseFirestore.instance
+                            .collection('food')
+                            .doc(document.get('foodName'));
+
+                        print(food.get());
                         return Text(document.get('foodName'));
                       } else {
                         return Container();
