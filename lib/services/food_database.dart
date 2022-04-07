@@ -9,19 +9,33 @@ class FoodDatabaseService {
   final CollectionReference userFoodCollection =
       FirebaseFirestore.instance.collection('UserFoodCollection');
 
-  Map<String, dynamic> _foodnamefromFoodClass(
-      FoodClass food, int serving, int portion) {
+  Map<String, dynamic> _foodnamefromFoodClass(FoodClass food) {
     return {
       'foodName': food.foodName,
-      'serving': serving,
-      'portion': portion,
+      'carbs': food.carbs,
+      'fat': food.fat,
+      'protein': food.protein,
+      'sugar': food.sugar,
     };
+  }
+
+  Future<List<DocumentSnapshot>> dailyLogsFoodClass() async {
+    List<DocumentSnapshot> list = [];
+    var now = DateTime.now();
+    var lastMidnight = DateTime(now.year, now.month, now.day);
+    QuerySnapshot result = await FirebaseFirestore.instance
+        .collection("UserFoodCollection")
+        .where("userID", isEqualTo: uid)
+        .where('timeAdded', isGreaterThan: Timestamp.fromDate(lastMidnight))
+        .get();
+    list = result.docs.toList();
+    return list;
   }
 
   Future<void> updateuserFoodCollection(FoodClass food, int serving,
       int portion, String mealType, DateTime time) async {
     await userFoodCollection.add({
-      'foodName': food.foodName,
+      'food': _foodnamefromFoodClass(food),
       'serving': serving,
       'portion': portion,
       'userID': uid,

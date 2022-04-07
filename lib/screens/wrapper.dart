@@ -25,14 +25,14 @@ class _WrapperState extends State<Wrapper> {
   }
 }
 
-class Test extends StatefulWidget {
-  const Test({Key? key}) : super(key: key);
+class TestSearch extends StatefulWidget {
+  const TestSearch({Key? key}) : super(key: key);
 
   @override
-  State<Test> createState() => _TestState();
+  State<TestSearch> createState() => _TestSearchState();
 }
 
-class _TestState extends State<Test> {
+class _TestSearchState extends State<TestSearch> {
   @override
   Widget build(BuildContext context) {
     ScrollController _controller = ScrollController();
