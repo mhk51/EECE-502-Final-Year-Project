@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/custom/loading.dart';
 import 'package:flutter_application_1/models/food_class.dart';
-import 'package:flutter_application_1/screens/logging_food/food_tile.dart';
 import 'package:flutter_application_1/screens/navdrawer.dart';
 import 'package:flutter_application_1/services/auth.dart';
 import 'package:flutter_application_1/services/food_database.dart';

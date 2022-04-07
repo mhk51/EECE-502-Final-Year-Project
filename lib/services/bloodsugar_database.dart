@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_application_1/models/daily_logs_class.dart';
 import 'package:flutter_application_1/models/food_class.dart';
 
 class BloodSugarDatabaseService {
@@ -19,9 +18,9 @@ class BloodSugarDatabaseService {
   }
 
   Future<void> updateuserBloodSugarCollection(
-      double BSL, String mealType, String prepost, DateTime time) async {
+      double bsl, String mealType, String prepost, DateTime time) async {
     await userBloodSugarCollection.add({
-      'BSL': BSL,
+      'BSL': bsl,
       'mealType': mealType,
       'prepost': prepost,
       'userID': uid,

@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import '../services/auth.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -83,6 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           double.parse(_textEditingController.text),
                           DateTime.now());
                       LoggedBSL.chartData.add(currentBSL);
+                      // ignore: avoid_print
                       print(currentBSL.level);
                       final uid = _auth.getUID();
                       await BloodSugarDatabaseService(uid: uid)

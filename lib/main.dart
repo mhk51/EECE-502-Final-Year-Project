@@ -35,14 +35,14 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (context) => const Wrapper(),
-          '/Home': (context) => HomeScreen(),
+          '/Home': (context) => const HomeScreen(),
           '/Insights': (context) => const WeeklyInsightsScreen(),
           '/ItemInfo': (context) => const ItemInfoScreen(),
           '/RecipeItemInfo': (context) => const RecipeItemInfoScreen(),
           '/LoggingFood': (context) => const LoggingFoodScreen(),
           '/NewRecipeSearch': (context) => const NewRecipeSearch(),
           '/InputNewRecipe': (context) => const InputNewRecipe(),
-          '/DailyLogging': (context) => DailyLogScreen(),
+          '/DailyLogging': (context) => const DailyLogScreen(),
           '/Settings': (context) => const SettingsForm(),
           '/CameraScreen': (context) => const CameraScreen()
         },

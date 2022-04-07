@@ -1,11 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_1/models/food_class.dart';
 import 'package:flutter_application_1/screens/logging_food/food_tile.dart';
 import 'package:flutter_application_1/screens/logging_food/empty_tile.dart';
-import 'package:flutter_application_1/screens/logging_food/logging_food_screen.dart';
 import 'package:flutter_application_1/services/search_service.dart';
 
 class FoodSearchWidget extends StatefulWidget {

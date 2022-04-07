@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/custom/app_icons_icons.dart';
 import 'package:flutter_application_1/custom/constants.dart';
-import 'package:flutter_application_1/screens/logging_food/food_search_list.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'logging_food_screen.dart';

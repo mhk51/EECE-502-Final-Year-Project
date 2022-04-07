@@ -1,9 +1,3 @@
-// ignore_for_file: avoid_print
-
-import 'dart:async';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_application_1/models/food_class.dart';
 import 'package:flutter_application_1/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/Authentication/authenticate.dart';
@@ -25,7 +19,7 @@ class _WrapperState extends State<Wrapper> {
     if (user == null) {
       return const Authenticate();
     } else {
-      return HomeScreen();
+      return const HomeScreen();
     }
   }
 }
