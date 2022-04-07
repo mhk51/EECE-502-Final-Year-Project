@@ -1,5 +1,4 @@
-// import 'dart:io
-
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/custom/app_icons_icons.dart';
@@ -8,6 +7,7 @@ import 'package:flutter_application_1/models/food_class.dart';
 import 'package:flutter_application_1/screens/logging_food/food_search_list.dart';
 import 'package:flutter_application_1/screens/navdrawer.dart';
 import 'package:flutter_application_1/services/barcode_service.dart';
+import 'package:flutter_application_1/services/search_service.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 // import 'package:image_picker/image_picker.dart';
 // import 'package:tflite/tflite.dart';
@@ -110,7 +110,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
   //         );
   //       });
   // }
-
+  Bloc bloc = Bloc();
   var msgController = TextEditingController();
   String tempSearchWord = "";
   String searchWord = "";
@@ -225,6 +225,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                     setState(() {
                       searchWord = tempSearchWord;
                     });
+                    bloc.fetchNewSearch(searchWord);
                   },
                   icon: const Icon(
                     Icons.search,
@@ -273,6 +274,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
               searchWord: searchWord,
               fromenterrecipe: false,
               ingredients: const [],
+              bloc: bloc,
             ),
           ],
         ),

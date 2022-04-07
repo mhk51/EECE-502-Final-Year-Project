@@ -159,11 +159,12 @@ class _NewRecipeSearchState extends State<NewRecipeSearch> {
             const SizedBox(
               height: 20,
             ),
-            FoodSearchWidget(
-              searchWord: searchWord,
-              fromenterrecipe: true,
-              ingredients: recipe.ingredients,
-            ),
+            // FoodSearchWidget(
+            //   searchWord: searchWord,
+            //   fromenterrecipe: true,
+            //   ingredients: recipe.ingredients,
+
+            // ),
           ],
         ),
       ),
