@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/camera_screen.dart';
-import 'package:flutter_application_1/screens/daily_log_screen.dart';
+import 'package:flutter_application_1/screens/daily_log_screen/daily_log_screen.dart';
 import 'package:flutter_application_1/screens/home_screen.dart';
 import 'package:flutter_application_1/screens/input_new_recipe.dart';
 import 'package:flutter_application_1/screens/item_info_screen.dart';

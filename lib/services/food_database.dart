@@ -19,17 +19,23 @@ class FoodDatabaseService {
     };
   }
 
-  Future<List<DocumentSnapshot>> dailyLogsFoodClass() async {
-    List<DocumentSnapshot> list = [];
+  // Future<void> deleteFoodLog(DocumentSnapshot doc) async {
+
+  // }
+
+  List<DocumentSnapshot> listfromQuery(QuerySnapshot<Object?> doc) {
+    return doc.docs;
+  }
+
+  Stream<List<DocumentSnapshot>> get dailyLogsFoodClass {
     var now = DateTime.now();
     var lastMidnight = DateTime(now.year, now.month, now.day);
-    QuerySnapshot result = await FirebaseFirestore.instance
-        .collection("UserFoodCollection")
+    Stream<List<DocumentSnapshot>> result = userFoodCollection
         .where("userID", isEqualTo: uid)
         .where('timeAdded', isGreaterThan: Timestamp.fromDate(lastMidnight))
-        .get();
-    list = result.docs.toList();
-    return list;
+        .snapshots()
+        .map(listfromQuery);
+    return result;
   }
 
   Future<void> updateuserFoodCollection(FoodClass food, int serving,
@@ -42,25 +48,5 @@ class FoodDatabaseService {
       'mealType': mealType,
       'timeAdded': time
     });
-  }
-
-  //userDataCollection from snapshot
-  DailyLogsClass _userDataCollectionfromSnapshot(DocumentSnapshot snapshot) {
-    return DailyLogsClass(
-        // uid: uid,
-        // name: snapshot.get('name'),
-        // email: snapshot.get('email'),
-        // age: snapshot.get('age'),
-        // height: snapshot.get('height'),
-        // weight: snapshot.get('weight'),
-        // gender: snapshot.get('gender'),
-        );
-  }
-
-  Stream<DailyLogsClass> get userData {
-    return userFoodCollection
-        .doc(uid)
-        .snapshots()
-        .map(_userDataCollectionfromSnapshot);
   }
 }
