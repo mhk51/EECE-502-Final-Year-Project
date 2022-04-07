@@ -391,6 +391,8 @@ PODS:
     - leveldb-library (~> 1.22)
     - nanopb (~> 2.30908.0)
   - Flutter (1.0.0)
+  - flutter_barcode_scanner (2.0.0):
+    - Flutter
   - GoogleDataTransport (9.1.2):
     - GoogleUtilities/Environment (~> 7.2)
     - nanopb (~> 2.30908.0)
@@ -454,6 +456,7 @@ DEPENDENCIES:
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - Flutter (from `Flutter`)
+  - flutter_barcode_scanner (from `.symlinks/plugins/flutter_barcode_scanner/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - tflite (from `.symlinks/plugins/tflite/ios`)
 
@@ -485,6 +488,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_core/ios"
   Flutter:
     :path: Flutter
+  flutter_barcode_scanner:
+    :path: ".symlinks/plugins/flutter_barcode_scanner/ios"
   image_picker:
     :path: ".symlinks/plugins/image_picker/ios"
   tflite:
@@ -502,6 +507,7 @@ SPEC CHECKSUMS:
   FirebaseCoreDiagnostics: 3b40dfadef5b90433a60ae01f01e90fe87aa76aa
   FirebaseFirestore: 3b2e4b532c68809b3df5f8d39d28b3398ffc196b
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  flutter_barcode_scanner: 7a1144744c28dc0c57a8de7218ffe5ec59a9e4bf
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
   "gRPC-C++": 13d8ccef97d5c3c441b7e3c529ef28ebee86fad2
@@ -514,6 +520,6 @@ SPEC CHECKSUMS:
   TensorFlowLiteC: b3ab9e867b0b71052ca102a32a786555b330b02e
   tflite: 7acd11db0915e2d90ab90474413068568eb605f0
 
-PODFILE CHECKSUM: d83f5995e3970c0dec5d54f1d8a3701090cb97c7
+PODFILE CHECKSUM: a9aa215ea61cbaf8f121758ec7b849ddaa328c3f
 
 COCOAPODS: 1.11.2

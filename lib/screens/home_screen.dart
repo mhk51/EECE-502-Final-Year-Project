@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/custom/constants.dart';
 import 'package:flutter_application_1/custom/line_chart.dart';
 import 'package:flutter_application_1/models/user.dart';
 import 'package:flutter_application_1/screens/navdrawer.dart';
+import 'package:flutter_application_1/services/bloodsugar_database.dart';
 import 'package:provider/provider.dart';
 
+import '../services/auth.dart';
+
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final _auth = AuthService();
+  List<String> mealType = ["Breakfast", "Lunch", "Dinner", "Snack"];
+  List<String> prepost = ["Before Meal", "After Meal"];
+  String defaultMeal = "Breakfast";
+  String defaultPrepost = "Before Meal";
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Future<void> showInformationDialog(BuildContext context) async {
     return await showDialog(
@@ -36,11 +46,37 @@ class _HomeScreenState extends State<HomeScreen> {
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     ),
+                    DropdownButtonFormField<String>(
+                      value: defaultMeal,
+                      decoration: textInputDecoration,
+                      items: mealType.map((sugar) {
+                        return DropdownMenuItem(
+                          value: sugar,
+                          child: Text(sugar),
+                        );
+                      }).toList(),
+                      onChanged: (val) => setState(() => defaultMeal = val!),
+                    ),
+                    DropdownButtonFormField<String>(
+                      value: defaultPrepost,
+                      decoration: textInputDecoration,
+                      items: prepost.map((sugar) {
+                        return DropdownMenuItem(
+                          value: sugar,
+                          child: Text(sugar),
+                        );
+                      }).toList(),
+                      onChanged: (val) => setState(() => defaultPrepost = val!),
+                    ),
+
+                    //
+                    //
+                    //
                   ],
                 )),
             actions: <Widget>[
               TextButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       TimeOfDay now = TimeOfDay.now();
                       LoggedBSL currentBSL = LoggedBSL(
@@ -48,7 +84,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           DateTime.now());
                       LoggedBSL.chartData.add(currentBSL);
                       print(currentBSL.level);
-
+                      final uid = _auth.getUID();
+                      await BloodSugarDatabaseService(uid: uid)
+                          .updateuserBloodSugarCollection(currentBSL.level,
+                              defaultMeal, defaultPrepost, DateTime.now());
                       Navigator.of(context).pop();
                     }
                   },
