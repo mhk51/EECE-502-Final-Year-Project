@@ -51,15 +51,20 @@ class NavDrawer extends StatelessWidget {
                       color: Colors.indigo[800],
                     ),
                   ),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   ListTile(
                     leading: const Icon(
                       Icons.book,
                       color: Colors.white,
+                      size: 28,
                     ),
                     title: const Text(
                       'Home',
                       style: TextStyle(
                         color: Colors.white,
+                        fontSize: 16,
                       ),
                     ),
                     onTap: () =>
@@ -68,32 +73,42 @@ class NavDrawer extends StatelessWidget {
                         ? Colors.grey[700]
                         : Colors.grey[800],
                   ),
-                  // ListTile(
-                  //   leading: const Icon(
-                  //     Icons.info,
-                  //     color: Colors.white,
-                  //   ),
-                  //   title: const Text(
-                  //     'Item Info',
-                  //     style: TextStyle(
-                  //       color: Colors.white,
-                  //     ),
-                  //   ),
-                  //   onTap: () =>
-                  //       {Navigator.pushReplacementNamed(context, '/ItemInfo')},
-                  //   tileColor: (pageRouteName == '/ItemInfo')
-                  //       ? Colors.grey[700]
-                  //       : Colors.grey[800],
-                  // ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  ListTile(
+                    leading: const Icon(
+                      Icons.water_drop,
+                      color: Colors.white,
+                      size: 28,
+                    ),
+                    title: const Text(
+                      'Bolus Advisor',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    ),
+                    onTap: () =>
+                        {Navigator.pushReplacementNamed(context, '/Bolus')},
+                    tileColor: (pageRouteName == '/Bolus')
+                        ? Colors.grey[700]
+                        : Colors.grey[800],
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   ListTile(
                     leading: const Icon(
                       Icons.insights_rounded,
                       color: Colors.white,
+                      size: 28,
                     ),
                     title: const Text(
                       'Insights',
                       style: TextStyle(
                         color: Colors.white,
+                        fontSize: 16,
                       ),
                     ),
                     onTap: () =>
@@ -102,15 +117,20 @@ class NavDrawer extends StatelessWidget {
                         ? Colors.grey[700]
                         : Colors.grey[800],
                   ),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   ListTile(
                     leading: const Icon(
                       Icons.verified_user,
                       color: Colors.white,
+                      size: 28,
                     ),
                     title: const Text(
                       'Daily Summary',
                       style: TextStyle(
                         color: Colors.white,
+                        fontSize: 16,
                       ),
                     ),
                     onTap: () => {
@@ -120,15 +140,20 @@ class NavDrawer extends StatelessWidget {
                         ? Colors.grey[700]
                         : Colors.grey[800],
                   ),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   ListTile(
                     leading: const Icon(
-                      Icons.restaurant_outlined,
+                      Icons.restaurant,
                       color: Colors.white,
+                      size: 28,
                     ),
                     title: const Text(
                       'Logging Food',
                       style: TextStyle(
                         color: Colors.white,
+                        fontSize: 16,
                       ),
                     ),
                     onTap: () => {
@@ -138,15 +163,20 @@ class NavDrawer extends StatelessWidget {
                         ? Colors.grey[700]
                         : Colors.grey[800],
                   ),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   ListTile(
                     leading: const Icon(
                       Icons.settings,
                       color: Colors.white,
+                      size: 28,
                     ),
                     title: const Text(
                       'Profile & Settings',
                       style: TextStyle(
                         color: Colors.white,
+                        fontSize: 16,
                       ),
                     ),
                     onTap: () =>
@@ -155,15 +185,20 @@ class NavDrawer extends StatelessWidget {
                         ? Colors.grey[700]
                         : Colors.grey[800],
                   ),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   ListTile(
                     leading: const Icon(
                       Icons.exit_to_app,
                       color: Colors.white,
+                      size: 28,
                     ),
                     title: const Text(
                       'Logout',
                       style: TextStyle(
                         color: Colors.white,
+                        fontSize: 16,
                       ),
                     ),
                     onTap: () async {

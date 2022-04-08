@@ -59,62 +59,68 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
             // centerTitle: true,
           ),
           body: Center(
-            child: Column(
-              //mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 550,
-                      child: ListView.builder(
-                          padding: const EdgeInsets.all(8),
-                          itemCount: recipe.ingredients.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container(
-                              height: 50,
-                              margin: const EdgeInsets.all(2),
-                              color: Colors.blue,
-                              child: Center(
-                                  child: Text(
-                                recipe.ingredients[index].foodName,
-                                style: const TextStyle(fontSize: 18),
-                              )),
-                            );
-                          }),
+            child: Expanded(
+              child: Column(
+                //mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: ListView.builder(
+                              padding: const EdgeInsets.all(8),
+                              itemCount: recipe.ingredients.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Container(
+                                  height: 50,
+                                  margin: const EdgeInsets.all(2),
+                                  color: Colors.blue,
+                                  child: Center(
+                                      child: Text(
+                                    recipe.ingredients[index].foodName,
+                                    style: const TextStyle(fontSize: 18),
+                                  )),
+                                );
+                              }),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        setState(() {});
-                      },
-                      child: const Text("Refresh"),
-                    ),
-                    ElevatedButton(
-                      onPressed: () async {
-                        await Navigator.pushNamed(context, '/NewRecipeSearch',
-                            arguments: recipe);
-                      },
-                      child: const Text("Add Ingredients"),
-                    ),
-                    ElevatedButton(
-                      onPressed: () async {
-                        await showInformationDialog(context);
+                  ),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            setState(() {});
+                          },
+                          child: const Text("Refresh"),
+                        ),
+                        ElevatedButton(
+                          onPressed: () async {
+                            await Navigator.pushNamed(
+                                context, '/NewRecipeSearch',
+                                arguments: recipe);
+                          },
+                          child: const Text("Add Ingredients"),
+                        ),
+                        ElevatedButton(
+                          onPressed: () async {
+                            await showInformationDialog(context);
 
-                        // for (int i = 0; i < recipe.ingredients.length; i++) {
-                        //   print(recipe.ingredients[i].foodName);
-                        // }
-                      },
-                      child: const Text("Save Recipe"),
+                            // for (int i = 0; i < recipe.ingredients.length; i++) {
+                            //   print(recipe.ingredients[i].foodName);
+                            // }
+                          },
+                          child: const Text("Save Recipe"),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
           )),
     );

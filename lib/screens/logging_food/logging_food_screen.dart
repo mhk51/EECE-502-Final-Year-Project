@@ -185,90 +185,94 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
             const SizedBox(
               height: 20,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                const SizedBox(
-                  width: 20,
-                ),
-                Expanded(
-                  child: TextFormField(
-                    controller: msgController,
-                    decoration: textInputDecoration.copyWith(
-                      hintText: 'Search Food',
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.grey,
-                          width: 2.5,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 10),
+                      child: TextFormField(
+                        controller: msgController,
+                        decoration: textInputDecoration.copyWith(
+                          hintText: 'Search Food',
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                              width: 2.5,
+                            ),
+                          ),
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              msgController.clear();
+                            },
+                            icon: const Icon(
+                              Icons.cancel,
+                              color: Colors.red,
+                            ),
+                          ),
                         ),
-                      ),
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          msgController.clear();
+                        validator: (val) =>
+                            val!.isEmpty ? 'Enter a Search Word' : null,
+                        onChanged: (val) {
+                          tempSearchWord = val;
                         },
-                        icon: const Icon(
-                          Icons.cancel,
-                          color: Colors.red,
-                        ),
                       ),
                     ),
-                    validator: (val) =>
-                        val!.isEmpty ? 'Enter a Search Word' : null,
-                    onChanged: (val) {
-                      tempSearchWord = val;
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        searchWord = tempSearchWord;
+                      });
+                      bloc.fetchNewSearch(searchWord);
                     },
+                    icon: const Icon(
+                      Icons.search,
+                      color: Colors.blue,
+                      size: 30,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 20),
-                IconButton(
-                  onPressed: () {
-                    setState(() {
-                      searchWord = tempSearchWord;
-                    });
-                    bloc.fetchNewSearch(searchWord);
-                  },
-                  icon: const Icon(
-                    Icons.search,
-                    color: Colors.blue,
-                    size: 30,
+                  IconButton(
+                    onPressed: () async {
+                      // _showChoiceDialog(context);
+                      await Navigator.pushNamed(context, '/CameraScreen');
+                    },
+                    icon: const Icon(
+                      Icons.center_focus_strong,
+                      color: Colors.blue,
+                      size: 30,
+                    ),
                   ),
-                ),
-                IconButton(
-                  onPressed: () async {
-                    // _showChoiceDialog(context);
-                    await Navigator.pushNamed(context, '/CameraScreen');
-                  },
-                  icon: const Icon(
-                    Icons.center_focus_strong,
-                    color: Colors.blue,
-                    size: 30,
+                  IconButton(
+                    onPressed: () async {
+                      // _showChoiceDialog(context);
+                      await scanBarcodeNormal();
+                      // QuerySnapshot<Object?> result =
+                      //     await BarcodeService().barcodeResult(_scanBarcode);
+                      // print(result.docs.first.get('title'));
+                      FoodClass result =
+                          await BarcodeService().barcodeResult(_scanBarcode);
+                      await Navigator.pushNamed(context, '/ItemInfo',
+                          arguments: result);
+                    },
+                    icon: const Icon(
+                      AppIcons.barcode_2,
+                      color: Colors.blue,
+                      size: 27,
+                    ),
                   ),
-                ),
-                IconButton(
-                  onPressed: () async {
-                    // _showChoiceDialog(context);
-                    await scanBarcodeNormal();
-                    // QuerySnapshot<Object?> result =
-                    //     await BarcodeService().barcodeResult(_scanBarcode);
-                    // print(result.docs.first.get('title'));
-                    FoodClass result =
-                        await BarcodeService().barcodeResult(_scanBarcode);
-                    await Navigator.pushNamed(context, '/ItemInfo',
-                        arguments: result);
-                  },
-                  icon: const Icon(
-                    AppIcons.barcode_2,
-                    color: Colors.blue,
-                    size: 27,
-                  ),
-                ),
-                const SizedBox(
-                  width: 20,
-                )
-              ],
+                  const SizedBox(
+                    width: 20,
+                  )
+                ],
+              ),
             ),
-            const SizedBox(
-              height: 20,
+            const Divider(
+              color: Colors.black,
+              thickness: 1.5,
+              height: 10,
             ),
             FoodSearchWidget(
               searchWord: searchWord,

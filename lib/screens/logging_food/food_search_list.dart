@@ -61,37 +61,66 @@ class _FoodSearchWidgetState extends State<FoodSearchWidget> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Container(
-          decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-          child: StreamBuilder<List<DocumentSnapshot>>(
-            stream: widget.bloc.foodStream,
-            builder: (BuildContext context,
-                AsyncSnapshot<List<DocumentSnapshot>> snapshot) {
-              if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              }
-              switch (snapshot.connectionState) {
-                case ConnectionState.waiting:
-                  return ListView(children: generateEmptyTiles());
-                default:
-                  return ListView(
-                    controller: controller,
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    children: snapshot.data!.map((DocumentSnapshot document) {
-                      return FoodTile(
-                        food: documentToFoodClass(document),
+      child: StreamBuilder<List<DocumentSnapshot>>(
+        stream: widget.bloc.foodStream,
+        builder: (BuildContext context,
+            AsyncSnapshot<List<DocumentSnapshot>> snapshot) {
+          if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          }
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return ListView(children: generateEmptyTiles());
+            default:
+              // return ListView.separated(
+              //   controller: controller,
+              //   scrollDirection: Axis.vertical,
+              //   shrinkWrap: true,
+              //   children: snapshot.data!.map((DocumentSnapshot document) {
+              //     return FoodTile(
+              //       food: documentToFoodClass(document),
+              //       fromenterrecipe: widget.fromenterrecipe,
+              //       ingredients: widget.ingredients,
+              //     );
+              //   }).toList(),
+
+              // );
+              List<FoodClass> list =
+                  snapshot.data!.map(documentToFoodClass).toList();
+              return Scrollbar(
+                controller: controller,
+                thickness: 5,
+                radius: const Radius.circular(90),
+                interactive: true,
+                showTrackOnHover: true,
+                hoverThickness: 10,
+                trackVisibility: true,
+                isAlwaysShown: true,
+                child: ListView.separated(
+                  controller: controller,
+                  itemCount: list.length,
+                  itemBuilder: (context, index) {
+                    return FoodTile(
+                        food: list[index],
                         fromenterrecipe: widget.fromenterrecipe,
-                        ingredients: widget.ingredients,
-                      );
-                    }).toList(),
-                  );
-              }
-            },
-          ),
-        ),
+                        ingredients: widget.ingredients);
+                  },
+                  separatorBuilder: (context, index) {
+                    return const Padding(
+                      padding: EdgeInsets.only(right: 5),
+                      child: Divider(
+                        height: 1,
+                        color: Colors.black,
+                        thickness: 0.75,
+                      ),
+                    );
+                  },
+                  physics: const ScrollPhysics(parent: BouncingScrollPhysics()),
+                  padding: const EdgeInsets.all(0),
+                ),
+              );
+          }
+        },
       ),
     );
   }

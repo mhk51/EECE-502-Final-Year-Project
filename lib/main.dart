@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/bolus.dart';
 import 'package:flutter_application_1/screens/camera_screen.dart';
 import 'package:flutter_application_1/screens/daily_log_screen/daily_log_screen.dart';
 import 'package:flutter_application_1/screens/home_screen.dart';
@@ -44,7 +45,8 @@ class MyApp extends StatelessWidget {
           '/InputNewRecipe': (context) => const InputNewRecipe(),
           '/DailyLogging': (context) => const DailyLogScreen(),
           '/Settings': (context) => const SettingsForm(),
-          '/CameraScreen': (context) => const CameraScreen()
+          '/CameraScreen': (context) => const CameraScreen(),
+          '/Bolus': (context) => const Bolus()
         },
       ),
     );

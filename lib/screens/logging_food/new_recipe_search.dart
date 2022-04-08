@@ -65,7 +65,7 @@ class _NewRecipeSearchState extends State<NewRecipeSearch> {
         ModalRoute.of(context)!.settings.arguments as RecipeIngredients;
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         appBar: AppBar(
           backgroundColor: Colors.blue[800],
           title: const Padding(
@@ -74,97 +74,99 @@ class _NewRecipeSearchState extends State<NewRecipeSearch> {
           ),
           // centerTitle: true,
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            const SizedBox(
-              height: 40,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                const SizedBox(
-                  width: 20,
-                ),
-                Expanded(
-                  child: TextFormField(
-                    controller: msgController,
-                    decoration: textInputDecoration.copyWith(
-                      hintText: 'Search Food',
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.grey,
-                          width: 2.5,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              const SizedBox(
+                height: 40,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Expanded(
+                    child: TextFormField(
+                      controller: msgController,
+                      decoration: textInputDecoration.copyWith(
+                        hintText: 'Search Food',
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.grey,
+                            width: 2.5,
+                          ),
+                        ),
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            msgController.clear();
+                          },
+                          icon: const Icon(
+                            Icons.cancel,
+                            color: Colors.red,
+                          ),
                         ),
                       ),
-                      suffixIcon: IconButton(
-                        onPressed: () {
-                          msgController.clear();
-                        },
-                        icon: const Icon(
-                          Icons.cancel,
-                          color: Colors.red,
-                        ),
-                      ),
+                      validator: (val) =>
+                          val!.isEmpty ? 'Enter a Search Word' : null,
+                      onChanged: (val) {
+                        tempSearchWord = val;
+                      },
                     ),
-                    validator: (val) =>
-                        val!.isEmpty ? 'Enter a Search Word' : null,
-                    onChanged: (val) {
-                      tempSearchWord = val;
+                  ),
+                  const SizedBox(width: 20),
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        searchWord = tempSearchWord;
+                      });
                     },
+                    icon: const Icon(
+                      Icons.search,
+                      color: Colors.blue,
+                      size: 30,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 20),
-                IconButton(
-                  onPressed: () {
-                    setState(() {
-                      searchWord = tempSearchWord;
-                    });
-                  },
-                  icon: const Icon(
-                    Icons.search,
-                    color: Colors.blue,
-                    size: 30,
+                  IconButton(
+                    onPressed: () {
+                      _showChoiceDialog(context);
+                    },
+                    icon: const Icon(
+                      Icons.center_focus_strong,
+                      color: Colors.blue,
+                      size: 30,
+                    ),
                   ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    _showChoiceDialog(context);
-                  },
-                  icon: const Icon(
-                    Icons.center_focus_strong,
-                    color: Colors.blue,
-                    size: 30,
+                  IconButton(
+                    onPressed: () {
+                      _showChoiceDialog(context);
+                    },
+                    icon: const Icon(
+                      AppIcons.barcode_2,
+                      color: Colors.blue,
+                      size: 27,
+                    ),
                   ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    _showChoiceDialog(context);
-                  },
-                  icon: const Icon(
-                    AppIcons.barcode_2,
-                    color: Colors.blue,
-                    size: 27,
-                  ),
-                ),
-                const SizedBox(
-                  width: 20,
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            // FoodSearchWidget(
-            //   searchWord: searchWord,
-            //   fromenterrecipe: true,
-            //   ingredients: recipe.ingredients,
+                  const SizedBox(
+                    width: 20,
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              // FoodSearchWidget(
+              //   searchWord: searchWord,
+              //   fromenterrecipe: true,
+              //   ingredients: recipe.ingredients,
 
-            // ),
-          ],
+              // ),
+            ],
+          ),
         ),
       ),
     );
