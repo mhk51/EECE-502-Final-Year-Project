@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_application_1/models/daily_logs_class.dart';
 import 'package:flutter_application_1/models/food_class.dart';
 
 class FoodDatabaseService {
@@ -8,20 +7,6 @@ class FoodDatabaseService {
 
   final CollectionReference userFoodCollection =
       FirebaseFirestore.instance.collection('UserFoodCollection');
-
-  Map<String, dynamic> _foodnamefromFoodClass(FoodClass food) {
-    return {
-      'foodName': food.foodName,
-      'carbs': food.carbs,
-      'fat': food.fat,
-      'protein': food.protein,
-      'sugar': food.sugar,
-    };
-  }
-
-  // Future<void> deleteFoodLog(DocumentSnapshot doc) async {
-
-  // }
 
   List<DocumentSnapshot> listfromQuery(QuerySnapshot<Object?> doc) {
     return doc.docs;
@@ -38,12 +23,21 @@ class FoodDatabaseService {
     return result;
   }
 
-  Future<void> updateuserFoodCollection(FoodClass food, int serving,
-      int portion, String mealType, DateTime time) async {
+  Map<String, dynamic> _foodnamefromFoodClass(
+      FoodClass food, double multiplier) {
+    return {
+      'foodName': food.foodName,
+      'carbs': (food.carbs * multiplier * 100).round() / 100,
+      'fat': (food.fat * multiplier * 100).round() / 100,
+      'protein': (food.protein * multiplier * 100).round() / 100,
+      'sugar': (food.sugar * multiplier * 100).round() / 100,
+    };
+  }
+
+  Future<void> addUserFoodLog(
+      FoodClass food, double multiplier, String mealType, DateTime time) async {
     await userFoodCollection.add({
-      'food': _foodnamefromFoodClass(food),
-      'serving': serving,
-      'portion': portion,
+      'food': _foodnamefromFoodClass(food, multiplier),
       'userID': uid,
       'mealType': mealType,
       'timeAdded': time

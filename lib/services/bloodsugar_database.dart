@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_application_1/models/food_class.dart';
+import 'package:flutter_application_1/custom/line_chart.dart';
 
 class BloodSugarDatabaseService {
   final String uid;
@@ -8,16 +8,25 @@ class BloodSugarDatabaseService {
   final CollectionReference userBloodSugarCollection =
       FirebaseFirestore.instance.collection('UserBloodSugarCollection');
 
-  Map<String, dynamic> _foodnamefromFoodClass(
-      FoodClass food, int serving, int portion) {
-    return {
-      'foodName': food.foodName,
-      'serving': serving,
-      'portion': portion,
-    };
+  LoggedBSL bslfromDoc(DocumentSnapshot doc) {
+    return LoggedBSL(doc.get('BSL'), doc.get('time'));
   }
 
-  Future<void> updateuserBloodSugarCollection(
+  List<DocumentSnapshot> listfromQuery(QuerySnapshot query) {
+    return query.docs;
+  }
+
+  Stream<List<DocumentSnapshot>> get bloodSugarLogStream {
+    var now = DateTime.now();
+    var lastMidnight = DateTime(now.year, now.month, now.day);
+    return userBloodSugarCollection
+        .where('userID', isEqualTo: uid)
+        .where('time', isGreaterThan: Timestamp.fromDate(lastMidnight))
+        .snapshots()
+        .map(listfromQuery);
+  }
+
+  Future<void> addBloodSugarLog(
       double bsl, String mealType, String prepost, DateTime time) async {
     await userBloodSugarCollection.add({
       'BSL': bsl,

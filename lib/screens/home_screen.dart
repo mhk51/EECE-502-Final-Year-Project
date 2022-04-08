@@ -32,63 +32,58 @@ class _HomeScreenState extends State<HomeScreen> {
               TextEditingController();
           return AlertDialog(
             content: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextFormField(
-                      validator: (value) {
-                        return value!.isNotEmpty ? null : "Invalid Field";
-                      },
-                      decoration:
-                          const InputDecoration(hintText: "Enter Sugar Level"),
-                      controller: _textEditingController,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    ),
-                    DropdownButtonFormField<String>(
-                      value: defaultMeal,
-                      decoration: textInputDecoration,
-                      items: mealType.map((sugar) {
-                        return DropdownMenuItem(
-                          value: sugar,
-                          child: Text(sugar),
-                        );
-                      }).toList(),
-                      onChanged: (val) => setState(() => defaultMeal = val!),
-                    ),
-                    DropdownButtonFormField<String>(
-                      value: defaultPrepost,
-                      decoration: textInputDecoration,
-                      items: prepost.map((sugar) {
-                        return DropdownMenuItem(
-                          value: sugar,
-                          child: Text(sugar),
-                        );
-                      }).toList(),
-                      onChanged: (val) => setState(() => defaultPrepost = val!),
-                    ),
-
-                    //
-                    //
-                    //
-                  ],
-                )),
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextFormField(
+                    validator: (value) {
+                      return value!.isNotEmpty ? null : "Invalid Field";
+                    },
+                    decoration:
+                        const InputDecoration(hintText: "Enter Sugar Level"),
+                    controller: _textEditingController,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  ),
+                  DropdownButtonFormField<String>(
+                    value: defaultMeal,
+                    decoration: textInputDecoration,
+                    items: mealType.map((sugar) {
+                      return DropdownMenuItem(
+                        value: sugar,
+                        child: Text(sugar),
+                      );
+                    }).toList(),
+                    onChanged: (val) => setState(() => defaultMeal = val!),
+                  ),
+                  DropdownButtonFormField<String>(
+                    value: defaultPrepost,
+                    decoration: textInputDecoration,
+                    items: prepost.map((sugar) {
+                      return DropdownMenuItem(
+                        value: sugar,
+                        child: Text(sugar),
+                      );
+                    }).toList(),
+                    onChanged: (val) => setState(() => defaultPrepost = val!),
+                  ),
+                ],
+              ),
+            ),
             actions: <Widget>[
               TextButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      TimeOfDay now = TimeOfDay.now();
+                      // TimeOfDay now = TimeOfDay.now();
                       LoggedBSL currentBSL = LoggedBSL(
                           double.parse(_textEditingController.text),
                           DateTime.now());
                       LoggedBSL.chartData.add(currentBSL);
-                      // ignore: avoid_print
-                      print(currentBSL.level);
                       final uid = _auth.getUID();
                       await BloodSugarDatabaseService(uid: uid)
-                          .updateuserBloodSugarCollection(currentBSL.level,
-                              defaultMeal, defaultPrepost, DateTime.now());
+                          .addBloodSugarLog(currentBSL.level, defaultMeal,
+                              defaultPrepost, DateTime.now());
                       Navigator.of(context).pop();
                     }
                   },
@@ -101,18 +96,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<CustomUser?>(context);
-    // print(user!.name);
-    // void _showSettingsPanel() {
-    //   showModalBottomSheet(
-    //       context: context,
-    //       builder: (context) {
-    //         return Container(
-    //           padding:
-    //               const EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-    //           child: const SettingsForm(),
-    //         );
-    //       });
-    // }
     final Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
@@ -140,96 +123,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         drawer: NavDrawer(),
-        // bottomNavigationBar: Padding(
-        //   padding: const EdgeInsets.all(8.0),
-        //   child: Row(
-        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //     children: [
-        //       BorderBox(
-        //         padding: const EdgeInsets.all(8.0),
-        //         width: 60,
-        //         height: 60,
-        //         child: TextButton(
-        //           onPressed: () async {
-        //             await Navigator.pushReplacementNamed(context, '/Home');
-        //           },
-        //           child: const Icon(
-        //             Icons.home,
-        //             color: Colors.black,
-        //           ),
-        //           style: TextButton.styleFrom(
-        //             backgroundColor: Colors.white,
-        //           ),
-        //         ),
-        //       ),
-        //       BorderBox(
-        //         padding: const EdgeInsets.all(8.0),
-        //         width: 60,
-        //         height: 60,
-        //         child: TextButton(
-        //           onPressed: () async {
-        //             await Navigator.pushReplacementNamed(
-        //                 context, '/DailyLogging');
-        //           },
-        //           child: const Icon(
-        //             Icons.list,
-        //             color: Colors.black,
-        //           ),
-        //           style: TextButton.styleFrom(
-        //             backgroundColor: Colors.white,
-        //           ),
-        //         ),
-        //       ),
-        //       BorderBox(
-        //         padding: const EdgeInsets.all(8.0),
-        //         width: 60,
-        //         height: 60,
-        //         child: TextButton(
-        //           onPressed: () async {
-        //             await Navigator.pushNamed(context, '/LoggingFood');
-
-        //             ///ItemInfo'
-        //           },
-        //           child: const Icon(Icons.add, color: Colors.black),
-        //           style: TextButton.styleFrom(
-        //             backgroundColor: Colors.white,
-        //           ),
-        //         ),
-        //       ),
-        //       BorderBox(
-        //         padding: const EdgeInsets.all(8.0),
-        //         width: 60,
-        //         height: 60,
-        //         child: TextButton(
-        //           onPressed: () async {
-        //             await Navigator.pushNamed(context, '/Insights');
-        //           },
-        //           child: const Icon(Icons.graphic_eq, color: Colors.black),
-        //           style: TextButton.styleFrom(
-        //             backgroundColor: Colors.white,
-        //           ),
-        //         ),
-        //       ),
-        //       BorderBox(
-        //         padding: const EdgeInsets.all(8.0),
-        //         width: 60,
-        //         height: 60,
-        //         child: TextButton(
-        //           onPressed: () {
-        //             _showSettingsPanel();
-        //           },
-        //           child: const Icon(
-        //             Icons.settings,
-        //             color: Colors.black,
-        //           ),
-        //           style: TextButton.styleFrom(
-        //             backgroundColor: Colors.white,
-        //           ),
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
         body: SizedBox(
           width: size.width,
           height: size.height,
@@ -280,14 +173,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Positioned(
-                      bottom: 0,
-                      child: Container(
-                        alignment: Alignment.bottomCenter,
-                        child: Row(
-                          verticalDirection: VerticalDirection.down,
-                        ),
-                      )),
+                  Container(
+                    alignment: Alignment.bottomCenter,
+                    child: Row(
+                      verticalDirection: VerticalDirection.down,
+                    ),
+                  ),
                 ],
               ),
             ],

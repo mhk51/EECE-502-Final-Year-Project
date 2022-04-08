@@ -136,20 +136,13 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
               onChanged: (val) => setState(() => defaultMeal = val!),
             ),
             const Text("Comment on food selected"),
-            //
-
-            //
             ElevatedButton(
               onPressed: () async {
                 final uid = _auth.getUID();
-                // DailyLogsClass logsClass = DailyLogsClass();
-                // logsClass.breakfastList.add(food);
-                await FoodDatabaseService(uid: uid).updateuserFoodCollection(
-                    food,
-                    numberofServings,
-                    defaultPortion,
-                    defaultMeal,
-                    DateTime.now());
+                double multiplier =
+                    numberofServings * defaultPortion.toDouble() / 100;
+                await FoodDatabaseService(uid: uid).addUserFoodLog(
+                    food, multiplier, defaultMeal, DateTime.now());
                 Navigator.pop(context);
               },
               child: const Text("Log Food"),
