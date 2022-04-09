@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/food_class.dart';
 import 'package:flutter_application_1/screens/logging_food/logging_food_screen.dart';
+import 'package:flutter_application_1/screens/recipe/recipe_ingredient_tile.dart';
+import 'package:flutter_application_1/services/recipe_database.dart';
+
+import '../../services/auth.dart';
 
 class InputNewRecipe extends StatefulWidget {
   const InputNewRecipe({Key? key}) : super(key: key);
@@ -9,8 +14,12 @@ class InputNewRecipe extends StatefulWidget {
 }
 
 class _InputNewRecipeState extends State<InputNewRecipe> {
+  bool saved = false;
+  final _auth = AuthService();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Future<void> showInformationDialog(BuildContext context) async {
+    var recipe =
+        ModalRoute.of(context)!.settings.arguments as RecipeIngredients;
     return await showDialog(
         context: context,
         builder: (context) {
@@ -34,7 +43,26 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
                 )),
             actions: <Widget>[
               TextButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    final uid = _auth.getUID();
+                    var carbs = 0.0;
+                    var fat = 0.0;
+                    var protein = 0.0;
+                    var sugar = 0.0;
+
+                    for (int i = 0; i < recipe.ingredients.length; i++) {
+                      carbs += recipe.ingredients[i].carbs;
+                      fat += recipe.ingredients[i].fat;
+                      protein += recipe.ingredients[i].protein;
+                      sugar += recipe.ingredients[i].sugar;
+                    }
+                    await RecipeDatabaseService(uid: uid).addRecipe(
+                        _textEditingController.text,
+                        carbs,
+                        protein,
+                        fat,
+                        sugar);
+                    saved = true;
                     Navigator.of(context).pop();
                   },
                   child: const Text("Save"))
@@ -69,22 +97,24 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Expanded(
-                          child: ListView.builder(
-                              padding: const EdgeInsets.all(8),
-                              itemCount: recipe.ingredients.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Container(
-                                  height: 50,
-                                  margin: const EdgeInsets.all(2),
-                                  color: Colors.blue,
-                                  child: Center(
-                                      child: Text(
-                                    recipe.ingredients[index].foodName,
-                                    style: const TextStyle(fontSize: 18),
-                                  )),
-                                );
-                              }),
-                        ),
+                            child:
+                                // ListView.builder(
+                                //     padding: const EdgeInsets.all(8),
+                                //     itemCount: recipe.ingredients.length,
+                                //     itemBuilder: (BuildContext context, int index) {
+                                //       return Container(
+                                //         height: 50,
+                                //         margin: const EdgeInsets.all(2),
+                                //         color: Colors.blue,
+                                //         child: Center(
+                                //             child: Text(
+                                //           recipe.ingredients[index].foodName,
+                                //           style: const TextStyle(fontSize: 18),
+                                //         )),
+                                //       );
+                                //     }),
+                                RecipeIgredientList(
+                                    ingredientsList: recipe.ingredients)),
                       ],
                     ),
                   ),
@@ -95,6 +125,11 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
                         ElevatedButton(
                           onPressed: () {
                             setState(() {});
+                            for (int i = 0;
+                                i < recipe.ingredients.length;
+                                i++) {
+                              print(recipe.ingredients[i].foodName);
+                            }
                           },
                           child: const Text("Refresh"),
                         ),
@@ -109,6 +144,9 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
                         ElevatedButton(
                           onPressed: () async {
                             await showInformationDialog(context);
+                            if (saved == true) {
+                              Navigator.of(context).pop();
+                            }
 
                             // for (int i = 0; i < recipe.ingredients.length; i++) {
                             //   print(recipe.ingredients[i].foodName);
@@ -123,6 +161,41 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
               ),
             ),
           )),
+    );
+  }
+}
+
+class RecipeIgredientList extends StatefulWidget {
+  final List<FoodClass> ingredientsList;
+
+  const RecipeIgredientList({Key? key, required this.ingredientsList})
+      : super(key: key);
+
+  @override
+  State<RecipeIgredientList> createState() => _RecipeIgredientListState();
+}
+
+class _RecipeIgredientListState extends State<RecipeIgredientList> {
+  Widget mappingFunction(FoodClass food) {
+    return RecipeLogTile(
+      food: food,
+      foodList: widget.ingredientsList,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          height: 350,
+          child: ListView(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            children: widget.ingredientsList.map(mappingFunction).toList(),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -128,6 +128,15 @@ class _RecipeItemInfoScreenState extends State<RecipeItemInfoScreen> {
                 // logsClass.breakfastList.add(food);
                 // await FoodDatabaseService(uid: uid).updateUserDataCollection(
                 //     food, numberofServings, defaultPortion);
+                args.food.carbs =
+                    (args.food.carbs / 100) * defaultPortion * numberofServings;
+                args.food.fat =
+                    (args.food.fat / 100) * defaultPortion * numberofServings;
+                args.food.protein = (args.food.protein / 100) *
+                    defaultPortion *
+                    numberofServings;
+                args.food.sugar =
+                    (args.food.sugar / 100) * defaultPortion * numberofServings;
                 args.ingredients.add(args.food);
                 Navigator.pop(context);
               },
