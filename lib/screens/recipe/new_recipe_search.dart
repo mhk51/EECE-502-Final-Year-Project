@@ -5,7 +5,9 @@ import 'package:flutter_application_1/custom/app_icons_icons.dart';
 import 'package:flutter_application_1/custom/constants.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'logging_food_screen.dart';
+import '../../services/search_service.dart';
+import '../logging_food/food_search_list.dart';
+import '../logging_food/logging_food_screen.dart';
 
 class NewRecipeSearch extends StatefulWidget {
   const NewRecipeSearch({Key? key}) : super(key: key);
@@ -56,6 +58,7 @@ class _NewRecipeSearchState extends State<NewRecipeSearch> {
         });
   }
 
+  Bloc bloc = Bloc();
   var msgController = TextEditingController();
   String tempSearchWord = "";
   String searchWord = "";
@@ -124,6 +127,7 @@ class _NewRecipeSearchState extends State<NewRecipeSearch> {
                       setState(() {
                         searchWord = tempSearchWord;
                       });
+                      bloc.fetchNewSearch(searchWord);
                     },
                     icon: const Icon(
                       Icons.search,
@@ -159,12 +163,12 @@ class _NewRecipeSearchState extends State<NewRecipeSearch> {
               const SizedBox(
                 height: 20,
               ),
-              // FoodSearchWidget(
-              //   searchWord: searchWord,
-              //   fromenterrecipe: true,
-              //   ingredients: recipe.ingredients,
-
-              // ),
+              FoodSearchWidget(
+                searchWord: searchWord,
+                fromenterrecipe: true,
+                ingredients: recipe.ingredients,
+                bloc: bloc,
+              ),
             ],
           ),
         ),
