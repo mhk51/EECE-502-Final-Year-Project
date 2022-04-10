@@ -33,6 +33,7 @@ Widget inputField(Icon prefixIcon, String hintText, bool isPassword,
     ),
     margin: const EdgeInsets.only(bottom: 20),
     child: TextFormField(
+      // scrollPadding: const EdgeInsets.only(bottom: 300),
       validator: (val) => validator(val),
       onChanged: (val) => onChanged(val),
       obscureText: isPassword,
