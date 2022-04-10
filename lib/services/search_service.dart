@@ -18,7 +18,7 @@ class Bloc {
       documentList = (await FirebaseFirestore.instance
               .collection("food")
               .orderBy("Description")
-              .limit(6)
+              .limit(10)
               .get())
           .docs;
       foodController.sink.add(documentList);
@@ -34,7 +34,7 @@ class Bloc {
     documentList = (await FirebaseFirestore.instance
             .collection('food')
             .where('SearchIndex', arrayContains: searchWord)
-            .limit(6)
+            .limit(10)
             .get())
         .docs;
     foodController.sink.add(documentList);
@@ -46,7 +46,7 @@ class Bloc {
               .collection("food")
               .orderBy("Description")
               .startAfterDocument(documentList[documentList.length - 1])
-              .limit(6)
+              .limit(10)
               .get())
           .docs;
       documentList.addAll(newDocumentList);
