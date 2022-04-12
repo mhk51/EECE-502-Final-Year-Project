@@ -207,21 +207,22 @@ Widget logo() {
               ),
             )),
         Positioned(
-            child: Container(
-          width: 100,
-          height: 100,
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            color: Color(0xff008FFF),
+          child: Container(
+            width: 100,
+            height: 100,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: Color(0xff008FFF),
+            ),
           ),
-        )),
+        ),
         Positioned(
           left: 50,
           child: Container(
             child: const Icon(
-              Icons.water_drop,
+              Icons.food_bank,
               color: Colors.white,
-              size: 40,
+              size: 59,
             ),
             width: 100,
             height: 100,

@@ -36,25 +36,25 @@ class _SignInState extends State<SignIn> {
   }
 
   void signIn() async {
-    // if (_formKey.currentState!.validate()) {
-    //   setState(() => loading = true);
-    //   dynamic result = await _auth.signInWithEmailAndPassword(email, password);
-    //   if (result == null) {
-    //     setState(() {
-    //       loading = false;
-    //       error = 'Could not sign in with those credentials';
-    //     });
-    //   }
-    // }
+    if (_formKey.currentState!.validate()) {
+      setState(() => loading = true);
+      dynamic result = await _auth.signInWithEmailAndPassword(email, password);
+      if (result == null) {
+        setState(() {
+          loading = false;
+          error = 'Could not sign in with those credentials';
+        });
+      }
+    }
   }
 
   ScrollController controller = ScrollController();
 
   @override
   Widget build(BuildContext context) {
-    double resize = MediaQuery.of(context).viewInsets.bottom - 100;
-    controller.animateTo(resize > 0 ? resize : 0,
-        duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
+    // double resize = MediaQuery.of(context).viewInsets.bottom - 100;
+    // controller.animateTo(resize > 0 ? resize : 0,
+    //     duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
     return loading
         ? const Loading()
         : Scaffold(
