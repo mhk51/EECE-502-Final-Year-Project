@@ -9,14 +9,14 @@ class RecipeItemInfoArgs {
 
 class FoodTile extends StatefulWidget {
   final FoodClass food;
-  const FoodTile(
-      {Key? key,
-      required this.food,
-      required this.fromenterrecipe,
-      required this.ingredients})
-      : super(key: key);
-  final bool fromenterrecipe;
-  final List<FoodClass> ingredients;
+  final String recipeName;
+  const FoodTile({
+    Key? key,
+    required this.food,
+    required this.recipeName,
+    // required this.ingredients
+  }) : super(key: key);
+  // final List<FoodClass> ingredients;
   @override
   State<FoodTile> createState() => _FoodTileState();
 }
@@ -77,11 +77,12 @@ class _FoodTileState extends State<FoodTile> {
                 size: 25,
               ),
               onPressed: () async {
-                if (widget.fromenterrecipe) {
-                  RecipeItemInfoArgs args =
-                      RecipeItemInfoArgs(widget.food, widget.ingredients);
+                if (widget.recipeName != "") {
                   await Navigator.pushNamed(context, '/RecipeItemInfo',
-                      arguments: args);
+                      arguments: {
+                        'food': widget.food,
+                        'recipeName': widget.recipeName
+                      });
                   setState(() {
                     addButtonSelected = !addButtonSelected;
                   });

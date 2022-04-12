@@ -3,11 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/custom/app_icons_icons.dart';
 import 'package:flutter_application_1/custom/constants.dart';
+import 'package:flutter_application_1/screens/logging_food/food_search_list.dart';
+import 'package:flutter_application_1/services/search_service.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../../services/search_service.dart';
-import '../logging_food/food_search_list.dart';
-import '../logging_food/logging_food_screen.dart';
 
 class NewRecipeSearch extends StatefulWidget {
   const NewRecipeSearch({Key? key}) : super(key: key);
@@ -64,8 +62,7 @@ class _NewRecipeSearchState extends State<NewRecipeSearch> {
   String searchWord = "";
   @override
   Widget build(BuildContext context) {
-    var recipe =
-        ModalRoute.of(context)!.settings.arguments as RecipeIngredients;
+    var recipeName = ModalRoute.of(context)!.settings.arguments as String;
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: true,
@@ -164,9 +161,9 @@ class _NewRecipeSearchState extends State<NewRecipeSearch> {
                 height: 20,
               ),
               FoodSearchWidget(
-                searchWord: searchWord,
-                fromenterrecipe: true,
-                ingredients: recipe.ingredients,
+                searchWord: searchWord, recipeName: recipeName,
+                // fromenterrecipe: true,
+                // ingredients: recipe.ingredients,
                 bloc: bloc,
               ),
             ],

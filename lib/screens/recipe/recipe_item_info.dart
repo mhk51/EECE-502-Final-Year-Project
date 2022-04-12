@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/custom/constants.dart';
-import 'package:flutter_application_1/screens/logging_food/food_tile.dart';
+import 'package:flutter_application_1/models/food_class.dart';
+import 'package:flutter_application_1/services/auth.dart';
+import 'package:flutter_application_1/services/recipe_database.dart';
 
 class RecipeItemInfoScreen extends StatefulWidget {
   // final FoodClass food;
@@ -15,10 +17,13 @@ class _RecipeItemInfoScreenState extends State<RecipeItemInfoScreen> {
   List<int> portions = [50, 100, 200, 300, 400, 500];
   int defaultPortion = 100;
   int numberofServings = 1;
+  final _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     //final food = ModalRoute.of(context)!.settings.arguments as FoodClass;
-    var args = ModalRoute.of(context)!.settings.arguments as RecipeItemInfoArgs;
+    var args = ModalRoute.of(context)!.settings.arguments as Map;
+    FoodClass food = args['food'];
+    String recipeName = args['recipeName'];
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -75,7 +80,7 @@ class _RecipeItemInfoScreenState extends State<RecipeItemInfoScreen> {
                         children: [
                           SizedBox(
                             height: 48,
-                            child: Text("Food Name: ${args.food.foodName}"),
+                            child: Text("Food Name: ${food.foodName}"),
                           ),
                         ],
                       ),
@@ -84,7 +89,7 @@ class _RecipeItemInfoScreenState extends State<RecipeItemInfoScreen> {
                           SizedBox(
                             height: 48,
                             child: Text(
-                                "Carbs: ${args.food.carbs * (defaultPortion / 100) * numberofServings}"),
+                                "Carbs: ${food.carbs * (defaultPortion / 100) * numberofServings}"),
                           ),
                         ],
                       ),
@@ -93,7 +98,7 @@ class _RecipeItemInfoScreenState extends State<RecipeItemInfoScreen> {
                           SizedBox(
                             height: 48,
                             child: Text(
-                                "Protien: ${args.food.protein * (defaultPortion / 100) * numberofServings}"),
+                                "Protien: ${food.protein * (defaultPortion / 100) * numberofServings}"),
                           ),
                         ],
                       ),
@@ -102,7 +107,7 @@ class _RecipeItemInfoScreenState extends State<RecipeItemInfoScreen> {
                           SizedBox(
                             height: 48,
                             child: Text(
-                                "Fat: ${args.food.fat * (defaultPortion / 100) * numberofServings}"),
+                                "Fat: ${food.fat * (defaultPortion / 100) * numberofServings}"),
                           ),
                         ],
                       ),
@@ -111,7 +116,7 @@ class _RecipeItemInfoScreenState extends State<RecipeItemInfoScreen> {
                           SizedBox(
                             height: 48,
                             child: Text(
-                                "Sugar: ${args.food.sugar * (defaultPortion / 100) * numberofServings}"),
+                                "Sugar: ${food.sugar * (defaultPortion / 100) * numberofServings}"),
                           ),
                         ],
                       ),
@@ -122,22 +127,22 @@ class _RecipeItemInfoScreenState extends State<RecipeItemInfoScreen> {
             ),
             const Text("Comment on food selected"),
             ElevatedButton(
+              // onPressed: () async {
+              //   food.carbs =
+              //       (food.carbs / 100) * defaultPortion * numberofServings;
+              //   food.fat = (food.fat / 100) * defaultPortion * numberofServings;
+              //   food.protein =
+              //       (food.protein / 100) * defaultPortion * numberofServings;
+              //   food.sugar =
+              //       (food.sugar / 100) * defaultPortion * numberofServings;
+              //   Navigator.pop(context);
+              // },
               onPressed: () async {
-                //final uid = _auth.getUID();
-                // DailyLogsClass logsClass = DailyLogsClass();
-                // logsClass.breakfastList.add(food);
-                // await FoodDatabaseService(uid: uid).updateUserDataCollection(
-                //     food, numberofServings, defaultPortion);
-                args.food.carbs =
-                    (args.food.carbs / 100) * defaultPortion * numberofServings;
-                args.food.fat =
-                    (args.food.fat / 100) * defaultPortion * numberofServings;
-                args.food.protein = (args.food.protein / 100) *
-                    defaultPortion *
-                    numberofServings;
-                args.food.sugar =
-                    (args.food.sugar / 100) * defaultPortion * numberofServings;
-                args.ingredients.add(args.food);
+                final uid = _auth.getUID();
+                double multiplier =
+                    numberofServings * defaultPortion.toDouble() / 100;
+                await RecipeDatabaseService(uid: uid, recipeName: recipeName)
+                    .addRecipeItem(food, multiplier, DateTime.now());
                 Navigator.pop(context);
               },
               child: const Text("Add Item"),

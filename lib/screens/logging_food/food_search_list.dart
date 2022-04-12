@@ -6,17 +6,17 @@ import 'package:flutter_application_1/screens/logging_food/empty_tile.dart';
 import 'package:flutter_application_1/services/search_service.dart';
 
 class FoodSearchWidget extends StatefulWidget {
+  final String recipeName;
   const FoodSearchWidget(
       {Key? key,
       required this.searchWord,
-      required this.fromenterrecipe,
-      required this.ingredients,
+      required this.recipeName,
       required this.bloc})
       : super(key: key);
 
   final String searchWord;
-  final bool fromenterrecipe;
-  final List<FoodClass> ingredients;
+  // final bool fromenterrecipe;
+  // final List<FoodClass> ingredients;
   final Bloc bloc;
 
   @override
@@ -72,19 +72,6 @@ class _FoodSearchWidgetState extends State<FoodSearchWidget> {
             case ConnectionState.waiting:
               return ListView(children: generateEmptyTiles());
             default:
-              // return ListView.separated(
-              //   controller: controller,
-              //   scrollDirection: Axis.vertical,
-              //   shrinkWrap: true,
-              //   children: snapshot.data!.map((DocumentSnapshot document) {
-              //     return FoodTile(
-              //       food: documentToFoodClass(document),
-              //       fromenterrecipe: widget.fromenterrecipe,
-              //       ingredients: widget.ingredients,
-              //     );
-              //   }).toList(),
-
-              // );
               List<FoodClass> list =
                   snapshot.data!.map(documentToFoodClass).toList();
               return Scrollbar(
@@ -100,10 +87,15 @@ class _FoodSearchWidgetState extends State<FoodSearchWidget> {
                   controller: controller,
                   itemCount: list.length,
                   itemBuilder: (context, index) {
-                    return FoodTile(
+                    if (widget.recipeName == '') {
+                      return FoodTile(
                         food: list[index],
-                        fromenterrecipe: widget.fromenterrecipe,
-                        ingredients: widget.ingredients);
+                        recipeName: '',
+                      );
+                    } else {
+                      return FoodTile(
+                          food: list[index], recipeName: widget.recipeName);
+                    }
                   },
                   separatorBuilder: (context, index) {
                     return const Padding(

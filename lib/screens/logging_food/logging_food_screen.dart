@@ -136,6 +136,42 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
     });
   }
 
+  Future<void> showInformationDialog(BuildContext context) async {
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          String recipeName = "";
+          final TextEditingController _textEditingController =
+              TextEditingController();
+          return AlertDialog(
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  onChanged: (value) {
+                    recipeName = value;
+                  },
+                  validator: (value) {
+                    return value!.isNotEmpty ? null : "Invalid Field";
+                  },
+                  decoration:
+                      const InputDecoration(hintText: "Enter Recipe Name"),
+                  controller: _textEditingController,
+                ),
+              ],
+            ),
+            actions: <Widget>[
+              TextButton(
+                  onPressed: () async {
+                    await Navigator.pushNamed(context, '/InputNewRecipe',
+                        arguments: recipeName);
+                  },
+                  child: const Text("Enter"))
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -174,11 +210,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
             ),
             ElevatedButton(
               onPressed: () async {
-                List<FoodClass> ingredients = [];
-                RecipeIngredients recipe = RecipeIngredients(ingredients);
-
-                await Navigator.pushNamed(context, '/InputNewRecipe',
-                    arguments: recipe);
+                await showInformationDialog(context);
               },
               child: const Text("Input New Recipe"),
             ),
@@ -276,8 +308,9 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
             ),
             FoodSearchWidget(
               searchWord: searchWord,
-              fromenterrecipe: false,
-              ingredients: const [],
+              recipeName: '',
+              // fromenterrecipe: false,
+              // ingredients: const [],
               bloc: bloc,
             ),
           ],
