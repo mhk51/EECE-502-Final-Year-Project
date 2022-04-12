@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/custom/loading.dart';
 import 'package:flutter_application_1/models/food_class.dart';
+import 'package:flutter_application_1/screens/daily_log_screen/food_log_tile.dart';
 import 'package:flutter_application_1/screens/logging_food/logging_food_screen.dart';
-import 'package:flutter_application_1/screens/recipe/recipe_ingredient_tile.dart';
 import 'package:flutter_application_1/services/recipe_database.dart';
 
 import '../../services/auth.dart';
@@ -16,11 +18,10 @@ class InputNewRecipe extends StatefulWidget {
 class _InputNewRecipeState extends State<InputNewRecipe> {
   bool saved = false;
   final _auth = AuthService();
-  var delIndex;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  RecipeIngredients recipe = RecipeIngredients([]);
+
   Future<void> showInformationDialog(BuildContext context) async {
-    var recipe =
-        ModalRoute.of(context)!.settings.arguments as RecipeIngredients;
     return await showDialog(
         context: context,
         builder: (context) {
@@ -57,12 +58,12 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
                       protein += recipe.ingredients[i].protein;
                       sugar += recipe.ingredients[i].sugar;
                     }
-                    await RecipeDatabaseService(uid: uid).addRecipe(
-                        _textEditingController.text,
-                        carbs,
-                        protein,
-                        fat,
-                        sugar);
+                    // await RecipeDatabaseService(uid: uid,recipeName: recipeName).addRecipe(
+                    //     _textEditingController.text,
+                    //     carbs,
+                    //     protein,
+                    //     fat,
+                    //     sugar);
                     saved = true;
                     Navigator.of(context).pop();
                   },
@@ -74,16 +75,15 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
 
   @override
   Widget build(BuildContext context) {
-    var recipe =
-        ModalRoute.of(context)!.settings.arguments as RecipeIngredients;
+    final recipeName = ModalRoute.of(context)!.settings.arguments as String;
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
             backgroundColor: Colors.blue[800],
-            title: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text("New Recipe"),
+            title: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(recipeName),
             ),
             // centerTitle: true,
           ),
@@ -93,21 +93,16 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                RecipeIgredientList(ingredientsList: recipe.ingredients),
+                RecipeIgredientList(
+                  ingredientsList: recipe.ingredients,
+                  recipeName: recipeName,
+                ),
                 Column(
                   children: [
-                    // ElevatedButton(
-                    //   onPressed: () {
-                    //     for (int i = 0; i < recipe.ingredients.length; i++) {
-                    //       print(recipe.ingredients[i].foodName);
-                    //     }
-                    //   },
-                    //   child: const Text("Refresh"),
-                    // ),
                     ElevatedButton(
                       onPressed: () async {
                         await Navigator.pushNamed(context, '/NewRecipeSearch',
-                            arguments: recipe);
+                            arguments: recipeName);
                         setState(() {});
                       },
                       child: const Text("Add Ingredients"),
@@ -135,9 +130,11 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
 }
 
 class RecipeIgredientList extends StatefulWidget {
+  final String recipeName;
   final List<FoodClass> ingredientsList;
 
-  const RecipeIgredientList({Key? key, required this.ingredientsList})
+  const RecipeIgredientList(
+      {Key? key, required this.ingredientsList, required this.recipeName})
       : super(key: key);
 
   @override
@@ -145,22 +142,42 @@ class RecipeIgredientList extends StatefulWidget {
 }
 
 class _RecipeIgredientListState extends State<RecipeIgredientList> {
-  Widget mappingFunction(FoodClass food) {
-    return RecipeLogTile(
-      food: food,
-      foodList: widget.ingredientsList,
-    );
+  FoodClass foodClassFromMap(Map<String, dynamic> map) {
+    return FoodClass(
+        foodName: map['foodName'],
+        sugar: map['sugar'],
+        carbs: map['carbs'],
+        protein: map['protein'],
+        fat: map['fat'],
+        bloodSugarInc: 0);
   }
 
+  Widget mappingFunction(DocumentSnapshot food) {
+    return FoodLogTile(doc: food);
+  }
+
+  final _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.all(1),
       height: 350,
-      child: ListView(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        children: widget.ingredientsList.map(mappingFunction).toList(),
-      ),
+      child: StreamBuilder<List<DocumentSnapshot>>(
+          stream: RecipeDatabaseService(
+                  uid: _auth.getUID(), recipeName: widget.recipeName)
+              .recipeStream,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.active &&
+                snapshot.hasData) {
+              return ListView(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                children: snapshot.data!.map(mappingFunction).toList(),
+              );
+            } else {
+              return const Loading();
+            }
+          }),
     );
   }
 }
