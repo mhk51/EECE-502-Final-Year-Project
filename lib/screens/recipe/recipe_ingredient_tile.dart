@@ -5,7 +5,7 @@ import 'package:flutter_application_1/models/food_class.dart';
 class RecipeLogTile extends StatefulWidget {
   final FoodClass food;
   final List<FoodClass> foodList;
-  const RecipeLogTile({Key? key, required this.food, required this.foodList})
+  RecipeLogTile({Key? key, required this.food, required this.foodList})
       : super(key: key);
 
   @override
@@ -66,21 +66,7 @@ class _RecipeLogTileState extends State<RecipeLogTile> {
             onPressed: () {
               for (int i = 0; i < widget.foodList.length; i++) {
                 if (widget.foodList[i].foodName == food.foodName) {
-                  for (int i = 0; i < widget.foodList.length; i++) {
-                    print(widget.foodList[i].foodName);
-                  }
-                  print("////");
-                  print("////");
-                  print("////");
-                  print(widget.foodList[i].foodName);
-                  print(food.foodName + "111");
-                  print("////");
-                  print("////");
-                  print("////");
                   widget.foodList.removeAt(i);
-                  for (int i = 0; i < widget.foodList.length; i++) {
-                    print(widget.foodList[i].foodName);
-                  }
                 }
               }
             },

@@ -16,6 +16,7 @@ class InputNewRecipe extends StatefulWidget {
 class _InputNewRecipeState extends State<InputNewRecipe> {
   bool saved = false;
   final _auth = AuthService();
+  var delIndex;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Future<void> showInformationDialog(BuildContext context) async {
     var recipe =
@@ -86,79 +87,47 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
             ),
             // centerTitle: true,
           ),
-          body: Center(
-            child: Expanded(
-              child: Column(
-                //mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Expanded(
-                            child:
-                                // ListView.builder(
-                                //     padding: const EdgeInsets.all(8),
-                                //     itemCount: recipe.ingredients.length,
-                                //     itemBuilder: (BuildContext context, int index) {
-                                //       return Container(
-                                //         height: 50,
-                                //         margin: const EdgeInsets.all(2),
-                                //         color: Colors.blue,
-                                //         child: Center(
-                                //             child: Text(
-                                //           recipe.ingredients[index].foodName,
-                                //           style: const TextStyle(fontSize: 18),
-                                //         )),
-                                //       );
-                                //     }),
-                                RecipeIgredientList(
-                                    ingredientsList: recipe.ingredients)),
-                      ],
+          body: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                RecipeIgredientList(ingredientsList: recipe.ingredients),
+                Column(
+                  children: [
+                    // ElevatedButton(
+                    //   onPressed: () {
+                    //     for (int i = 0; i < recipe.ingredients.length; i++) {
+                    //       print(recipe.ingredients[i].foodName);
+                    //     }
+                    //   },
+                    //   child: const Text("Refresh"),
+                    // ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        await Navigator.pushNamed(context, '/NewRecipeSearch',
+                            arguments: recipe);
+                        setState(() {});
+                      },
+                      child: const Text("Add Ingredients"),
                     ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            setState(() {});
-                            for (int i = 0;
-                                i < recipe.ingredients.length;
-                                i++) {
-                              print(recipe.ingredients[i].foodName);
-                            }
-                          },
-                          child: const Text("Refresh"),
-                        ),
-                        ElevatedButton(
-                          onPressed: () async {
-                            await Navigator.pushNamed(
-                                context, '/NewRecipeSearch',
-                                arguments: recipe);
-                          },
-                          child: const Text("Add Ingredients"),
-                        ),
-                        ElevatedButton(
-                          onPressed: () async {
-                            await showInformationDialog(context);
-                            if (saved == true) {
-                              Navigator.of(context).pop();
-                            }
+                    ElevatedButton(
+                      onPressed: () async {
+                        await showInformationDialog(context);
+                        if (saved == true) {
+                          Navigator.of(context).pop();
+                        }
 
-                            // for (int i = 0; i < recipe.ingredients.length; i++) {
-                            //   print(recipe.ingredients[i].foodName);
-                            // }
-                          },
-                          child: const Text("Save Recipe"),
-                        ),
-                      ],
+                        // for (int i = 0; i < recipe.ingredients.length; i++) {
+                        //   print(recipe.ingredients[i].foodName);
+                        // }
+                      },
+                      child: const Text("Save Recipe"),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                )
+              ],
             ),
           )),
     );
@@ -185,17 +154,13 @@ class _RecipeIgredientListState extends State<RecipeIgredientList> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          height: 350,
-          child: ListView(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            children: widget.ingredientsList.map(mappingFunction).toList(),
-          ),
-        ),
-      ],
+    return Container(
+      height: 350,
+      child: ListView(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        children: widget.ingredientsList.map(mappingFunction).toList(),
+      ),
     );
   }
 }
