@@ -4,9 +4,8 @@ import 'package:flutter_application_1/custom/loading.dart';
 import 'package:flutter_application_1/models/food_class.dart';
 import 'package:flutter_application_1/screens/daily_log_screen/food_log_tile.dart';
 import 'package:flutter_application_1/screens/logging_food/logging_food_screen.dart';
+import 'package:flutter_application_1/services/auth.dart';
 import 'package:flutter_application_1/services/recipe_database.dart';
-
-import '../../services/auth.dart';
 
 class InputNewRecipe extends StatefulWidget {
   const InputNewRecipe({Key? key}) : super(key: key);
