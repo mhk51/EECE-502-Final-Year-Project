@@ -9,7 +9,7 @@ class BloodSugarDatabaseService {
       FirebaseFirestore.instance.collection('UserBloodSugarCollection');
 
   LoggedBSL bslfromDoc(DocumentSnapshot doc) {
-    return LoggedBSL(doc.get('BSL'), doc.get('time'));
+    return LoggedBSL(doc.get('BSL'), doc.get('time').toDate());
   }
 
   List<DocumentSnapshot> listfromQuery(QuerySnapshot query) {
@@ -24,6 +24,19 @@ class BloodSugarDatabaseService {
         .where('time', isGreaterThan: Timestamp.fromDate(lastMidnight))
         .snapshots()
         .map(listfromQuery);
+  }
+
+  Future<List<LoggedBSL>> getBSLDocs(String mealType) async {
+    var now = DateTime.now();
+    var lastMidnight = DateTime(now.year, now.month, now.day);
+    return (await userBloodSugarCollection
+            .where('userID', isEqualTo: uid)
+            .where('mealType', isEqualTo: mealType)
+            .where('time', isGreaterThan: Timestamp.fromDate(lastMidnight))
+            .get())
+        .docs
+        .map(bslfromDoc)
+        .toList();
   }
 
   Future<void> addBloodSugarLog(

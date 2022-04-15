@@ -23,6 +23,30 @@ class FoodDatabaseService {
     return result;
   }
 
+  FoodClass foodClassfromDoc(DocumentSnapshot doc) {
+    Map<String, dynamic> food = doc.get('food');
+    return FoodClass(
+        foodName: food['foodName'],
+        sugar: food['sugar'],
+        carbs: food['carbs'],
+        protein: food['protein'],
+        fat: food['fat'],
+        bloodSugarInc: 0);
+  }
+
+  Future<List<FoodClass>> getFoodLogs(String mealType) async {
+    var now = DateTime.now();
+    var lastMidnight = DateTime(now.year, now.month, now.day);
+    return (await userFoodCollection
+            .where("userID", isEqualTo: uid)
+            .where('mealType', isEqualTo: mealType)
+            .where('timeAdded', isGreaterThan: Timestamp.fromDate(lastMidnight))
+            .get())
+        .docs
+        .map(foodClassfromDoc)
+        .toList();
+  }
+
   Map<String, dynamic> _foodnamefromFoodClass(
       FoodClass food, double multiplier) {
     return {

@@ -30,6 +30,24 @@ class RecipeDatabaseService {
     };
   }
 
+  List<String> getUniqueRecipes(List<DocumentSnapshot> docs) {
+    List<String> recipeList = [];
+    for (int i = 0; i < docs.length; i++) {
+      if (recipeList.contains(docs[i].get('recipeName'))) {
+        continue;
+      } else {
+        recipeList.add(docs[i].get('recipeName'));
+      }
+    }
+    return recipeList;
+  }
+
+  Future<List<String>> getAllRecipes() async {
+    List<DocumentSnapshot> result =
+        (await userRecipeCollection.where('userID', isEqualTo: uid).get()).docs;
+    return getUniqueRecipes(result);
+  }
+
   Future<void> addRecipeItem(
       FoodClass food, double multiplier, DateTime time) async {
     await userRecipeCollection.add({

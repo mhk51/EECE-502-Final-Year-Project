@@ -127,16 +127,6 @@ class _RecipeItemInfoScreenState extends State<RecipeItemInfoScreen> {
             ),
             const Text("Comment on food selected"),
             ElevatedButton(
-              // onPressed: () async {
-              //   food.carbs =
-              //       (food.carbs / 100) * defaultPortion * numberofServings;
-              //   food.fat = (food.fat / 100) * defaultPortion * numberofServings;
-              //   food.protein =
-              //       (food.protein / 100) * defaultPortion * numberofServings;
-              //   food.sugar =
-              //       (food.sugar / 100) * defaultPortion * numberofServings;
-              //   Navigator.pop(context);
-              // },
               onPressed: () async {
                 final uid = _auth.getUID();
                 double multiplier =
