@@ -10,6 +10,8 @@ import 'package:flutter_application_1/services/bloodsugar_database.dart';
 import 'package:flutter_application_1/services/food_database.dart';
 import 'package:flutter_application_1/services/recipe_database.dart';
 
+import '../custom/constants.dart';
+
 class Bolus extends StatefulWidget {
   const Bolus({Key? key}) : super(key: key);
 
@@ -19,6 +21,8 @@ class Bolus extends StatefulWidget {
 
 class _BolusState extends State<Bolus> {
   final _auth = AuthService();
+  List<String> mealType = ["Breakfast", "Lunch", "Dinner", "Snack"];
+  String defaultMeal = "Breakfast";
 
   Future<Map<String, dynamic>> test(String mealType) async {
     String userUID = _auth.getUID();
@@ -161,6 +165,33 @@ class _BolusState extends State<Bolus> {
                   //     }).toList(),
                   //   ),
                   // )
+                  //Hadi's take on bolus
+                  Column(
+                    children: [
+                      Text(""),
+                      Text(""),
+                      Text(""),
+                      Text(
+                          "Important Note: Make sure to input an accurate measurment of BSL and input all meal in order to give you an accurate estimation of Insulin to take before the meal"),
+                      DropdownButtonFormField<String>(
+                        value: defaultMeal,
+                        decoration: textInputDecoration,
+                        items: mealType.map((sugar) {
+                          return DropdownMenuItem(
+                            value: sugar,
+                            child: Text(sugar),
+                          );
+                        }).toList(),
+                        onChanged: (val) => setState(() => defaultMeal = val!),
+                      ),
+                      Text(
+                          "Blood Sugar Level pre " + defaultMeal + ": {{BSL}}"),
+                      Text("Carbs from " + defaultMeal + ": {{Carbs}}"),
+                      Text("Estimated Insulin to take before " +
+                          defaultMeal +
+                          ": {{Carbs}}/{{Insulin to Carb Ratio}} + ({{BSL}} - {{Target BSL}})/{{Sensitivity Factor}}")
+                    ],
+                  )
                 ],
               ),
             );
