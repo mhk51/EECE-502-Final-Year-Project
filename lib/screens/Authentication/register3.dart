@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/user.dart';
 import 'package:flutter_application_1/screens/Authentication/registration_class.dart';
 import 'package:flutter_application_1/services/database.dart';
+import 'package:flutter_application_1/services/therapy_database.dart';
 import 'package:provider/provider.dart';
 
 class RegisterPage3 extends StatefulWidget {
@@ -182,7 +183,24 @@ class _RegisterPage3State extends State<RegisterPage3> {
                       registrationClass.weight,
                       registrationClass.isGenderMale ? 'male' : 'female',
                     );
-                    print('executed');
+                    await TherapyDatabaseService(uid: result.uid)
+                        .updateUserTherapyCollection(
+                            11.0,
+                            8.0,
+                            5.6,
+                            4.6,
+                            3.0,
+                            15.0,
+                            10.0,
+                            6.0,
+                            '7:00',
+                            '10:00',
+                            '12:00',
+                            '15:00',
+                            '18:00',
+                            '20:00',
+                            -1,
+                            -1);
                   }
                 }
 
