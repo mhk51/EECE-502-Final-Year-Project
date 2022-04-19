@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/custom/constants.dart';
 import 'package:flutter_application_1/models/food_class.dart';
 import 'package:flutter_application_1/services/auth.dart';
+import 'package:flutter_application_1/services/foodStats.dart';
 import 'package:flutter_application_1/services/food_database.dart';
 
 class ItemInfoScreen extends StatefulWidget {
@@ -218,6 +219,9 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
                       numberofServings * defaultPortion.toDouble() / 100;
                   await FoodDatabaseService(uid: uid).addUserFoodLog(
                       food, multiplier, defaultMeal, DateTime.now());
+
+                  await FoodStatsService(uid: uid)
+                      .addUserFoodStatsLog(food, defaultMeal, 10);
                   Navigator.pop(context);
                 },
                 child: const Text("Log Food"),
