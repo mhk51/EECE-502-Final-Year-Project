@@ -21,7 +21,9 @@ class FoodStatsService {
 
   Stream<List<DocumentSnapshot>> get recommendedFoodClass {
     Stream<List<DocumentSnapshot>> result = userFoodStatsCollection
-        .where("count", isGreaterThan: 1)
+        .where("count", isGreaterThan: 3)
+        .orderBy('count')
+        .limit(5)
         .snapshots()
         .map(listfromQuery);
     return result;

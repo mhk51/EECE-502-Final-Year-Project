@@ -24,7 +24,7 @@ class _BolusState extends State<Bolus> {
   final controller = TextEditingController(text: 0.00.toString());
   final _auth = AuthService();
 
-  Future<Map<String, dynamic>> test(String mealType) async {
+  Future<Map<String, dynamic>> fetchData(String mealType) async {
     String userUID = _auth.getUID();
     List responses = [];
     try {
@@ -83,7 +83,7 @@ class _BolusState extends State<Bolus> {
         title: const Text('Bolus Advisor'),
       ),
       body: FutureBuilder<Map<String, dynamic>>(
-        future: test('Breakfast'),
+        future: fetchData('Breakfast'),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done &&
               snapshot.hasData) {
