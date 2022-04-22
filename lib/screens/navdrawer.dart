@@ -14,6 +14,9 @@ class NavDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<CustomUser?>(context);
+    Color primaryColor = const Color.fromARGB(255, 255, 75, 58);
+    Color backgroundColor = const Color.fromARGB(238, 238, 238, 238);
+
     String? pageRouteName = ModalRoute.of(context)?.settings.name;
     if (user == null) {
       return const Wrapper();
@@ -47,9 +50,7 @@ class NavDrawer extends StatelessWidget {
                         ),
                       ],
                     ),
-                    decoration: BoxDecoration(
-                      color: Colors.indigo[800],
-                    ),
+                    decoration: BoxDecoration(color: primaryColor),
                   ),
                   const SizedBox(
                     height: 8,
