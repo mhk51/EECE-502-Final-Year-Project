@@ -31,7 +31,7 @@ class _LineChartState extends State<LineChart> {
               height: 300,
               margin: const EdgeInsets.all(8.0),
               child: SfCartesianChart(
-                title: ChartTitle(text: "Blood Sugar Data"),
+                // title: ChartTitle(text: "My Blood Sugar Data"),
                 primaryXAxis: DateTimeAxis(
                     minimum: DateTime.now().subtract(
                         const Duration(hours: 11, minutes: 59, seconds: 59)),
