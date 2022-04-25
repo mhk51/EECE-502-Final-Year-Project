@@ -166,7 +166,10 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                     await Navigator.pushNamed(context, '/InputNewRecipe',
                         arguments: recipeName);
                   },
-                  child: const Text("Enter"))
+                  child: const Text(
+                    "Enter",
+                    style: TextStyle(color: primaryColor),
+                  ))
             ],
           );
         });
@@ -176,10 +179,11 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        // backgroundColor: backgroundColor,
         resizeToAvoidBottomInset: false,
         drawer: NavDrawer(),
         appBar: AppBar(
-          backgroundColor: Colors.blue[800],
+          backgroundColor: primaryColor,
           title: const Padding(
             padding: EdgeInsets.all(8.0),
             child: Text("Logging Food"),
@@ -195,25 +199,89 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(
-                    onPressed: () {}, child: const Text("All Results")),
-                const SizedBox(width: 20),
+                // ElevatedButton(
+                //     onPressed: () {}, child: const Text("All Results")),
                 ElevatedButton(
                   onPressed: () {},
-                  child: const Text("Favorites"),
+                  child: const Text("Favorites",
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontFamily: 'Inria Serif',
+                      )),
+                  style: ButtonStyle(
+                    minimumSize:
+                        MaterialStateProperty.all<Size>(const Size(185, 55)),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(primaryColor),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                    ),
+                  ),
                 ),
+                // const SizedBox(width: 20),
+                // ElevatedButton(
+                //   onPressed: () {},
+                //   child: const Text("Favorites"),
+                // ),
                 // Expanded(child: Search()),
               ],
             ),
             const SizedBox(
               height: 10,
             ),
-            ElevatedButton(
-              onPressed: () async {
-                await showInformationDialog(context);
-              },
-              child: const Text("Input New Recipe"),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {},
+                  child: const Text("Recipes",
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontFamily: 'Inria Serif',
+                      )),
+                  style: ButtonStyle(
+                    minimumSize:
+                        MaterialStateProperty.all<Size>(const Size(185, 55)),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(primaryColor),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    await showInformationDialog(context);
+                  },
+                  child: const Text("New Recipe",
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontFamily: 'Inria Serif',
+                      )),
+                  style: ButtonStyle(
+                    minimumSize:
+                        MaterialStateProperty.all<Size>(const Size(185, 55)),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(primaryColor),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
+            // ElevatedButton(
+            //   onPressed: () async {
+            //     await showInformationDialog(context);
+            //   },
+            //   child: const Text("Input New Recipe"),
+            // ),
             const SizedBox(
               height: 20,
             ),
@@ -230,11 +298,12 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                         decoration: textInputDecoration.copyWith(
                           hintText: 'Search Food',
                           enabledBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.grey,
-                              width: 2.5,
-                            ),
-                          ),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 2.5,
+                              ),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
                           suffixIcon: IconButton(
                             onPressed: () {
                               msgController.clear();
@@ -251,48 +320,74 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                           tempSearchWord = val;
                         },
                       ),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.white),
+                          color: Colors.white,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(20))),
                     ),
                   ),
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        searchWord = tempSearchWord;
-                      });
-                      bloc.fetchNewSearch(searchWord);
-                    },
-                    icon: const Icon(
-                      Icons.search,
-                      color: Colors.blue,
-                      size: 30,
+                  Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white),
+                        color: primaryColor,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10))),
+                    child: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          searchWord = tempSearchWord;
+                        });
+                        bloc.fetchNewSearch(searchWord);
+                      },
+                      icon: const Icon(
+                        Icons.search,
+                        color: Colors.white,
+                        size: 30,
+                      ),
                     ),
                   ),
-                  IconButton(
-                    onPressed: () async {
-                      // _showChoiceDialog(context);
-                      await Navigator.pushNamed(context, '/CameraScreen');
-                    },
-                    icon: const Icon(
-                      Icons.center_focus_strong,
-                      color: Colors.blue,
-                      size: 30,
+                  Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white),
+                        color: primaryColor,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10))),
+                    child: IconButton(
+                      onPressed: () async {
+                        // _showChoiceDialog(context);
+                        await Navigator.pushNamed(context, '/CameraScreen');
+                      },
+                      icon: const Icon(
+                        Icons.center_focus_strong,
+                        color: Colors.white,
+                        size: 30,
+                      ),
                     ),
                   ),
-                  IconButton(
-                    onPressed: () async {
-                      // _showChoiceDialog(context);
-                      await scanBarcodeNormal();
-                      // QuerySnapshot<Object?> result =
-                      //     await BarcodeService().barcodeResult(_scanBarcode);
-                      // print(result.docs.first.get('title'));
-                      FoodClass result =
-                          await BarcodeService().barcodeResult(_scanBarcode);
-                      await Navigator.pushNamed(context, '/ItemInfo',
-                          arguments: result);
-                    },
-                    icon: const Icon(
-                      AppIcons.barcode_2,
-                      color: Colors.blue,
-                      size: 27,
+                  Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white),
+                        color: primaryColor,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10))),
+                    child: IconButton(
+                      onPressed: () async {
+                        // _showChoiceDialog(context);
+                        await scanBarcodeNormal();
+                        // QuerySnapshot<Object?> result =
+                        //     await BarcodeService().barcodeResult(_scanBarcode);
+                        // print(result.docs.first.get('title'));
+                        FoodClass result =
+                            await BarcodeService().barcodeResult(_scanBarcode);
+                        await Navigator.pushNamed(context, '/ItemInfo',
+                            arguments: result);
+                      },
+                      icon: const Icon(
+                        AppIcons.barcode_2,
+                        color: Colors.white,
+                        size: 27,
+                      ),
                     ),
                   ),
                   const SizedBox(
