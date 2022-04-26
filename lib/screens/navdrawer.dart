@@ -99,25 +99,25 @@ class NavDrawer extends StatelessWidget {
                   const SizedBox(
                     height: 8,
                   ),
-                  ListTile(
-                    leading: const Icon(
-                      Icons.insights_rounded,
-                      color: Colors.white,
-                      size: 28,
-                    ),
-                    title: const Text(
-                      'Insights',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
-                    ),
-                    onTap: () =>
-                        {Navigator.pushReplacementNamed(context, '/Insights')},
-                    tileColor: (pageRouteName == '/Insights')
-                        ? Colors.grey[700]
-                        : Colors.grey[800],
-                  ),
+                  // ListTile(
+                  //   leading: const Icon(
+                  //     Icons.insights_rounded,
+                  //     color: Colors.white,
+                  //     size: 28,
+                  //   ),
+                  //   title: const Text(
+                  //     'Insights',
+                  //     style: TextStyle(
+                  //       color: Colors.white,
+                  //       fontSize: 16,
+                  //     ),
+                  //   ),
+                  //   onTap: () =>
+                  //       {Navigator.pushReplacementNamed(context, '/Insights')},
+                  //   tileColor: (pageRouteName == '/Insights')
+                  //       ? Colors.grey[700]
+                  //       : Colors.grey[800],
+                  // ),
                   const SizedBox(
                     height: 8,
                   ),
