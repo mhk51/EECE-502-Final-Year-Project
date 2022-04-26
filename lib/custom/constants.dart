@@ -15,6 +15,9 @@ const textInputDecoration = InputDecoration(
   ),
 );
 
+const primaryColor = Color.fromARGB(255, 255, 75, 58);
+const backgroundColor = Color.fromARGB(242, 242, 242, 242);
+
 Widget inputField(Icon prefixIcon, String hintText, bool isPassword,
     Function onChanged, Function validator) {
   return Container(

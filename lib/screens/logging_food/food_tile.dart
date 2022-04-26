@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/custom/constants.dart';
 import 'package:flutter_application_1/models/food_class.dart';
 
 class RecipeItemInfoArgs {
@@ -44,7 +45,7 @@ class _FoodTileState extends State<FoodTile> {
             ),
             TextSpan(
               text: '${widget.food.carbs}',
-              style: TextStyle(color: Colors.blue, fontSize: fontSize),
+              style: TextStyle(color: primaryColor, fontSize: fontSize),
             ),
             TextSpan(
               text: ' - Prot: ',
@@ -52,7 +53,7 @@ class _FoodTileState extends State<FoodTile> {
             ),
             TextSpan(
               text: '${widget.food.protein}',
-              style: TextStyle(color: Colors.blue, fontSize: fontSize),
+              style: TextStyle(color: primaryColor, fontSize: fontSize),
             ),
             TextSpan(
               text: ' - Fat: ',
@@ -60,7 +61,7 @@ class _FoodTileState extends State<FoodTile> {
             ),
             TextSpan(
               text: '${widget.food.fat}',
-              style: TextStyle(color: Colors.blue, fontSize: fontSize),
+              style: TextStyle(color: primaryColor, fontSize: fontSize),
             )
           ],
         ),
@@ -73,7 +74,7 @@ class _FoodTileState extends State<FoodTile> {
             IconButton(
               icon: Icon(
                 Icons.add_circle,
-                color: addButtonSelected ? Colors.blue : Colors.grey[600],
+                color: addButtonSelected ? primaryColor : Colors.grey[600],
                 size: 25,
               ),
               onPressed: () async {
@@ -107,7 +108,7 @@ class _FoodTileState extends State<FoodTile> {
               },
               icon: Icon(
                 Icons.star,
-                color: starButtonSelected ? Colors.amber : Colors.grey[600],
+                color: starButtonSelected ? primaryColor : Colors.grey[600],
                 size: 25,
               ),
               iconSize: 5,

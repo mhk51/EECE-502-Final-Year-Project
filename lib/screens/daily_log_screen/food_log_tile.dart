@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/custom/constants.dart';
 import 'package:flutter_application_1/models/food_class.dart';
 
 class FoodLogTile extends StatefulWidget {
@@ -49,7 +50,7 @@ class _FoodLogTileState extends State<FoodLogTile> {
                 ),
                 TextSpan(
                   text: '${food.carbs}',
-                  style: TextStyle(color: Colors.blue, fontSize: fontSize),
+                  style: TextStyle(color: primaryColor, fontSize: fontSize),
                 ),
                 TextSpan(
                   text: ' - Prot: ',
@@ -57,7 +58,7 @@ class _FoodLogTileState extends State<FoodLogTile> {
                 ),
                 TextSpan(
                   text: '${food.protein}',
-                  style: TextStyle(color: Colors.blue, fontSize: fontSize),
+                  style: TextStyle(color: primaryColor, fontSize: fontSize),
                 ),
                 TextSpan(
                   text: ' - Fat: ',
@@ -65,7 +66,7 @@ class _FoodLogTileState extends State<FoodLogTile> {
                 ),
                 TextSpan(
                   text: '${food.fat}',
-                  style: TextStyle(color: Colors.blue, fontSize: fontSize),
+                  style: TextStyle(color: primaryColor, fontSize: fontSize),
                 )
               ],
             ),

@@ -36,96 +36,107 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
         resizeToAvoidBottomInset: false,
         // drawer: NavDrawer(),
         appBar: AppBar(
-          backgroundColor: Colors.blue[800],
+          backgroundColor: primaryColor,
           title: const Padding(
             padding: EdgeInsets.all(8.0),
-            child: Text("Add/Edit Food"),
+            // child: Text("Add/Edit Food"),
+            child: Text("Add Food"),
           ),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.delete),
-              iconSize: 28,
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.save),
-              iconSize: 28,
-            )
-          ],
+          // actions: [
+          //   IconButton(
+          //     onPressed: () {},
+          //     icon: const Icon(Icons.delete),
+          //     iconSize: 28,
+          //   ),
+          //   const SizedBox(
+          //     width: 10,
+          //   ),
+          //   IconButton(
+          //     onPressed: () {},
+          //     icon: const Icon(Icons.save),
+          //     iconSize: 28,
+          //   )
+          // ],
         ),
         body: Scrollbar(
-          child: ListView(
-            // mainAxisAlignment: MainAxisAlignment.start,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              const Text(
-                "Item Info:",
-                style: TextStyle(
-                  fontSize: 18,
-                ),
-              ),
-              Row(
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Container(
-                      color: Colors.grey[200],
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
-                            child: Text('Food Name'),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: TextField(
-                              minLines: 3,
-                              maxLines: 3,
-                              controller: foodNameController,
-                              decoration: InputDecoration(
-                                filled: true,
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    width: 1.5,
-                                    color: Colors.grey[500]!,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    width: 1.5,
-                                    color: Colors.grey[500]!,
-                                  ),
-                                ),
-                                fillColor: Colors.white,
-                              ),
-                              onChanged: (val) {},
-                            ),
-                          ),
-                        ],
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      "Portion Size:",
+                      style: TextStyle(
+                        fontSize: 18,
                       ),
                     ),
                   ),
+                  DropdownButtonFormField<int>(
+                    value: defaultPortion,
+                    decoration: textInputDecoration,
+                    items: portions.map((sugar) {
+                      return DropdownMenuItem(
+                        value: sugar,
+                        child: Text('$sugar g'),
+                      );
+                    }).toList(),
+                    onChanged: (val) => setState(() => defaultPortion = val!),
+                  ),
                 ],
               ),
-              TextButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.add_circle),
-                label: const Text('Add photo'),
-              ),
-              DropdownButtonFormField<int>(
-                value: defaultPortion,
-                decoration: textInputDecoration,
-                items: portions.map((sugar) {
-                  return DropdownMenuItem(
-                    value: sugar,
-                    child: Text('$sugar g'),
-                  );
-                }).toList(),
-                onChanged: (val) => setState(() => defaultPortion = val!),
-              ),
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       child: Container(
+              //         color: Colors.grey[200],
+              //         child: Column(
+              //           crossAxisAlignment: CrossAxisAlignment.start,
+              //           children: [
+              //             const Padding(
+              //               padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
+              //               child: Text('Food Name'),
+              //             ),
+              //             Padding(
+              //               padding: const EdgeInsets.all(12.0),
+              //               child: TextField(
+              //                 minLines: 3,
+              //                 maxLines: 3,
+              //                 controller: foodNameController,
+              //                 decoration: InputDecoration(
+              //                   filled: true,
+              //                   enabledBorder: OutlineInputBorder(
+              //                     borderSide: BorderSide(
+              //                       width: 1.5,
+              //                       color: Colors.grey[500]!,
+              //                     ),
+              //                   ),
+              //                   focusedBorder: OutlineInputBorder(
+              //                     borderSide: BorderSide(
+              //                       width: 1.5,
+              //                       color: Colors.grey[500]!,
+              //                     ),
+              //                   ),
+              //                   fillColor: Colors.white,
+              //                 ),
+              //                 onChanged: (val) {},
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              // TextButton.icon(
+              //   onPressed: () {},
+              //   icon: const Icon(Icons.add_circle),
+              //   label: const Text('Add photo'),
+              // ),
+
               TextField(
                 onChanged: (value) {
                   setState(() {
@@ -145,17 +156,28 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
               //CupertinoSearchTextField(),
               Column(
                 children: [
-                  const Text("Nutritional Facts: "),
+                  const Text(
+                    "Nutritional Facts: ",
+                    style: TextStyle(color: Colors.black, fontSize: 28),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Table(
-                      border: TableBorder.all(),
+                      border: TableBorder.all(
+                          borderRadius: BorderRadius.circular(20)),
                       children: [
                         TableRow(
                           children: [
                             SizedBox(
                               height: 48,
-                              child: Text("Food Name: ${food.foodName}"),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  "Food Name: ${food.foodName}",
+                                  style: const TextStyle(
+                                      color: Colors.black, fontSize: 22),
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -163,8 +185,29 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
                           children: [
                             SizedBox(
                               height: 48,
-                              child: Text(
-                                  "Carbs: ${food.carbs * (defaultPortion / 100) * numberofServings}"),
+                              child:
+                                  // Text(
+                                  //     "Carbs: ${food.carbs * (defaultPortion / 100) * numberofServings}"),
+                                  Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: RichText(
+                                  text: TextSpan(
+                                      text: 'Carbs: ',
+                                      style: const TextStyle(
+                                          color: Colors.black, fontSize: 22),
+                                      children: [
+                                        TextSpan(
+                                          text:
+                                              '${food.carbs * (defaultPortion / 100) * numberofServings}',
+                                          style: const TextStyle(
+                                              color: primaryColor),
+                                        ),
+                                        const TextSpan(
+                                          text: ' g',
+                                        )
+                                      ]),
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -172,8 +215,29 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
                           children: [
                             SizedBox(
                               height: 48,
-                              child: Text(
-                                  "Protien: ${food.protein * (defaultPortion / 100) * numberofServings}"),
+                              child:
+                                  // Text(
+                                  //     "Protien: ${food.protein * (defaultPortion / 100) * numberofServings}"),
+                                  Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: RichText(
+                                  text: TextSpan(
+                                      text: 'Protien: ',
+                                      style: const TextStyle(
+                                          color: Colors.black, fontSize: 22),
+                                      children: [
+                                        TextSpan(
+                                          text:
+                                              '${food.protein * (defaultPortion / 100) * numberofServings}',
+                                          style: const TextStyle(
+                                              color: primaryColor),
+                                        ),
+                                        const TextSpan(
+                                          text: ' g',
+                                        )
+                                      ]),
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -181,8 +245,29 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
                           children: [
                             SizedBox(
                               height: 48,
-                              child: Text(
-                                  "Fat: ${food.fat * (defaultPortion / 100) * numberofServings}"),
+                              child:
+                                  // Text(
+                                  //     "Fat: ${food.fat * (defaultPortion / 100) * numberofServings}"),
+                                  Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: RichText(
+                                  text: TextSpan(
+                                      text: 'Fat: ',
+                                      style: const TextStyle(
+                                          color: Colors.black, fontSize: 22),
+                                      children: [
+                                        TextSpan(
+                                          text:
+                                              '${food.fat * (defaultPortion / 100) * numberofServings}',
+                                          style: const TextStyle(
+                                              color: primaryColor),
+                                        ),
+                                        const TextSpan(
+                                          text: ' g',
+                                        )
+                                      ]),
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -190,8 +275,29 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
                           children: [
                             SizedBox(
                               height: 48,
-                              child: Text(
-                                  "Sugar: ${food.sugar * (defaultPortion / 100) * numberofServings}"),
+                              child:
+                                  // Text(
+                                  //     "Sugar: ${food.sugar * (defaultPortion / 100) * numberofServings}"),
+                                  Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: RichText(
+                                  text: TextSpan(
+                                      text: 'Sugar: ',
+                                      style: const TextStyle(
+                                          color: Colors.black, fontSize: 22),
+                                      children: [
+                                        TextSpan(
+                                          text:
+                                              '${food.sugar * (defaultPortion / 100) * numberofServings}',
+                                          style: const TextStyle(
+                                              color: primaryColor),
+                                        ),
+                                        const TextSpan(
+                                          text: ' g',
+                                        )
+                                      ]),
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -211,7 +317,22 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
                 }).toList(),
                 onChanged: (val) => setState(() => defaultMeal = val!),
               ),
-              const Text("Comment on food selected"),
+              // const Text("Comment on food selected"),
+              // ElevatedButton(
+              //   onPressed: () async {
+              //     final uid = _auth.getUID();
+              //     double multiplier =
+              //         numberofServings * defaultPortion.toDouble() / 100;
+              //     await FoodDatabaseService(uid: uid).addUserFoodLog(
+              //         food, multiplier, defaultMeal, DateTime.now());
+
+              //     await FoodStatsService(uid: uid)
+              //         .addUserFoodStatsLog(food, defaultMeal, 10);
+              //     Navigator.pop(context);
+              //   },
+              //   child: const Text("Log Food"),
+              // ),
+
               ElevatedButton(
                 onPressed: () async {
                   final uid = _auth.getUID();
@@ -224,7 +345,22 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
                       .addUserFoodStatsLog(food, defaultMeal, 10);
                   Navigator.pop(context);
                 },
-                child: const Text("Log Food"),
+                child: const Text("Log Food",
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontFamily: 'Inria Serif',
+                    )),
+                style: ButtonStyle(
+                  minimumSize:
+                      MaterialStateProperty.all<Size>(const Size(314, 70)),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(primaryColor),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

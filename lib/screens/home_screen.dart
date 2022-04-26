@@ -22,6 +22,8 @@ class _HomeScreenState extends State<HomeScreen> {
   List<String> prepost = ["Before Meal", "After Meal"];
   String defaultMeal = "Breakfast";
   String defaultPrepost = "Before Meal";
+  Color primaryColor = const Color.fromARGB(255, 255, 75, 58);
+  Color backgroundColor = const Color.fromARGB(242, 242, 242, 242);
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Future<void> showInformationDialog(BuildContext context) async {
@@ -73,21 +75,27 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             actions: <Widget>[
               TextButton(
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      // TimeOfDay now = TimeOfDay.now();
-                      LoggedBSL currentBSL = LoggedBSL(
-                          double.parse(_textEditingController.text),
-                          DateTime.now());
-                      LoggedBSL.chartData.add(currentBSL);
-                      final uid = _auth.getUID();
-                      await BloodSugarDatabaseService(uid: uid)
-                          .addBloodSugarLog(currentBSL.level, defaultMeal,
-                              defaultPrepost, DateTime.now());
-                      Navigator.of(context).pop();
-                    }
-                  },
-                  child: const Text("Submit"))
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    // TimeOfDay now = TimeOfDay.now();
+                    LoggedBSL currentBSL = LoggedBSL(
+                        double.parse(_textEditingController.text),
+                        DateTime.now());
+                    LoggedBSL.chartData.add(currentBSL);
+                    final uid = _auth.getUID();
+                    await BloodSugarDatabaseService(uid: uid).addBloodSugarLog(
+                        currentBSL.level,
+                        defaultMeal,
+                        defaultPrepost,
+                        DateTime.now());
+                    Navigator.of(context).pop();
+                  }
+                },
+                child: Text(
+                  "Submit",
+                  style: TextStyle(color: primaryColor),
+                ),
+              )
             ],
           );
         });
@@ -100,9 +108,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.white,
+        backgroundColor: backgroundColor,
         appBar: AppBar(
-          backgroundColor: Colors.blue[800],
+          title: Text("Home"),
+          backgroundColor: primaryColor,
           actions: [
             TextButton.icon(
               onPressed: () {
@@ -127,17 +136,45 @@ class _HomeScreenState extends State<HomeScreen> {
           width: size.width,
           height: size.height,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               const SizedBox(
                 height: 10,
               ),
-              Padding(
+              Container(
                 padding: const EdgeInsets.all(8.0),
+                width: 0.95 * size.width,
+                alignment: Alignment.center,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
                 child: Text('Welcome ${user!.name}',
-                    style: const TextStyle(fontSize: 20)),
+                    style: const TextStyle(
+                      fontSize: 48,
+                      fontFamily: 'Inria Serif',
+                    )),
               ),
-              const LineChart(),
+              Container(
+                padding: const EdgeInsets.all(8.0),
+                width: 0.95 * size.width,
+                alignment: Alignment.center,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
+                child: Column(
+                  children: const [
+                    Text("My Blood Sugar Data",
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontFamily: 'Inria Serif',
+                        )),
+                    LineChart(),
+                  ],
+                ),
+              ),
               Container(
                 alignment: Alignment.center,
                 child: ElevatedButton(
@@ -145,41 +182,49 @@ class _HomeScreenState extends State<HomeScreen> {
                     await showInformationDialog(
                         context); // Navigator.pushNamed(context, '/LoggingFood');
                   },
-                  child: const Text("Log Current Sugar Level"),
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(340, 40),
-                    alignment: Alignment.center,
+                  child: const Text("Log Current Sugar Level",
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontFamily: 'Inria Serif',
+                      )),
+                  style: ButtonStyle(
+                    minimumSize:
+                        MaterialStateProperty.all<Size>(const Size(314, 70)),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        const Color.fromARGB(255, 255, 75, 58)),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                    ),
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Padding(
+              Container(
                 padding: EdgeInsets.all(8.0),
-                child: Text("Tip Of The Day:"),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text("Choose food with low levels of added sugar"),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                    alignment: Alignment.bottomCenter,
-                    child: Row(
-                      verticalDirection: VerticalDirection.down,
+                width: 0.95 * size.width,
+                alignment: Alignment.bottomLeft,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
+                child: Column(
+                  children: const [
+                    Text("Tip Of The Day:",
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontFamily: 'Inria Serif',
+                        )),
+                    SizedBox(
+                      height: 20,
                     ),
-                  ),
-                ],
+                    Text("Choose food with low levels of added sugar",
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontFamily: 'Inria Serif',
+                        )),
+                  ],
+                ),
               ),
             ],
           ),
