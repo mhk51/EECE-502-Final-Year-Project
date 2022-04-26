@@ -28,7 +28,7 @@ class TherapyDatabaseService {
     return await userTherapyCollection.doc(uid).set({
       'hyperglycemia': hyperglycemia,
       'glucoseHigh': glucoseHigh,
-      'glocoseTarget': glocoseTarget,
+      'glucoseTarget': glocoseTarget,
       'glucoseLow': glucoseLow,
       'hypoglycemia': hypoglycemia,
       'hyperglycemiaAfterMeal': hyperglycemiaAfterMeal,

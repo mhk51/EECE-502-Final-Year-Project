@@ -620,6 +620,8 @@ class _SettingsFormState extends State<SettingsForm> {
                             stream: TherapyDatabaseService(uid: childData.uid)
                                 .userTherapyData,
                             builder: (context, snapshot) {
+                              print(childData.uid);
+                              print(snapshot.hasData);
                               return (snapshot.connectionState ==
                                           ConnectionState.active &&
                                       snapshot.hasData)
