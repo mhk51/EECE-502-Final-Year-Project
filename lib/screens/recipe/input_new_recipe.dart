@@ -17,7 +17,8 @@ class InputNewRecipe extends StatefulWidget {
 
 class _InputNewRecipeState extends State<InputNewRecipe> {
   RecipeIngredients recipe = RecipeIngredients([]);
-
+  String mealValue = "Breakfast";
+  List<String> mealTypes = ["Breakfast", "Lunch", "Dinner", "Snack"];
   @override
   Widget build(BuildContext context) {
     final data =
@@ -59,9 +60,6 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
                     ),
                   ),
                 ),
-                // Container(
-                //   child: Text("Ingredients"),
-                // ),
                 RecipeIgredientList(
                   ingredientsList: recipe.ingredients,
                   recipeName: recipeName,
@@ -92,15 +90,29 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    logging
+                        ? Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            child: DropdownButtonFormField<String>(
+                                value: mealValue,
+                                decoration: textInputDecoration,
+                                items: mealTypes.map((sugar) {
+                                  return DropdownMenuItem(
+                                    value: sugar,
+                                    child: Text(sugar),
+                                  );
+                                }).toList(),
+                                onChanged: (val) {
+                                  setState(() => mealValue = val!);
+                                }),
+                          )
+                        : Container(),
                     ElevatedButton(
                       onPressed: () async {
                         if (logging) {
                           await RecipeDatabaseService(
                                   recipeName: recipeName, uid: userUID)
-                              .logAllRecipeItems();
+                              .logAllRecipeItems(mealValue);
                         }
                         // Navigator.pop(context);
                       },
