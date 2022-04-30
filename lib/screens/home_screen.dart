@@ -138,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
             height: size.height,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const SizedBox(
                   height: 10,
@@ -151,11 +151,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),
-                  child: Text('Welcome \n${user!.name}',
+                  child: Text('Welcome\n${user!.name}',
                       style: const TextStyle(
                         fontSize: 40,
                         fontFamily: 'Inria Serif',
                       )),
+                ),
+                SizedBox(
+                  height: 0.02 * size.height,
                 ),
                 Container(
                   padding: const EdgeInsets.all(8.0),
@@ -175,6 +178,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       LineChart(),
                     ],
                   ),
+                ),
+                SizedBox(
+                  height: 0.02 * size.height,
                 ),
                 Container(
                   alignment: Alignment.center,
@@ -200,6 +206,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
+                ),
+                SizedBox(
+                  height: 0.02 * size.height,
                 ),
                 Container(
                   padding: EdgeInsets.all(8.0),
