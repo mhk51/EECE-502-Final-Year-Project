@@ -158,40 +158,24 @@ class _BolusListViewState extends State<BolusListView> {
             content: Form(
               key: _formKey,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Text(
-                      "If you feel that the insulin recommendation is not accurate,\nplease input the correct one so that we can adjust the recommendation for the next time:"),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Expanded(
-                        flex: 1,
-                        child: Text('Actual Insulin Needed'),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          height: 40,
-                          width: 150,
-                          padding: const EdgeInsets.fromLTRB(10, 0, 50, 2),
-                          margin: const EdgeInsets.fromLTRB(50, 0, 40, 0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Expanded(
-                                child: TextField(
-                                  decoration: const InputDecoration(
-                                      hintText: '00',
-                                      contentPadding: EdgeInsets.all(0)),
-                                  onChanged: (val) {},
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+                      "If you feel that the insulin recommendation is not accurate,\nplease input the correct one so that we can adjust the recommendation for the next time:",
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontFamily: 'Inria Serif',
+                      )),
+                  TextFormField(
+                    validator: (value) {
+                      return value!.isNotEmpty ? null : "Invalid Field";
+                    },
+                    decoration: const InputDecoration(
+                        hintText: "Actual Insulin Needed"),
+                    controller: _textEditingController,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   ),
                 ],
               ),
@@ -330,7 +314,7 @@ class _BolusListViewState extends State<BolusListView> {
               ),
               const Expanded(
                 flex: 1,
-                child: Text(' '),
+                child: Text('Carbs'),
               ),
               Expanded(
                 flex: 5,
@@ -572,7 +556,18 @@ class _BolusListViewState extends State<BolusListView> {
             //     mealValue +
             //     ": $bloodSugarLevel"),
             // Text("Carbs from " + mealValue + ": $carbs"),
-            OutlinedButton(
+            // OutlinedButton(
+            //     onPressed: () {
+            //       setState(() {
+            //         insulinUnits = (widget.carbs / widget.carbohydratesRatio +
+            //             (widget.bloodSugarLevel - widget.glucoseTarget) /
+            //                 widget.insulinSensitivity);
+            //       });
+            //     },
+            //     child: const Text('Calculate')),
+            Container(
+              alignment: Alignment.center,
+              child: ElevatedButton(
                 onPressed: () {
                   setState(() {
                     insulinUnits = (widget.carbs / widget.carbohydratesRatio +
@@ -580,66 +575,33 @@ class _BolusListViewState extends State<BolusListView> {
                             widget.insulinSensitivity);
                   });
                 },
-                child: const Text('Calculate')),
+                child: const Text("Calculate",
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontFamily: 'Inria Serif',
+                    )),
+                style: ButtonStyle(
+                  minimumSize:
+                      MaterialStateProperty.all<Size>(const Size(314, 70)),
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      const Color.fromARGB(255, 255, 75, 58)),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
             // Text("Estimated Insulin to take before " +
             //     mealValue +
             //     ": ${widget.carbs}/{{Insulin to Carb Ratio}} + (${widget.bloodSugarLevel} - {{Target BSL}})/{{Sensitivity Factor}}"),
             // const Text(
             //     "Important Note: Make sure to input an accurate measurment of BSL and input all meal in order to give you an accurate estimation of Insulin to take before the meal"),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-            //   child: Container(
-            //     padding: const EdgeInsets.all(8.0),
-            //     // width: 0.95 * size.width,
-            //     alignment: Alignment.center,
-            //     decoration: const BoxDecoration(
-            //       color: Colors.white,
-            //       borderRadius: BorderRadius.all(Radius.circular(20)),
-            //     ),
-            //     child: Column(
-            //       children: [
-            //         Text(
-            //             "If you feel that the insulin recommendation is not accurate,\nplease input the correct one so that we can adjust the recommendation for the next time:"),
-            //         Row(
-            //           mainAxisAlignment: MainAxisAlignment.center,
-            //           children: [
-            //             const Expanded(
-            //               flex: 1,
-            //               child: Text('Actual Insulin Needed'),
-            //             ),
-            //             Expanded(
-            //               flex: 1,
-            //               child: Container(
-            //                 height: 40,
-            //                 width: 150,
-            //                 padding: const EdgeInsets.fromLTRB(10, 0, 50, 2),
-            //                 margin: const EdgeInsets.fromLTRB(50, 0, 40, 0),
-            //                 child: Row(
-            //                   crossAxisAlignment: CrossAxisAlignment.end,
-            //                   children: [
-            //                     Expanded(
-            //                       child: TextField(
-            //                         decoration: const InputDecoration(
-            //                             hintText: '00',
-            //                             contentPadding: EdgeInsets.all(0)),
-            //                         onChanged: (val) {
-            //                           try {
-            //                             widget.bloodSugarLevel =
-            //                                 double.parse(val);
-            //                           } catch (e) {}
-            //                         },
-            //                       ),
-            //                     ),
-            //                   ],
-            //                 ),
-            //               ),
-            //             ),
-            //           ],
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
+
             Container(
               alignment: Alignment.center,
               child: ElevatedButton(
