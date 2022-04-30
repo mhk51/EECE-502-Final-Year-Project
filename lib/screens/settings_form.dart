@@ -498,7 +498,9 @@ class _SettingsFormState extends State<SettingsForm> {
                                 subtitle: Container(
                                   margin: const EdgeInsets.only(top: 10),
                                   child: Text(
-                                    childData.name!.split(" ")[1],
+                                    (childData.name!.split(" ").length == 1)
+                                        ? ""
+                                        : childData.name!.split(" ")[1],
                                     style: const TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
@@ -620,8 +622,6 @@ class _SettingsFormState extends State<SettingsForm> {
                             stream: TherapyDatabaseService(uid: childData.uid)
                                 .userTherapyData,
                             builder: (context, snapshot) {
-                              print(childData.uid);
-                              print(snapshot.hasData);
                               return (snapshot.connectionState ==
                                           ConnectionState.active &&
                                       snapshot.hasData)

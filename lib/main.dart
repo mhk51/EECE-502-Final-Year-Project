@@ -8,6 +8,7 @@ import 'package:flutter_application_1/screens/item_info_screen.dart';
 import 'package:flutter_application_1/screens/logging_food/logging_food_screen.dart';
 import 'package:flutter_application_1/screens/recipe/new_recipe_search.dart';
 import 'package:flutter_application_1/screens/recipe/recipe_item_info.dart';
+import 'package:flutter_application_1/screens/recipe/recipe_list.dart';
 import 'package:flutter_application_1/screens/settings_form.dart';
 import 'package:flutter_application_1/screens/weekly_insights_screen.dart';
 import 'package:flutter_application_1/screens/wrapper.dart';
@@ -46,7 +47,8 @@ class MyApp extends StatelessWidget {
           '/DailyLogging': (context) => const DailyLogScreen(),
           '/Settings': (context) => const SettingsForm(),
           '/CameraScreen': (context) => const CameraScreen(),
-          '/Bolus': (context) => const Bolus()
+          '/Bolus': (context) => const Bolus(),
+          '/RecipeList': (context) => const RecipeList(),
         },
       ),
     );
