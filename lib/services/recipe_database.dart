@@ -58,7 +58,14 @@ class RecipeDatabaseService {
     });
   }
 
-  Future<void> logEachItem(DocumentSnapshot doc) async {}
+  Future<bool> checkIfRecipeExists() async {
+    QuerySnapshot result = await userRecipeCollection
+        .where('recipeName', isEqualTo: recipeName)
+        .where('userID', isEqualTo: uid)
+        .limit(1)
+        .get();
+    return result.docs.isNotEmpty;
+  }
 
   Future<void> logAllRecipeItems(String mealType) async {
     final CollectionReference userFoodCollection =

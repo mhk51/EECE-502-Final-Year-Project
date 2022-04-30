@@ -6,7 +6,9 @@ import 'package:flutter_application_1/custom/constants.dart';
 import 'package:flutter_application_1/models/food_class.dart';
 import 'package:flutter_application_1/screens/logging_food/food_search_list.dart';
 import 'package:flutter_application_1/screens/navdrawer.dart';
+import 'package:flutter_application_1/services/auth.dart';
 import 'package:flutter_application_1/services/barcode_service.dart';
+import 'package:flutter_application_1/services/recipe_database.dart';
 import 'package:flutter_application_1/services/search_service.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 // import 'package:image_picker/image_picker.dart';
@@ -163,12 +165,31 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
             actions: <Widget>[
               TextButton(
                   onPressed: () async {
-                    await Navigator.pushNamed(context, '/InputNewRecipe',
-                        arguments: {
-                          'recipeName': recipeName,
-                          'Logging': false
-                        });
-                    Navigator.pop(context);
+                    final uid = AuthService().getUID();
+                    bool exists = await RecipeDatabaseService(
+                            recipeName: recipeName, uid: uid)
+                        .checkIfRecipeExists();
+                    if (!exists) {
+                      await Navigator.pushNamed(context, '/InputNewRecipe',
+                          arguments: {
+                            'recipeName': recipeName,
+                            'Logging': false
+                          });
+                      Navigator.pop(context);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: primaryColor,
+                          action: SnackBarAction(
+                            label: 'Dismiss',
+                            textColor: Colors.white,
+                            onPressed: () {
+                              ScaffoldMessenger.of(context).clearSnackBars();
+                            },
+                          ),
+                          behavior: SnackBarBehavior.floating,
+                          duration: const Duration(minutes: 1),
+                          content: const Text('Recipe Already Exists')));
+                    }
                   },
                   child: const Text(
                     "Enter",
@@ -184,7 +205,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
     return SafeArea(
       child: Scaffold(
         // backgroundColor: Colors.grey,
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         drawer: NavDrawer(),
         appBar: AppBar(
           backgroundColor: primaryColor,

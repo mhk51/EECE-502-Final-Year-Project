@@ -168,16 +168,16 @@ class _BolusState extends State<Bolus> {
 
 // ignore: must_be_immutable
 class BolusListView extends StatefulWidget {
-  Function dropDownMenuOnChanged;
-  String mealValue;
-  double glucoseTarget;
+  final Function dropDownMenuOnChanged;
+  final String mealValue;
+  final double glucoseTarget;
   double bloodSugarLevel;
   double carbs;
-  double protein;
-  double fat;
-  double calories;
-  double carbohydratesRatio;
-  double insulinSensitivity;
+  final double protein;
+  final double fat;
+  final double calories;
+  final double carbohydratesRatio;
+  final double insulinSensitivity;
   BolusListView({
     Key? key,
     required this.mealValue,

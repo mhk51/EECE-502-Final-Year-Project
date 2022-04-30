@@ -18,7 +18,7 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
   List<String> mealType = ["Breakfast", "Lunch", "Dinner", "Snack"];
   String defaultMeal = "Breakfast";
   int defaultPortion = 100;
-  int numberofServings = 1;
+  double numberofServings = 1.0;
   final _auth = AuthService();
   late TextEditingController foodNameController;
 
@@ -42,21 +42,6 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
             // child: Text("Add/Edit Food"),
             child: Text("Add Food"),
           ),
-          // actions: [
-          //   IconButton(
-          //     onPressed: () {},
-          //     icon: const Icon(Icons.delete),
-          //     iconSize: 28,
-          //   ),
-          //   const SizedBox(
-          //     width: 10,
-          //   ),
-          //   IconButton(
-          //     onPressed: () {},
-          //     icon: const Icon(Icons.save),
-          //     iconSize: 28,
-          //   )
-          // ],
         ),
         body: Scrollbar(
           child: Column(
@@ -88,60 +73,12 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
                   ),
                 ],
               ),
-              // Row(
-              //   children: [
-              //     Expanded(
-              //       child: Container(
-              //         color: Colors.grey[200],
-              //         child: Column(
-              //           crossAxisAlignment: CrossAxisAlignment.start,
-              //           children: [
-              //             const Padding(
-              //               padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
-              //               child: Text('Food Name'),
-              //             ),
-              //             Padding(
-              //               padding: const EdgeInsets.all(12.0),
-              //               child: TextField(
-              //                 minLines: 3,
-              //                 maxLines: 3,
-              //                 controller: foodNameController,
-              //                 decoration: InputDecoration(
-              //                   filled: true,
-              //                   enabledBorder: OutlineInputBorder(
-              //                     borderSide: BorderSide(
-              //                       width: 1.5,
-              //                       color: Colors.grey[500]!,
-              //                     ),
-              //                   ),
-              //                   focusedBorder: OutlineInputBorder(
-              //                     borderSide: BorderSide(
-              //                       width: 1.5,
-              //                       color: Colors.grey[500]!,
-              //                     ),
-              //                   ),
-              //                   fillColor: Colors.white,
-              //                 ),
-              //                 onChanged: (val) {},
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              // TextButton.icon(
-              //   onPressed: () {},
-              //   icon: const Icon(Icons.add_circle),
-              //   label: const Text('Add photo'),
-              // ),
 
               TextField(
                 onChanged: (value) {
                   setState(() {
                     try {
-                      numberofServings = int.parse(value);
+                      numberofServings = double.parse(value);
                     } catch (e) {
                       numberofServings;
                     }
@@ -318,21 +255,6 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
                 }).toList(),
                 onChanged: (val) => setState(() => defaultMeal = val!),
               ),
-              // const Text("Comment on food selected"),
-              // ElevatedButton(
-              //   onPressed: () async {
-              //     final uid = _auth.getUID();
-              //     double multiplier =
-              //         numberofServings * defaultPortion.toDouble() / 100;
-              //     await FoodDatabaseService(uid: uid).addUserFoodLog(
-              //         food, multiplier, defaultMeal, DateTime.now());
-
-              //     await FoodStatsService(uid: uid)
-              //         .addUserFoodStatsLog(food, defaultMeal, 10);
-              //     Navigator.pop(context);
-              //   },
-              //   child: const Text("Log Food"),
-              // ),
 
               ElevatedButton(
                 onPressed: () async {
