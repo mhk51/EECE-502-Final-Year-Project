@@ -58,11 +58,23 @@ class RecipeDatabaseService {
     });
   }
 
-  Future<void> logAllRecipeItems() async {
-    QuerySnapshot result = await userRecipeCollection.get();
+  Future<void> logEachItem(DocumentSnapshot doc) async {}
+
+  Future<void> logAllRecipeItems(String mealType) async {
+    final CollectionReference userFoodCollection =
+        FirebaseFirestore.instance.collection('UserFoodCollection');
+    QuerySnapshot result = await userRecipeCollection
+        .where('recipeName', isEqualTo: recipeName)
+        .where('userID', isEqualTo: uid)
+        .get();
     List<DocumentSnapshot> docs = result.docs;
-    for (int i = 0; i < docs.length; i++) {
-      print(docs[i].data());
+    for (var element in docs) {
+      await userFoodCollection.add({
+        'food': element.get('food'),
+        'mealType': mealType,
+        'timeAdded': DateTime.now(),
+        'userID': uid,
+      });
     }
   }
 }
