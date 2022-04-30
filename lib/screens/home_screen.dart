@@ -152,6 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),
                   child: Text('Welcome\n${user!.name}',
+                      textAlign: TextAlign.center,
                       style: const TextStyle(
                         fontSize: 40,
                         fontFamily: 'Inria Serif',

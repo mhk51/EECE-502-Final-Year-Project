@@ -20,6 +20,7 @@ class _DailyLogScreenState extends State<DailyLogScreen> {
   @override
   Widget build(BuildContext context) {
     final uid = _auth.getUID();
+    final Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         drawer: NavDrawer(),
@@ -68,7 +69,7 @@ class _DailyLogScreenState extends State<DailyLogScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           SizedBox(
-                            height: 20,
+                            height: 0.03 * size.height,
                           ),
                           Container(
                             padding: EdgeInsets.all(8.0),
@@ -93,7 +94,7 @@ class _DailyLogScreenState extends State<DailyLogScreen> {
                                         children: [
                                           TextSpan(
                                             text:
-                                                '${carbs * 100.round() / 100}',
+                                                '${(carbs * 100).round() / 100}',
                                             style: const TextStyle(
                                                 color: primaryColor),
                                           ),
@@ -110,7 +111,7 @@ class _DailyLogScreenState extends State<DailyLogScreen> {
                                         children: [
                                           TextSpan(
                                             text:
-                                                '${protein * 100.round() / 100}',
+                                                '${(protein * 100).round() / 100}',
                                             style: const TextStyle(
                                                 color: primaryColor),
                                           ),
@@ -126,7 +127,8 @@ class _DailyLogScreenState extends State<DailyLogScreen> {
                                             color: Colors.black, fontSize: 22),
                                         children: [
                                           TextSpan(
-                                            text: '${fat * 100.round() / 100}',
+                                            text:
+                                                '${(fat * 100).round() / 100}',
                                             style: const TextStyle(
                                                 color: primaryColor),
                                           ),
@@ -197,10 +199,11 @@ class _TodayMealListState extends State<TodayMealList> {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Column(
       children: [
         SizedBox(
-          height: 20,
+          height: 0.02 * size.height,
         ),
         Text(
           widget.mealType,
