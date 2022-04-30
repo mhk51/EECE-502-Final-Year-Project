@@ -164,7 +164,8 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: Table(
                       border: TableBorder.all(
-                          borderRadius: BorderRadius.circular(20)),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                       children: [
                         TableRow(
                           children: [

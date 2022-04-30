@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/custom/constants.dart';
 import 'package:flutter_application_1/custom/loading.dart';
 import 'package:flutter_application_1/models/food_class.dart';
 import 'package:flutter_application_1/screens/daily_log_screen/food_log_tile.dart';
@@ -75,11 +76,12 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
   @override
   Widget build(BuildContext context) {
     final recipeName = ModalRoute.of(context)!.settings.arguments as String;
+    final Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
-            backgroundColor: Colors.blue[800],
+            backgroundColor: primaryColor,
             title: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(recipeName),
@@ -92,6 +94,25 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Container(
+                  padding: const EdgeInsets.all(8.0),
+                  width: 0.95 * size.width,
+                  alignment: Alignment.center,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                  ),
+                  child: const Text(
+                    "Ingredients",
+                    style: TextStyle(
+                      fontSize: 48,
+                      fontFamily: 'Inria Serif',
+                    ),
+                  ),
+                ),
+                // Container(
+                //   child: Text("Ingredients"),
+                // ),
                 RecipeIgredientList(
                   ingredientsList: recipe.ingredients,
                   recipeName: recipeName,
@@ -104,7 +125,34 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
                             arguments: recipeName);
                         setState(() {});
                       },
-                      child: const Text("Add Ingredients"),
+                      child: const Text("Add Ingredients",
+                          style: TextStyle(
+                            fontSize: 28,
+                            fontFamily: 'Inria Serif',
+                          )),
+                      style: ButtonStyle(
+                        minimumSize: MaterialStateProperty.all<Size>(
+                            const Size(185, 55)),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(primaryColor),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                        ),
+                      ),
+                    ),
+                    // ElevatedButton(
+                    //   onPressed: () async {
+                    //     await Navigator.pushNamed(context, '/NewRecipeSearch',
+                    //         arguments: recipeName);
+                    //     setState(() {});
+                    //   },
+                    //   child: const Text("Add Ingredients"),
+                    // ),
+                    const SizedBox(
+                      height: 20,
                     ),
                     ElevatedButton(
                       onPressed: () async {
@@ -117,8 +165,37 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
                         //   print(recipe.ingredients[i].foodName);
                         // }
                       },
-                      child: const Text("Save Recipe"),
+                      child: const Text("Save Recipe",
+                          style: TextStyle(
+                            fontSize: 28,
+                            fontFamily: 'Inria Serif',
+                          )),
+                      style: ButtonStyle(
+                        minimumSize: MaterialStateProperty.all<Size>(
+                            const Size(185, 55)),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(primaryColor),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                        ),
+                      ),
                     ),
+                    // ElevatedButton(
+                    //   onPressed: () async {
+                    //     await showInformationDialog(context);
+                    //     if (saved == true) {
+                    //       Navigator.of(context).pop();
+                    //     }
+
+                    //     // for (int i = 0; i < recipe.ingredients.length; i++) {
+                    //     //   print(recipe.ingredients[i].foodName);
+                    //     // }
+                    //   },
+                    //   child: const Text("Save Recipe"),
+                    // ),
                   ],
                 )
               ],
