@@ -63,8 +63,8 @@ class TherapyDatabaseService {
       lunchEndTime: snapshot.get('lunchEndTime'),
       dinnerStartTime: snapshot.get('dinnerStartTime'),
       dinnerEndTime: snapshot.get('dinnerEndTime'),
-      insulinSensitivity: snapshot.get('insulinSensitivity'),
-      carbohydratesRatio: snapshot.get('carbohydratesRatio'),
+      insulinSensitivity: snapshot.get('insulinSensitivity').toDouble(),
+      carbohydratesRatio: snapshot.get('carbohydratesRatio').toDouble(),
     );
   }
 
@@ -78,9 +78,17 @@ class TherapyDatabaseService {
   Future<Map<String, double>> getTherapyParams() async {
     DocumentSnapshot result = await userTherapyCollection.doc(uid).get();
     return {
-      'insulinSensitivity': result.get('insulinSensitivity'),
-      'carbohydratesRatio': result.get('carbohydratesRatio'),
+      'insulinSensitivity': result.get('insulinSensitivity').toDouble(),
+      'carbohydratesRatio': result.get('carbohydratesRatio').toDouble(),
       'glucoseTarget': result.get('glucoseTarget'),
     };
+  }
+
+  Future<void> updateTherapyParams(
+      double insulinSensitivity, double carbohydratesRatio) async {
+    userTherapyCollection.doc(uid).update({
+      'insulinSensitivity': insulinSensitivity,
+      'carbohydratesRatio': carbohydratesRatio
+    });
   }
 }

@@ -84,6 +84,38 @@ class _BolusState extends State<Bolus> {
     });
   }
 
+  Future<void> showInformationDialog(BuildContext context) async {
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  validator: (value) {
+                    return value!.isNotEmpty ? null : "Invalid Field";
+                  },
+                  decoration:
+                      const InputDecoration(hintText: "Enter Sugar Level"),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                ),
+              ],
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () async {},
+                child: const Text(
+                  "Submit",
+                  style: TextStyle(color: primaryColor),
+                ),
+              )
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,6 +142,9 @@ class _BolusState extends State<Bolus> {
             //     snapshot.data!['recipeList'] as List<String>;
             // String? dropdownValue =
             //     recipeList.isNotEmpty ? recipeList[0] : null;
+            // if (insulinSensitivity == -1 && carbohydratesRatio == -1) {
+            //   showInformationDialog(context);
+            // }
             return BolusListView(
               mealValue: mealValue,
               dropDownMenuOnChanged: dropDownMenuOnChanged,
@@ -210,6 +245,134 @@ class _BolusListViewState extends State<BolusListView> {
   }
 
   double insulinUnits = 0.0;
+  final _auth = AuthService();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.insulinSensitivity == -1 || widget.carbohydratesRatio == -1) {
+      WidgetsBinding.instance!.addPostFrameCallback((_) async {
+        double carbohydratesRatio = -1;
+        double insulinSensitivity = -1;
+        await showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (context) {
+              final _formKey = GlobalKey<FormState>();
+              return AlertDialog(
+                contentPadding: EdgeInsets.zero,
+                content: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.all(20.0),
+                          child: Text(
+                            'Title',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Divider(
+                          thickness: 0.7,
+                          color: Colors.grey[400],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          child: TextFormField(
+                            cursorColor: Colors.indigo[800],
+                            validator: (value) {
+                              return value!.isNotEmpty ? null : "Invalid Field";
+                            },
+                            decoration: InputDecoration(
+                              hintText: 'Insulin Sensitivity',
+                              fillColor: Colors.grey[200],
+                              filled: true,
+                            ),
+                            onChanged: (value) {
+                              try {
+                                insulinSensitivity = double.parse(value);
+                              } catch (e) {}
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          child: TextFormField(
+                            cursorColor: Colors.indigo[800],
+                            validator: (value) {
+                              return value!.isNotEmpty ? null : "Invalid Field";
+                            },
+                            decoration: InputDecoration(
+                              hintText: 'Carbohydrates Ratio',
+                              fillColor: Colors.grey[200],
+                              filled: true,
+                            ),
+                            onChanged: (value) {
+                              try {
+                                carbohydratesRatio = double.parse(value);
+                              } catch (e) {}
+                            },
+                          ),
+                        ),
+                      ],
+                    )),
+                actions: <Widget>[
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        "CANCEL",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey[700],
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.all(8),
+                    child: TextButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          TherapyDatabaseService(uid: _auth.getUID())
+                              .updateTherapyParams(
+                                  insulinSensitivity, carbohydratesRatio);
+                          Navigator.pop(context);
+                        }
+                      },
+                      style: TextButton.styleFrom(
+                        primary: Colors.red,
+                        backgroundColor: Colors.red,
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.all(5.0),
+                        child: Text(
+                          "SAVE",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              );
+            });
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -317,7 +480,6 @@ class _BolusListViewState extends State<BolusListView> {
             ],
           ),
         ),
-
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
           child: Row(
@@ -531,31 +693,6 @@ class _BolusListViewState extends State<BolusListView> {
             ],
           ),
         ),
-        // Center(
-        //   child: DropdownButton<String>(
-        //     value: dropdownValue,
-        //     icon: const Icon(Icons.arrow_downward_outlined),
-        //     elevation: 16,
-        //     style: const TextStyle(color: Colors.deepPurple),
-        //     underline: Container(
-        //       height: 2,
-        //       color: Colors.deepPurpleAccent,
-        //     ),
-        //     onChanged: (String? newValue) {
-        //       setState(() {
-        //         dropdownValue = newValue!;
-        //       });
-        //     },
-        //     items: recipeList
-        //         .map<DropdownMenuItem<String>>((String value) {
-        //       return DropdownMenuItem<String>(
-        //         value: value,
-        //         child: Text(value),
-        //       );
-        //     }).toList(),
-        //   ),
-        // )
-        //Hadi's take on bolus
         Column(
           children: [
             SizedBox(
@@ -574,31 +711,19 @@ class _BolusListViewState extends State<BolusListView> {
                 widget.dropDownMenuOnChanged(val);
               },
             ),
-            // Text("Blood Sugar Level pre " +
-            //     mealValue +
-            //     ": $bloodSugarLevel"),
-            // Text("Carbs from " + mealValue + ": $carbs"),
-            // OutlinedButton(
-            //     onPressed: () {
-            //       setState(() {
-            //         insulinUnits = (widget.carbs / widget.carbohydratesRatio +
-            //             (widget.bloodSugarLevel - widget.glucoseTarget) /
-            //                 widget.insulinSensitivity);
-            //       });
-            //     },
-            //     child: const Text('Calculate')),
-            SizedBox(
-              height: 0.03 * size.height,
-            ),
             Container(
               alignment: Alignment.center,
               child: ElevatedButton(
                 onPressed: () {
-                  setState(() {
-                    insulinUnits = (widget.carbs / widget.carbohydratesRatio +
-                        (widget.bloodSugarLevel - widget.glucoseTarget) /
-                            widget.insulinSensitivity);
-                  });
+                  if (widget.insulinSensitivity == -1 ||
+                      widget.carbohydratesRatio == -1) {
+                  } else {
+                    setState(() {
+                      insulinUnits = (widget.carbs / widget.carbohydratesRatio +
+                          (widget.bloodSugarLevel - widget.glucoseTarget) /
+                              widget.insulinSensitivity);
+                    });
+                  }
                 },
                 child: const Text("Calculate",
                     style: TextStyle(
@@ -621,12 +746,6 @@ class _BolusListViewState extends State<BolusListView> {
             SizedBox(
               height: 0.02 * size.height,
             ),
-            // Text("Estimated Insulin to take before " +
-            //     mealValue +
-            //     ": ${widget.carbs}/{{Insulin to Carb Ratio}} + (${widget.bloodSugarLevel} - {{Target BSL}})/{{Sensitivity Factor}}"),
-            // const Text(
-            //     "Important Note: Make sure to input an accurate measurment of BSL and input all meal in order to give you an accurate estimation of Insulin to take before the meal"),
-
             Container(
               alignment: Alignment.center,
               child: ElevatedButton(
