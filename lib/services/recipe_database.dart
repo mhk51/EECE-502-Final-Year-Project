@@ -57,4 +57,12 @@ class RecipeDatabaseService {
       'recipeName': recipeName,
     });
   }
+
+  Future<void> logAllRecipeItems() async {
+    QuerySnapshot result = await userRecipeCollection.get();
+    List<DocumentSnapshot> docs = result.docs;
+    for (int i = 0; i < docs.length; i++) {
+      print(docs[i].data());
+    }
+  }
 }

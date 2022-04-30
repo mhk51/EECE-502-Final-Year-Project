@@ -16,67 +16,16 @@ class InputNewRecipe extends StatefulWidget {
 }
 
 class _InputNewRecipeState extends State<InputNewRecipe> {
-  bool saved = false;
-  final _auth = AuthService();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   RecipeIngredients recipe = RecipeIngredients([]);
-
-  Future<void> showInformationDialog(BuildContext context) async {
-    return await showDialog(
-        context: context,
-        builder: (context) {
-          final TextEditingController _textEditingController =
-              TextEditingController();
-          return AlertDialog(
-            content: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextFormField(
-                      validator: (value) {
-                        return value!.isNotEmpty ? null : "Invalid Field";
-                      },
-                      decoration:
-                          const InputDecoration(hintText: "Enter Recipe Name"),
-                      controller: _textEditingController,
-                    ),
-                  ],
-                )),
-            actions: <Widget>[
-              TextButton(
-                  onPressed: () async {
-                    final uid = _auth.getUID();
-                    var carbs = 0.0;
-                    var fat = 0.0;
-                    var protein = 0.0;
-                    var sugar = 0.0;
-
-                    for (int i = 0; i < recipe.ingredients.length; i++) {
-                      carbs += recipe.ingredients[i].carbs;
-                      fat += recipe.ingredients[i].fat;
-                      protein += recipe.ingredients[i].protein;
-                      sugar += recipe.ingredients[i].sugar;
-                    }
-                    // await RecipeDatabaseService(uid: uid,recipeName: recipeName).addRecipe(
-                    //     _textEditingController.text,
-                    //     carbs,
-                    //     protein,
-                    //     fat,
-                    //     sugar);
-                    saved = true;
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text("Save"))
-            ],
-          );
-        });
-  }
 
   @override
   Widget build(BuildContext context) {
-    final recipeName = ModalRoute.of(context)!.settings.arguments as String;
+    final data =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final String recipeName = data['recipeName'] as String;
+    final bool logging = data['Logging'] as bool;
     final Size size = MediaQuery.of(context).size;
+    final String userUID = AuthService().getUID();
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
@@ -143,30 +92,20 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
                         ),
                       ),
                     ),
-                    // ElevatedButton(
-                    //   onPressed: () async {
-                    //     await Navigator.pushNamed(context, '/NewRecipeSearch',
-                    //         arguments: recipeName);
-                    //     setState(() {});
-                    //   },
-                    //   child: const Text("Add Ingredients"),
-                    // ),
                     const SizedBox(
                       height: 20,
                     ),
                     ElevatedButton(
                       onPressed: () async {
-                        await showInformationDialog(context);
-                        if (saved == true) {
-                          Navigator.of(context).pop();
+                        if (logging) {
+                          await RecipeDatabaseService(
+                                  recipeName: recipeName, uid: userUID)
+                              .logAllRecipeItems();
                         }
-
-                        // for (int i = 0; i < recipe.ingredients.length; i++) {
-                        //   print(recipe.ingredients[i].foodName);
-                        // }
+                        // Navigator.pop(context);
                       },
-                      child: const Text("Save Recipe",
-                          style: TextStyle(
+                      child: Text(logging ? "Log Recipe" : "Save Recipe",
+                          style: const TextStyle(
                             fontSize: 28,
                             fontFamily: 'Inria Serif',
                           )),
@@ -183,19 +122,6 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
                         ),
                       ),
                     ),
-                    // ElevatedButton(
-                    //   onPressed: () async {
-                    //     await showInformationDialog(context);
-                    //     if (saved == true) {
-                    //       Navigator.of(context).pop();
-                    //     }
-
-                    //     // for (int i = 0; i < recipe.ingredients.length; i++) {
-                    //     //   print(recipe.ingredients[i].foodName);
-                    //     // }
-                    //   },
-                    //   child: const Text("Save Recipe"),
-                    // ),
                   ],
                 )
               ],

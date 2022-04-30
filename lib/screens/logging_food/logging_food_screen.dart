@@ -164,7 +164,11 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
               TextButton(
                   onPressed: () async {
                     await Navigator.pushNamed(context, '/InputNewRecipe',
-                        arguments: recipeName);
+                        arguments: {
+                          'recipeName': recipeName,
+                          'Logging': false
+                        });
+                    Navigator.pop(context);
                   },
                   child: const Text(
                     "Enter",

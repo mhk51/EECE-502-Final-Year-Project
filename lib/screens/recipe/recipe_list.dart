@@ -7,7 +7,25 @@ class RecipeList extends StatelessWidget {
   const RecipeList({Key? key}) : super(key: key);
 
   Widget _widgetFromString(String recipe) {
-    return Text(recipe);
+    return Builder(builder: (context) {
+      return Container(
+        margin: const EdgeInsets.all(10),
+        child: ListTile(
+          onTap: () async {
+            await Navigator.pushNamed(context, '/InputNewRecipe',
+                arguments: {'recipeName': recipe, 'Logging': true});
+          },
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          contentPadding: const EdgeInsets.all(10),
+          tileColor: Colors.grey[200],
+          leading: Text(
+            recipe,
+            style: const TextStyle(fontSize: 28),
+          ),
+        ),
+      );
+    });
   }
 
   @override

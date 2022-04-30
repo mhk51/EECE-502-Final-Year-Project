@@ -71,68 +71,6 @@ class _BolusState extends State<Bolus> {
     };
   }
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  Future<void> showInformationDialog(BuildContext context) async {
-    return await showDialog(
-        context: context,
-        builder: (context) {
-          final TextEditingController _textEditingController =
-              TextEditingController();
-          return AlertDialog(
-            content: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                      "If you feel that the insulin recommendation is not accurate,\nplease input the correct one so that we can adjust the recommendation for the next time:"),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Expanded(
-                        flex: 1,
-                        child: Text('Actual Insulin Needed'),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          height: 40,
-                          width: 150,
-                          padding: const EdgeInsets.fromLTRB(10, 0, 50, 2),
-                          margin: const EdgeInsets.fromLTRB(50, 0, 40, 0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Expanded(
-                                child: TextField(
-                                  decoration: const InputDecoration(
-                                      hintText: '00',
-                                      contentPadding: EdgeInsets.all(0)),
-                                  onChanged: (val) {},
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  "Submit",
-                  style: TextStyle(color: primaryColor),
-                ),
-              )
-            ],
-          );
-        });
-  }
-
   Widget widgetfromString(String text) {
     return Text(text);
   }
@@ -209,6 +147,68 @@ class BolusListView extends StatefulWidget {
 }
 
 class _BolusListViewState extends State<BolusListView> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  Future<void> showInformationDialog(BuildContext context) async {
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          final TextEditingController _textEditingController =
+              TextEditingController();
+          return AlertDialog(
+            content: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                      "If you feel that the insulin recommendation is not accurate,\nplease input the correct one so that we can adjust the recommendation for the next time:"),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Expanded(
+                        flex: 1,
+                        child: Text('Actual Insulin Needed'),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          height: 40,
+                          width: 150,
+                          padding: const EdgeInsets.fromLTRB(10, 0, 50, 2),
+                          margin: const EdgeInsets.fromLTRB(50, 0, 40, 0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Expanded(
+                                child: TextField(
+                                  decoration: const InputDecoration(
+                                      hintText: '00',
+                                      contentPadding: EdgeInsets.all(0)),
+                                  onChanged: (val) {},
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {},
+                child: const Text(
+                  "Submit",
+                  style: TextStyle(color: primaryColor),
+                ),
+              )
+            ],
+          );
+        });
+  }
+
   double insulinUnits = 0.0;
   String mealValue = "Breakfast";
   List<String> mealType = ["Breakfast", "Lunch", "Dinner", "Snack"];
@@ -643,7 +643,9 @@ class _BolusListViewState extends State<BolusListView> {
             Container(
               alignment: Alignment.center,
               child: ElevatedButton(
-                onPressed: () async {},
+                onPressed: () async {
+                  await showInformationDialog(context);
+                },
                 child: const Text("Feedback",
                     style: TextStyle(
                       fontSize: 28,
