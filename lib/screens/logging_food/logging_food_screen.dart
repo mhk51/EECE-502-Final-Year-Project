@@ -179,7 +179,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        // backgroundColor: backgroundColor,
+        // backgroundColor: Colors.grey,
         resizeToAvoidBottomInset: false,
         drawer: NavDrawer(),
         appBar: AppBar(

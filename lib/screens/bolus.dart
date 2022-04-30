@@ -79,7 +79,7 @@ class _BolusState extends State<Bolus> {
     return Scaffold(
       drawer: NavDrawer(),
       appBar: AppBar(
-        backgroundColor: Colors.indigo[800],
+        backgroundColor: const Color.fromARGB(255, 255, 75, 58),
         title: const Text('Bolus Advisor'),
       ),
       body: FutureBuilder<Map<String, dynamic>>(
@@ -517,11 +517,49 @@ class _BolusListViewState extends State<BolusListView> {
                   });
                 },
                 child: const Text('Calculate')),
-            Text("Estimated Insulin to take before " +
-                mealValue +
-                ": ${widget.carbs}/{{Insulin to Carb Ratio}} + (${widget.bloodSugarLevel} - {{Target BSL}})/{{Sensitivity Factor}}"),
-            const Text(
-                "Important Note: Make sure to input an accurate measurment of BSL and input all meal in order to give you an accurate estimation of Insulin to take before the meal"),
+            // Text("Estimated Insulin to take before " +
+            //     mealValue +
+            //     ": ${widget.carbs}/{{Insulin to Carb Ratio}} + (${widget.bloodSugarLevel} - {{Target BSL}})/{{Sensitivity Factor}}"),
+            // const Text(
+            //     "Important Note: Make sure to input an accurate measurment of BSL and input all meal in order to give you an accurate estimation of Insulin to take before the meal"),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Expanded(
+                    flex: 1,
+                    child: Text('Actual Insulin Needed'),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      height: 40,
+                      width: 150,
+                      padding: const EdgeInsets.fromLTRB(10, 0, 50, 2),
+                      margin: const EdgeInsets.fromLTRB(50, 0, 40, 0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              decoration: const InputDecoration(
+                                  hintText: '00',
+                                  contentPadding: EdgeInsets.all(0)),
+                              onChanged: (val) {
+                                try {
+                                  widget.bloodSugarLevel = double.parse(val);
+                                } catch (e) {}
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         )
       ],

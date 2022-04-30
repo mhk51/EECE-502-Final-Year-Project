@@ -39,8 +39,7 @@ class FoodStatsService {
     };
   }
 
-  Future<void> addUserFoodStatsLog(
-      FoodClass food, String mealType, double score) async {
+  Future<void> addUserFoodStatsLog(FoodClass food, String mealType) async {
     DocumentSnapshot entry =
         await userFoodStatsCollection.doc(food.foodName).get();
     bool exists = entry.exists;
@@ -66,7 +65,7 @@ class FoodStatsService {
         'Lunch': lunchCount,
         'Dinner': dinnerCount,
         'Snack': snackCount,
-        'score': score
+        'correctionFactor': 1,
       });
     } else {
       int count = entry.get("count");

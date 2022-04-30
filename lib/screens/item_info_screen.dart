@@ -342,7 +342,7 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
                       food, multiplier, defaultMeal, DateTime.now());
 
                   await FoodStatsService(uid: uid)
-                      .addUserFoodStatsLog(food, defaultMeal, 10);
+                      .addUserFoodStatsLog(food, defaultMeal);
                   Navigator.pop(context);
                 },
                 child: const Text("Log Food",
