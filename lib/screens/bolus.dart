@@ -75,6 +75,15 @@ class _BolusState extends State<Bolus> {
     return Text(text);
   }
 
+  String mealValue = "Breakfast";
+  List<String> mealType = ["Breakfast", "Lunch", "Dinner", "Snack"];
+
+  void dropDownMenuOnChanged(String val) {
+    setState(() {
+      mealValue = val;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,7 +93,7 @@ class _BolusState extends State<Bolus> {
         title: const Text('Bolus Advisor'),
       ),
       body: FutureBuilder<Map<String, dynamic>>(
-        future: fetchData('Breakfast'),
+        future: fetchData(mealValue),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done &&
               snapshot.hasData) {
@@ -102,6 +111,8 @@ class _BolusState extends State<Bolus> {
             // String? dropdownValue =
             //     recipeList.isNotEmpty ? recipeList[0] : null;
             return BolusListView(
+              mealValue: mealValue,
+              dropDownMenuOnChanged: dropDownMenuOnChanged,
               bloodSugarLevel: bloodSugarLevel,
               carbs: carbs,
               fat: fat,
@@ -122,6 +133,8 @@ class _BolusState extends State<Bolus> {
 
 // ignore: must_be_immutable
 class BolusListView extends StatefulWidget {
+  Function dropDownMenuOnChanged;
+  String mealValue;
   double glucoseTarget;
   double bloodSugarLevel;
   double carbs;
@@ -132,6 +145,8 @@ class BolusListView extends StatefulWidget {
   double insulinSensitivity;
   BolusListView({
     Key? key,
+    required this.mealValue,
+    required this.dropDownMenuOnChanged,
     required this.carbohydratesRatio,
     required this.bloodSugarLevel,
     required this.calories,
@@ -147,6 +162,7 @@ class BolusListView extends StatefulWidget {
 }
 
 class _BolusListViewState extends State<BolusListView> {
+  List<String> mealType = ["Breakfast", "Lunch", "Dinner", "Snack"];
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Future<void> showInformationDialog(BuildContext context) async {
     return await showDialog(
@@ -194,8 +210,7 @@ class _BolusListViewState extends State<BolusListView> {
   }
 
   double insulinUnits = 0.0;
-  String mealValue = "Breakfast";
-  List<String> mealType = ["Breakfast", "Lunch", "Dinner", "Snack"];
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -262,17 +277,18 @@ class _BolusListViewState extends State<BolusListView> {
               Expanded(
                 flex: 5,
                 child: Container(
-                  height: 40,
+                  height: 42,
                   width: 150,
                   color: const Color.fromARGB(255, 255, 188, 164),
-                  padding: const EdgeInsets.fromLTRB(10, 0, 50, 2),
-                  margin: const EdgeInsets.fromLTRB(50, 0, 40, 0),
+                  padding: const EdgeInsets.fromLTRB(10, 6, 10, 2),
+                  margin: const EdgeInsets.fromLTRB(50, 0, 10, 0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Expanded(
                         child: TextField(
                           decoration: InputDecoration(
+                              suffixIcon: const Icon(Icons.edit),
                               hintText: widget.bloodSugarLevel != 0.0
                                   ? widget.bloodSugarLevel
                                       .toStringAsPrecision(4)
@@ -292,6 +308,7 @@ class _BolusListViewState extends State<BolusListView> {
                         'mmol/L',
                         style: TextStyle(fontSize: 16),
                       ),
+                      const SizedBox(width: 8)
                     ],
                   ),
                 ),
@@ -328,9 +345,10 @@ class _BolusListViewState extends State<BolusListView> {
                       Expanded(
                         child: TextField(
                           decoration: InputDecoration(
+                              suffixIcon: const Icon(Icons.edit),
                               hintText: widget.carbs != 0.0
                                   ? widget.carbs.toStringAsPrecision(4)
-                                  : '000.00',
+                                  : '00.00',
                               contentPadding: const EdgeInsets.all(0)),
                           onChanged: (val) {
                             try {
@@ -349,11 +367,6 @@ class _BolusListViewState extends State<BolusListView> {
                       const SizedBox(
                         width: 36,
                       ),
-                      FloatingActionButton(
-                          backgroundColor: primaryColor,
-                          elevation: 0,
-                          onPressed: () {},
-                          child: const Icon(Icons.restaurant))
                     ],
                   ),
                 ),
@@ -388,9 +401,10 @@ class _BolusListViewState extends State<BolusListView> {
                       Expanded(
                         child: TextField(
                           decoration: InputDecoration(
+                              suffixIcon: const Icon(Icons.edit),
                               hintText: widget.protein != 0.0
                                   ? widget.protein.toStringAsPrecision(4)
-                                  : '000.00',
+                                  : '00.00',
                               contentPadding: const EdgeInsets.all(0)),
                           onChanged: (val) {},
                         ),
@@ -403,7 +417,7 @@ class _BolusListViewState extends State<BolusListView> {
                         style: TextStyle(fontSize: 16),
                       ),
                       const SizedBox(
-                        width: 86,
+                        width: 30,
                       ),
                     ],
                   ),
@@ -439,9 +453,10 @@ class _BolusListViewState extends State<BolusListView> {
                       Expanded(
                         child: TextField(
                           decoration: InputDecoration(
+                              suffixIcon: const Icon(Icons.edit),
                               hintText: widget.fat != 0.0
                                   ? widget.fat.toStringAsPrecision(4)
-                                  : '000.00',
+                                  : '00.00',
                               contentPadding: const EdgeInsets.all(0)),
                           onChanged: (val) {},
                         ),
@@ -454,7 +469,7 @@ class _BolusListViewState extends State<BolusListView> {
                         style: TextStyle(fontSize: 16),
                       ),
                       const SizedBox(
-                        width: 86,
+                        width: 30,
                       ),
                     ],
                   ),
@@ -490,9 +505,10 @@ class _BolusListViewState extends State<BolusListView> {
                       Expanded(
                         child: TextField(
                           decoration: InputDecoration(
+                              suffixIcon: const Icon(Icons.edit),
                               hintText: widget.calories != 0.0
                                   ? widget.calories.toStringAsPrecision(4)
-                                  : '000.00',
+                                  : '00.00',
                               contentPadding: const EdgeInsets.all(0)),
                           onChanged: (val) {},
                         ),
@@ -505,7 +521,7 @@ class _BolusListViewState extends State<BolusListView> {
                         style: TextStyle(fontSize: 16),
                       ),
                       const SizedBox(
-                        width: 86,
+                        width: 38,
                       ),
                     ],
                   ),
@@ -542,7 +558,7 @@ class _BolusListViewState extends State<BolusListView> {
         Column(
           children: [
             DropdownButtonFormField<String>(
-              value: mealValue,
+              value: widget.mealValue,
               decoration: textInputDecoration,
               items: mealType.map((sugar) {
                 return DropdownMenuItem(
@@ -550,7 +566,9 @@ class _BolusListViewState extends State<BolusListView> {
                   child: Text(sugar),
                 );
               }).toList(),
-              onChanged: (val) => setState(() => mealValue = val!),
+              onChanged: (val) {
+                widget.dropDownMenuOnChanged(val);
+              },
             ),
             // Text("Blood Sugar Level pre " +
             //     mealValue +
@@ -593,7 +611,7 @@ class _BolusListViewState extends State<BolusListView> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             // Text("Estimated Insulin to take before " +
