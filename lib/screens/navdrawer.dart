@@ -5,6 +5,7 @@ import 'package:flutter_application_1/screens/wrapper.dart';
 import 'package:flutter_application_1/services/auth.dart';
 import 'package:flutter_application_1/services/database.dart';
 import 'package:provider/provider.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class NavDrawer extends StatelessWidget {
   NavDrawer({Key? key}) : super(key: key);
@@ -79,7 +80,7 @@ class NavDrawer extends StatelessWidget {
                   ),
                   ListTile(
                     leading: const Icon(
-                      Icons.water_drop,
+                      FontAwesomeIcons.droplet,
                       color: Colors.white,
                       size: 28,
                     ),

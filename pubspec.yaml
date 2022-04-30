@@ -48,6 +48,7 @@ dependencies:
   #Henri: plugin used to access device camera and gallery
   image_picker:  #^0.8.3+1
   flutter_barcode_scanner: ^2.0.0
+  font_awesome_flutter: ^10.1.0
   
 
 
