@@ -44,6 +44,9 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(
+                  height: 0.03 * size.height,
+                ),
                 Container(
                   padding: const EdgeInsets.all(8.0),
                   width: 0.95 * size.width,
@@ -63,6 +66,9 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
                 RecipeIgredientList(
                   ingredientsList: recipe.ingredients,
                   recipeName: recipeName,
+                ),
+                SizedBox(
+                  height: 0.02 * size.height,
                 ),
                 Column(
                   children: [
@@ -89,6 +95,9 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
                           ),
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      height: 0.03 * size.height,
                     ),
                     logging
                         ? Padding(
@@ -173,9 +182,10 @@ class _RecipeIgredientListState extends State<RecipeIgredientList> {
   final _auth = AuthService();
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Container(
       padding: const EdgeInsets.all(1),
-      height: 350,
+      height: 0.55 * size.height,
       child: StreamBuilder<List<DocumentSnapshot>>(
           stream: RecipeDatabaseService(
                   uid: _auth.getUID(), recipeName: widget.recipeName)

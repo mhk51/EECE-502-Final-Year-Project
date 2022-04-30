@@ -1,3 +1,4 @@
+import 'package:flutter_application_1/custom/constants.dart';
 import 'package:flutter_application_1/models/therapy.dart';
 import 'package:flutter_application_1/models/user.dart';
 import 'package:flutter_application_1/screens/navdrawer.dart';
@@ -329,7 +330,7 @@ class _SettingsFormState extends State<SettingsForm> {
                               child: Text('Settings'),
                             ),
                           ]),
-                      backgroundColor: Colors.indigo[800],
+                      backgroundColor: primaryColor,
                       title: const Text('Profile & Settings'),
                       centerTitle: true,
                       actions: [
@@ -356,7 +357,7 @@ class _SettingsFormState extends State<SettingsForm> {
                               Center(
                                 child: Stack(children: [
                                   CircleAvatar(
-                                    backgroundColor: const Color(0xff00A3FF),
+                                    backgroundColor: primaryColor,
                                     radius: 61.0,
                                     child: CircleAvatar(
                                       radius: 58,
@@ -630,13 +631,13 @@ class _SettingsFormState extends State<SettingsForm> {
                                       padding: const EdgeInsets.all(20),
                                       child: ListView(
                                         children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
+                                          const Padding(
+                                            padding: EdgeInsets.only(
                                                 left: 50, top: 20),
                                             child: Text(
                                               'Glucose Levels Target Range',
                                               style: TextStyle(
-                                                  color: Colors.indigo[400],
+                                                  color: primaryColor,
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.bold),
                                             ),
@@ -752,13 +753,13 @@ class _SettingsFormState extends State<SettingsForm> {
                                             thickness: 1.5,
                                             color: Colors.grey[600],
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
+                                          const Padding(
+                                            padding: EdgeInsets.only(
                                                 left: 50, top: 20),
                                             child: Text(
                                               'Target Range After Meal',
                                               style: TextStyle(
-                                                  color: Colors.indigo[400],
+                                                  color: primaryColor,
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.bold),
                                             ),
@@ -807,13 +808,13 @@ class _SettingsFormState extends State<SettingsForm> {
                                             thickness: 1.5,
                                             color: Colors.grey[600],
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
+                                          const Padding(
+                                            padding: EdgeInsets.only(
                                                 left: 50, top: 20),
                                             child: Text(
                                               'Ratio and sensitivity Settings',
                                               style: TextStyle(
-                                                  color: Colors.indigo[400],
+                                                  color: primaryColor,
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.bold),
                                             ),
@@ -931,13 +932,13 @@ class _SettingsFormState extends State<SettingsForm> {
                                             thickness: 1.5,
                                             color: Colors.grey[600],
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
+                                          const Padding(
+                                            padding: EdgeInsets.only(
                                                 left: 50, top: 20),
                                             child: Text(
                                               'Breakfast time',
                                               style: TextStyle(
-                                                  color: Colors.indigo[400],
+                                                  color: primaryColor,
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.bold),
                                             ),
@@ -983,13 +984,13 @@ class _SettingsFormState extends State<SettingsForm> {
                                             thickness: 1.5,
                                             color: Colors.grey[600],
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
+                                          const Padding(
+                                            padding: EdgeInsets.only(
                                                 left: 50, top: 20),
                                             child: Text(
                                               'Lunch time',
                                               style: TextStyle(
-                                                  color: Colors.indigo[400],
+                                                  color: primaryColor,
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.bold),
                                             ),
@@ -1035,13 +1036,13 @@ class _SettingsFormState extends State<SettingsForm> {
                                             thickness: 1.5,
                                             color: Colors.grey[600],
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
+                                          const Padding(
+                                            padding: EdgeInsets.only(
                                                 left: 50, top: 20),
                                             child: Text(
                                               'Dinner time',
                                               style: TextStyle(
-                                                  color: Colors.indigo[400],
+                                                  color: primaryColor,
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.bold),
                                             ),

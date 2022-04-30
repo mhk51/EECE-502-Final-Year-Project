@@ -202,6 +202,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         // backgroundColor: Colors.grey,
@@ -218,8 +219,8 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            const SizedBox(
-              height: 40,
+            SizedBox(
+              height: 0.04 * size.height,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -253,8 +254,8 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                 // Expanded(child: Search()),
               ],
             ),
-            const SizedBox(
-              height: 10,
+            SizedBox(
+              height: 0.02 * size.height,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -309,8 +310,8 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
             //   },
             //   child: const Text("Input New Recipe"),
             // ),
-            const SizedBox(
-              height: 20,
+            SizedBox(
+              height: 0.02 * size.height,
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 8),
@@ -417,8 +418,8 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    width: 20,
+                  SizedBox(
+                    width: 0.02 * size.height,
                   )
                 ],
               ),

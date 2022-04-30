@@ -90,6 +90,7 @@ class _NewRecipeSearchState extends State<NewRecipeSearch> {
   @override
   Widget build(BuildContext context) {
     var recipeName = ModalRoute.of(context)!.settings.arguments as String;
+    final Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: true,
@@ -105,12 +106,10 @@ class _NewRecipeSearchState extends State<NewRecipeSearch> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              const SizedBox(
-                height: 40,
+              SizedBox(
+                height: 0.04 * size.height,
               ),
-              const SizedBox(
-                height: 10,
-              ),
+
               //////////////////////////////////////////////////////////////////////////////////////////////////
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -215,8 +214,8 @@ class _NewRecipeSearchState extends State<NewRecipeSearch> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    width: 20,
+                  SizedBox(
+                    width: 0.02 * size.width,
                   )
                 ],
               ),
@@ -295,8 +294,8 @@ class _NewRecipeSearchState extends State<NewRecipeSearch> {
               //     )
               //   ],
               // ),
-              const SizedBox(
-                height: 20,
+              SizedBox(
+                height: 0.02 * size.height,
               ),
               FoodSearchWidget(
                 searchWord: searchWord, recipeName: recipeName,

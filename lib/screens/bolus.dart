@@ -376,6 +376,7 @@ class _BolusListViewState extends State<BolusListView> {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return ListView(
       children: [
         Card(
@@ -694,6 +695,9 @@ class _BolusListViewState extends State<BolusListView> {
         ),
         Column(
           children: [
+            SizedBox(
+              height: 0.02 * size.height,
+            ),
             DropdownButtonFormField<String>(
               value: widget.mealValue,
               decoration: textInputDecoration,
@@ -739,8 +743,8 @@ class _BolusListViewState extends State<BolusListView> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 20,
+            SizedBox(
+              height: 0.02 * size.height,
             ),
             Container(
               alignment: Alignment.center,
