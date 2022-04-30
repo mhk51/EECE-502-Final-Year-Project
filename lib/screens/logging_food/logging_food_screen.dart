@@ -235,7 +235,9 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/RecipeList');
+                  },
                   child: const Text("Recipes",
                       style: TextStyle(
                         fontSize: 28,
