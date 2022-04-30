@@ -1,6 +1,7 @@
 // ignore_for_file: empty_catches, avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_application_1/custom/line_chart.dart';
 import 'package:flutter_application_1/custom/loading.dart';
 import 'package:flutter_application_1/models/food_class.dart';
@@ -68,6 +69,68 @@ class _BolusState extends State<Bolus> {
       'carbohydratesRatio': therapyParams['carbohydratesRatio'],
       'insulinSensitivity': therapyParams['insulinSensitivity']
     };
+  }
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  Future<void> showInformationDialog(BuildContext context) async {
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          final TextEditingController _textEditingController =
+              TextEditingController();
+          return AlertDialog(
+            content: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                      "If you feel that the insulin recommendation is not accurate,\nplease input the correct one so that we can adjust the recommendation for the next time:"),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Expanded(
+                        flex: 1,
+                        child: Text('Actual Insulin Needed'),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          height: 40,
+                          width: 150,
+                          padding: const EdgeInsets.fromLTRB(10, 0, 50, 2),
+                          margin: const EdgeInsets.fromLTRB(50, 0, 40, 0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Expanded(
+                                child: TextField(
+                                  decoration: const InputDecoration(
+                                      hintText: '00',
+                                      contentPadding: EdgeInsets.all(0)),
+                                  onChanged: (val) {},
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  "Submit",
+                  style: TextStyle(color: primaryColor),
+                ),
+              )
+            ],
+          );
+        });
   }
 
   Widget widgetfromString(String text) {
@@ -204,7 +267,7 @@ class _BolusListViewState extends State<BolusListView> {
               const Expanded(
                 flex: 1,
                 child: Icon(
-                  Icons.water_drop,
+                  Icons.bloodtype,
                   size: 30,
                 ),
               ),
@@ -267,7 +330,7 @@ class _BolusListViewState extends State<BolusListView> {
               ),
               const Expanded(
                 flex: 1,
-                child: Text('Carbs'),
+                child: Text(' '),
               ),
               Expanded(
                 flex: 5,
@@ -303,6 +366,7 @@ class _BolusListViewState extends State<BolusListView> {
                         width: 36,
                       ),
                       FloatingActionButton(
+                          backgroundColor: primaryColor,
                           elevation: 0,
                           onPressed: () {},
                           child: const Icon(Icons.restaurant))
@@ -522,42 +586,80 @@ class _BolusListViewState extends State<BolusListView> {
             //     ": ${widget.carbs}/{{Insulin to Carb Ratio}} + (${widget.bloodSugarLevel} - {{Target BSL}})/{{Sensitivity Factor}}"),
             // const Text(
             //     "Important Note: Make sure to input an accurate measurment of BSL and input all meal in order to give you an accurate estimation of Insulin to take before the meal"),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Expanded(
-                    flex: 1,
-                    child: Text('Actual Insulin Needed'),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Container(
-                      height: 40,
-                      width: 150,
-                      padding: const EdgeInsets.fromLTRB(10, 0, 50, 2),
-                      margin: const EdgeInsets.fromLTRB(50, 0, 40, 0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Expanded(
-                            child: TextField(
-                              decoration: const InputDecoration(
-                                  hintText: '00',
-                                  contentPadding: EdgeInsets.all(0)),
-                              onChanged: (val) {
-                                try {
-                                  widget.bloodSugarLevel = double.parse(val);
-                                } catch (e) {}
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+            //   child: Container(
+            //     padding: const EdgeInsets.all(8.0),
+            //     // width: 0.95 * size.width,
+            //     alignment: Alignment.center,
+            //     decoration: const BoxDecoration(
+            //       color: Colors.white,
+            //       borderRadius: BorderRadius.all(Radius.circular(20)),
+            //     ),
+            //     child: Column(
+            //       children: [
+            //         Text(
+            //             "If you feel that the insulin recommendation is not accurate,\nplease input the correct one so that we can adjust the recommendation for the next time:"),
+            //         Row(
+            //           mainAxisAlignment: MainAxisAlignment.center,
+            //           children: [
+            //             const Expanded(
+            //               flex: 1,
+            //               child: Text('Actual Insulin Needed'),
+            //             ),
+            //             Expanded(
+            //               flex: 1,
+            //               child: Container(
+            //                 height: 40,
+            //                 width: 150,
+            //                 padding: const EdgeInsets.fromLTRB(10, 0, 50, 2),
+            //                 margin: const EdgeInsets.fromLTRB(50, 0, 40, 0),
+            //                 child: Row(
+            //                   crossAxisAlignment: CrossAxisAlignment.end,
+            //                   children: [
+            //                     Expanded(
+            //                       child: TextField(
+            //                         decoration: const InputDecoration(
+            //                             hintText: '00',
+            //                             contentPadding: EdgeInsets.all(0)),
+            //                         onChanged: (val) {
+            //                           try {
+            //                             widget.bloodSugarLevel =
+            //                                 double.parse(val);
+            //                           } catch (e) {}
+            //                         },
+            //                       ),
+            //                     ),
+            //                   ],
+            //                 ),
+            //               ),
+            //             ),
+            //           ],
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+            Container(
+              alignment: Alignment.center,
+              child: ElevatedButton(
+                onPressed: () async {},
+                child: const Text("Feedback",
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontFamily: 'Inria Serif',
+                    )),
+                style: ButtonStyle(
+                  minimumSize:
+                      MaterialStateProperty.all<Size>(const Size(314, 70)),
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      const Color.fromARGB(255, 255, 75, 58)),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
                     ),
                   ),
-                ],
+                ),
               ),
             ),
           ],
