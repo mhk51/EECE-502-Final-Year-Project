@@ -619,6 +619,7 @@ class _SettingsFormState extends State<SettingsForm> {
                           ),
                         ),
                         StreamBuilder<Therapy>(
+                            initialData: null,
                             stream: TherapyDatabaseService(uid: childData.uid)
                                 .userTherapyData,
                             builder: (context, snapshot) {
