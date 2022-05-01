@@ -21,7 +21,7 @@ class _WrapperState extends State<Wrapper> {
     final user = Provider.of<CustomUser?>(context, listen: true);
     // return either the Home or Authenticate widget
     if (user == null) {
-      return Authenticate();
+      return const Authenticate();
     } else {
       return const HomeScreen();
     }

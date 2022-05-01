@@ -4,7 +4,8 @@ import '../../custom/loading.dart';
 import '../../services/auth.dart';
 
 class SignIn1 extends StatefulWidget {
-  const SignIn1({Key? key}) : super(key: key);
+  final Function toggleView;
+  const SignIn1({Key? key, required this.toggleView}) : super(key: key);
 
   @override
   State<SignIn1> createState() => _SignIn1State();
