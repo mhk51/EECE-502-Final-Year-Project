@@ -32,8 +32,8 @@ class Bloc {
 
   fetchNewSearch(String searchWord) async {
     documentList = (await FirebaseFirestore.instance
-            .collection('food')
-            .where('SearchIndex', arrayContains: searchWord)
+            .collection('foods')
+            .where('SearchIndex', arrayContains: searchWord.toLowerCase())
             .limit(10)
             .get())
         .docs;

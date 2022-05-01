@@ -9,6 +9,7 @@ import 'package:flutter_application_1/screens/navdrawer.dart';
 import 'package:flutter_application_1/services/auth.dart';
 import 'package:flutter_application_1/services/bloodsugar_database.dart';
 import 'package:flutter_application_1/services/food_database.dart';
+import 'package:flutter_application_1/services/food_stats_service.dart';
 import 'package:flutter_application_1/services/recipe_database.dart';
 import 'package:flutter_application_1/services/therapy_database.dart';
 
@@ -48,21 +49,32 @@ class _BolusState extends State<Bolus> {
     for (int i = 0; i < bslList.length; i++) {
       bslevel = (bslList[i].level).toDouble();
     }
+    List<String> foodNames = [];
+    Map<String, double> data = {};
     double totalCarbs = 0.0;
     double totalProtein = 0.0;
     double totalFats = 0.0;
     double totalCalories = 0.0;
-    for (int i = 0; i < foodList.length; i++) {
-      totalCarbs += (foodList[i].carbs);
-      totalProtein += foodList[i].protein;
-      totalFats += foodList[i].fat;
-      totalCalories += foodList[i].sugar * 4; //sugar grams to kcal
+
+    for (FoodClass food in foodList) {
+      foodNames.add(food.foodName);
+    }
+    if (foodList.isNotEmpty) {
+      data =
+          await FoodStatsService(uid: userUID).getCorrectionFactors(foodNames);
+    }
+    for (FoodClass food in foodList) {
+      totalCarbs += (food.carbs) * data[food.foodName]!.toDouble();
+      totalProtein += food.protein;
+      totalFats += food.fat;
+      totalCalories += food.sugar * 4;
     }
     return {
       'carbs': totalCarbs,
       'fat': totalFats,
       'protein': totalProtein,
       'calories': totalCalories,
+      'foodNames': foodNames,
       'bslevel': bslevel,
       'recipeList': recipeList,
       'glucoseTarget': therapyParams['glucoseTarget'],
@@ -129,6 +141,7 @@ class _BolusState extends State<Bolus> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done &&
               snapshot.hasData) {
+            List<String> foodNames = snapshot.data!['foodNames'];
             double bloodSugarLevel = snapshot.data!['bslevel'];
             double carbs = ((snapshot.data!['carbs']! * 100).round() / 100);
             double protein = ((snapshot.data!['protein']! * 100).round() / 100);
@@ -146,6 +159,7 @@ class _BolusState extends State<Bolus> {
             //   showInformationDialog(context);
             // }
             return BolusListView(
+              foodNames: foodNames,
               mealValue: mealValue,
               dropDownMenuOnChanged: dropDownMenuOnChanged,
               bloodSugarLevel: bloodSugarLevel,
@@ -168,6 +182,7 @@ class _BolusState extends State<Bolus> {
 
 // ignore: must_be_immutable
 class BolusListView extends StatefulWidget {
+  final List<String> foodNames;
   final Function dropDownMenuOnChanged;
   final String mealValue;
   final double glucoseTarget;
@@ -180,6 +195,7 @@ class BolusListView extends StatefulWidget {
   final double insulinSensitivity;
   BolusListView({
     Key? key,
+    required this.foodNames,
     required this.mealValue,
     required this.dropDownMenuOnChanged,
     required this.carbohydratesRatio,
@@ -199,10 +215,11 @@ class BolusListView extends StatefulWidget {
 class _BolusListViewState extends State<BolusListView> {
   List<String> mealType = ["Breakfast", "Lunch", "Dinner", "Snack"];
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  Future<void> showInformationDialog(BuildContext context) async {
+  Future<double?> showInformationDialog(BuildContext context) async {
     return await showDialog(
         context: context,
         builder: (context) {
+          late double feedBackInsulin;
           final TextEditingController _textEditingController =
               TextEditingController();
           return AlertDialog(
@@ -219,21 +236,28 @@ class _BolusListViewState extends State<BolusListView> {
                         fontFamily: 'Inria Serif',
                       )),
                   TextFormField(
+                    onChanged: ((value) {
+                      try {
+                        feedBackInsulin = double.parse(value);
+                      } catch (e) {}
+                    }),
                     validator: (value) {
                       return value!.isNotEmpty ? null : "Invalid Field";
                     },
                     decoration: const InputDecoration(
                         hintText: "Actual Insulin Needed"),
                     controller: _textEditingController,
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true, signed: false),
                   ),
                 ],
               ),
             ),
             actions: <Widget>[
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context, feedBackInsulin);
+                },
                 child: const Text(
                   "Submit",
                   style: TextStyle(color: primaryColor),
@@ -387,7 +411,7 @@ class _BolusListViewState extends State<BolusListView> {
               expandedAlignment: Alignment.bottomLeft,
               expandedCrossAxisAlignment: CrossAxisAlignment.start,
               title: Text(
-                  'Total bolus: ${insulinUnits.floor()}-${insulinUnits.ceil()} units'),
+                  'Total bolus: ${(insulinUnits * 10).round() / 10} units'),
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(left: 15),
@@ -750,7 +774,18 @@ class _BolusListViewState extends State<BolusListView> {
               alignment: Alignment.center,
               child: ElevatedButton(
                 onPressed: () async {
-                  await showInformationDialog(context);
+                  double? feedBackInsulin =
+                      await showInformationDialog(context);
+                  if (feedBackInsulin != null) {
+                    double effectiveCarbs = (feedBackInsulin -
+                            (widget.bloodSugarLevel - widget.glucoseTarget) /
+                                widget.insulinSensitivity) *
+                        widget.carbohydratesRatio;
+                    double feedBackCorrection = effectiveCarbs / widget.carbs;
+                    await FoodStatsService(uid: _auth.getUID())
+                        .updateFoodFactor(widget.foodNames, widget.mealValue,
+                            feedBackCorrection);
+                  }
                 },
                 child: const Text("Feedback",
                     style: TextStyle(

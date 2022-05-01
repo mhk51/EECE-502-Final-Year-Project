@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_1/models/food_class.dart';
+import 'package:flutter_application_1/services/food_stats_service.dart';
 
 class RecipeDatabaseService {
   final String uid;
@@ -67,6 +68,16 @@ class RecipeDatabaseService {
     return result.docs.isNotEmpty;
   }
 
+  FoodClass foodClassfromDoc(Map<String, dynamic> food) {
+    return FoodClass(
+        foodName: food['foodName'],
+        sugar: food['sugar'],
+        carbs: food['carbs'],
+        protein: food['protein'],
+        fat: food['fat'],
+        bloodSugarInc: 0);
+  }
+
   Future<void> logAllRecipeItems(String mealType) async {
     final CollectionReference userFoodCollection =
         FirebaseFirestore.instance.collection('UserFoodCollection');
@@ -82,6 +93,8 @@ class RecipeDatabaseService {
         'timeAdded': DateTime.now(),
         'userID': uid,
       });
+      FoodClass food = foodClassfromDoc(element.get('food'));
+      await FoodStatsService(uid: uid).addUserFoodStatsLog(food, mealType);
     }
   }
 }

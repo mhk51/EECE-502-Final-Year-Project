@@ -58,6 +58,7 @@ class FoodStatsService {
     if (exists == false) {
       await userFoodStatsCollection.doc(food.foodName).set({
         'food': _foodnamefromFoodClass(food),
+        'foodName': food.foodName,
         'count': 1,
         'Breakfast': breakfastCount,
         'Lunch': lunchCount,
@@ -97,13 +98,27 @@ class FoodStatsService {
     // userFoodStatsCollection.doc().set(data)
   }
 
-  Future<void> updateFoodFactor(List<String> foodNames, String mealType) async {
+  Future<void> updateFoodFactor(List<String> foodNames, String mealType,
+      double feedBackCorrection) async {
     for (var foodName in foodNames) {
       DocumentReference docRef = userFoodStatsCollection.doc(foodName);
       DocumentSnapshot docSnap = await docRef.get();
       double correctionFactor = docSnap.get('correctionFactor').toDouble();
-      // correctionFactor = {some correction formula}
+      correctionFactor = correctionFactor * feedBackCorrection;
       docRef.update({'correctionFactor': correctionFactor});
     }
+  }
+
+  Future<Map<String, double>> getCorrectionFactors(
+      List<String> foodNames) async {
+    Map<String, double> data = {};
+    List<DocumentSnapshot> docs = (await userFoodStatsCollection
+            .where('foodName', whereIn: foodNames)
+            .get())
+        .docs;
+    for (DocumentSnapshot doc in docs) {
+      data[doc.get('foodName')] = doc.get('correctionFactor').toDouble();
+    }
+    return data;
   }
 }
