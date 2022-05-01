@@ -63,10 +63,23 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
                     ),
                   ),
                 ),
-                RecipeIgredientList(
-                  ingredientsList: recipe.ingredients,
-                  recipeName: recipeName,
-                ),
+                logging
+                    ? Container(
+                        padding: const EdgeInsets.all(1),
+                        height: 0.45 * size.height,
+                        child: RecipeIgredientList(
+                          ingredientsList: recipe.ingredients,
+                          recipeName: recipeName,
+                        ),
+                      )
+                    : Container(
+                        padding: const EdgeInsets.all(1),
+                        height: 0.55 * size.height,
+                        child: RecipeIgredientList(
+                          ingredientsList: recipe.ingredients,
+                          recipeName: recipeName,
+                        ),
+                      ),
                 SizedBox(
                   height: 0.02 * size.height,
                 ),
@@ -96,9 +109,6 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 0.03 * size.height,
-                    ),
                     logging
                         ? Padding(
                             padding: const EdgeInsets.symmetric(vertical: 20),
@@ -115,7 +125,9 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
                                   setState(() => mealValue = val!);
                                 }),
                           )
-                        : Container(),
+                        : SizedBox(
+                            height: 0.03 * size.height,
+                          ),
                     ElevatedButton(
                       onPressed: () async {
                         if (logging) {
@@ -183,25 +195,21 @@ class _RecipeIgredientListState extends State<RecipeIgredientList> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return Container(
-      padding: const EdgeInsets.all(1),
-      height: 0.55 * size.height,
-      child: StreamBuilder<List<DocumentSnapshot>>(
-          stream: RecipeDatabaseService(
-                  uid: _auth.getUID(), recipeName: widget.recipeName)
-              .recipeStream,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.active &&
-                snapshot.hasData) {
-              return ListView(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                children: snapshot.data!.map(mappingFunction).toList(),
-              );
-            } else {
-              return const Loading();
-            }
-          }),
-    );
+    return StreamBuilder<List<DocumentSnapshot>>(
+        stream: RecipeDatabaseService(
+                uid: _auth.getUID(), recipeName: widget.recipeName)
+            .recipeStream,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.active &&
+              snapshot.hasData) {
+            return ListView(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              children: snapshot.data!.map(mappingFunction).toList(),
+            );
+          } else {
+            return const Loading();
+          }
+        });
   }
 }

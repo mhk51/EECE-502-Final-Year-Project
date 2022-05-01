@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
           '/CameraScreen': (context) => const CameraScreen(),
           '/Bolus': (context) => const Bolus(),
           '/RecipeList': (context) => const RecipeList(),
-          '/SignIn': (context) => const SignIn1(),
+          // '/SignIn': (context) =>  SignIn1(),
         },
       ),
     );
