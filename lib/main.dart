@@ -10,6 +10,7 @@ import 'package:flutter_application_1/screens/recipe/new_recipe_search.dart';
 import 'package:flutter_application_1/screens/recipe/recipe_item_info.dart';
 import 'package:flutter_application_1/screens/recipe/recipe_list.dart';
 import 'package:flutter_application_1/screens/settings_form.dart';
+import 'package:flutter_application_1/screens/signin/signin.dart';
 import 'package:flutter_application_1/screens/weekly_insights_screen.dart';
 import 'package:flutter_application_1/screens/wrapper.dart';
 import 'package:provider/provider.dart';
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
           '/CameraScreen': (context) => const CameraScreen(),
           '/Bolus': (context) => const Bolus(),
           '/RecipeList': (context) => const RecipeList(),
+          '/SignIn': (context) => const SignIn1(),
         },
       ),
     );

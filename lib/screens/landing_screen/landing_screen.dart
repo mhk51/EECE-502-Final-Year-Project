@@ -108,7 +108,9 @@ class LandingScreen extends StatelessWidget {
               // top: 747,
               bottom: 30,
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, "/SignIn");
+                },
                 child: Text(
                   "Already have an Account? Log In Here",
                   textScaleFactor: textScaleFactor,
