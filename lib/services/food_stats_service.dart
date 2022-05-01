@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_1/models/food_class.dart';
 
@@ -97,5 +95,15 @@ class FoodStatsService {
       }
     }
     // userFoodStatsCollection.doc().set(data)
+  }
+
+  Future<void> updateFoodFactor(List<String> foodNames, String mealType) async {
+    for (var foodName in foodNames) {
+      DocumentReference docRef = userFoodStatsCollection.doc(foodName);
+      DocumentSnapshot docSnap = await docRef.get();
+      double correctionFactor = docSnap.get('correctionFactor').toDouble();
+      // correctionFactor = {some correction formula}
+      docRef.update({'correctionFactor': correctionFactor});
+    }
   }
 }

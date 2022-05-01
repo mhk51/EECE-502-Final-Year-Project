@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/custom/constants.dart';
 import 'package:flutter_application_1/models/food_class.dart';
 import 'package:flutter_application_1/services/auth.dart';
-import 'package:flutter_application_1/services/foodStats.dart';
+import 'package:flutter_application_1/services/food_stats_service.dart';
 import 'package:flutter_application_1/services/food_database.dart';
 
 class ItemInfoScreen extends StatefulWidget {
