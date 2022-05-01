@@ -63,8 +63,8 @@ class TherapyDatabaseService {
       lunchEndTime: snapshot.get('lunchEndTime'),
       dinnerStartTime: snapshot.get('dinnerStartTime'),
       dinnerEndTime: snapshot.get('dinnerEndTime'),
-      insulinSensitivity: snapshot.get('insulinSensitivity').toInt(),
-      carbohydratesRatio: snapshot.get('carbohydratesRatio'),
+      insulinSensitivity: snapshot.get('insulinSensitivity').toDouble(),
+      carbohydratesRatio: snapshot.get('carbohydratesRatio').toDouble(),
     );
   }
 
