@@ -23,7 +23,7 @@ class FoodTile extends StatefulWidget {
 }
 
 class _FoodTileState extends State<FoodTile> {
-  final double fontSize = 11;
+  final double fontSize = 14;
   bool addButtonSelected = false;
   bool starButtonSelected = false;
 
@@ -32,7 +32,10 @@ class _FoodTileState extends State<FoodTile> {
     return ListTile(
       dense: true,
       style: ListTileStyle.drawer,
-      title: Text(widget.food.foodName),
+      title: Text(
+        widget.food.foodName,
+        style: const TextStyle(fontSize: 16),
+      ),
       subtitle: RichText(
         overflow: TextOverflow.ellipsis,
         textAlign: TextAlign.start,
