@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/recommendations/recommendationTile.dart';
-import 'package:flutter_application_1/services/foodStats.dart';
+import 'package:flutter_application_1/services/food_stats_service.dart';
 
 import '../../custom/loading.dart';
 import '../../services/auth.dart';
