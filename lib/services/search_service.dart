@@ -16,7 +16,7 @@ class Bloc {
   Future fetchFirstList() async {
     try {
       documentList = (await FirebaseFirestore.instance
-              .collection("food")
+              .collection("foods")
               .orderBy("Description")
               .limit(10)
               .get())
@@ -43,7 +43,7 @@ class Bloc {
   fetchNextMovies() async {
     try {
       List<DocumentSnapshot> newDocumentList = (await FirebaseFirestore.instance
-              .collection("food")
+              .collection("foods")
               .orderBy("Description")
               .startAfterDocument(documentList[documentList.length - 1])
               .limit(10)
