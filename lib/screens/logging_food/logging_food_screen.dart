@@ -366,7 +366,8 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                         setState(() {
                           searchWord = tempSearchWord;
                         });
-                        bloc.fetchNewSearch(searchWord);
+                        bloc.searchWord = searchWord;
+                        bloc.fetchNewSearch();
                       },
                       icon: const Icon(
                         Icons.search,

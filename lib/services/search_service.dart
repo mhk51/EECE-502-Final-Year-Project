@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 
 class Bloc {
   List<DocumentSnapshot> documentList = [];
 
   late StreamController<List<DocumentSnapshot>> foodController;
-
+  String searchWord = "";
   Bloc() {
     foodController = StreamController<List<DocumentSnapshot>>();
   }
@@ -30,7 +31,7 @@ class Bloc {
     }
   }
 
-  fetchNewSearch(String searchWord) async {
+  fetchNewSearch() async {
     documentList = (await FirebaseFirestore.instance
             .collection('foods')
             .where('SearchIndex', arrayContains: searchWord.toLowerCase())
@@ -44,7 +45,7 @@ class Bloc {
     try {
       List<DocumentSnapshot> newDocumentList = (await FirebaseFirestore.instance
               .collection("foods")
-              .orderBy("Description")
+              .where('SearchIndex', arrayContains: searchWord.toLowerCase())
               .startAfterDocument(documentList[documentList.length - 1])
               .limit(10)
               .get())

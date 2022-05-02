@@ -162,7 +162,7 @@ class _NewRecipeSearchState extends State<NewRecipeSearch> {
                         setState(() {
                           searchWord = tempSearchWord;
                         });
-                        bloc.fetchNewSearch(searchWord);
+                        bloc.fetchNewSearch();
                       },
                       icon: const Icon(
                         Icons.search,
