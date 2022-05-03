@@ -128,8 +128,10 @@ class _SignUp1State extends State<SignUp1> {
                         padding: const EdgeInsets.only(bottom: 40, top: 60),
                         child: ElevatedButton(
                           onPressed: () {
-                            registrationClass
-                                .setSignUpScreen(SignUpScreen.signup2);
+                            if (_formKey.currentState!.validate()) {
+                              registrationClass
+                                  .setSignUpScreen(SignUpScreen.signup2);
+                            }
                           },
                           style: ButtonStyle(
                             minimumSize: MaterialStateProperty.all<Size>(

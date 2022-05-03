@@ -1,3 +1,5 @@
+// ignore_for_file: empty_catches
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +19,7 @@ class _SignUp2State extends State<SignUp2> {
   Widget build(BuildContext context) {
     RegistrationClass registrationClass =
         Provider.of<RegistrationClass>(context);
-    var defaultGender = 'None';
+    var defaultGender = 'Male';
     var genderType = ["Male", "Female"];
     return SafeArea(
       child: Scaffold(
@@ -44,7 +46,8 @@ class _SignUp2State extends State<SignUp2> {
                         top: 10,
                         child: IconButton(
                             onPressed: () {
-                              Navigator.pop(context);
+                              registrationClass
+                                  .setSignUpScreen(SignUpScreen.signup1);
                             },
                             icon: const Icon(Icons.arrow_back))),
                     const Positioned(
@@ -170,7 +173,8 @@ class _SignUp2State extends State<SignUp2> {
                         child: ElevatedButton(
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              Navigator.pushNamed(context, '/Signup3');
+                              registrationClass
+                                  .setSignUpScreen(SignUpScreen.signup3);
                             }
                           },
                           style: ButtonStyle(

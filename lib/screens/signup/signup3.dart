@@ -44,7 +44,8 @@ class _SignUp3State extends State<SignUp3> {
                         top: 10,
                         child: IconButton(
                             onPressed: () {
-                              Navigator.pop(context);
+                              registrationClass
+                                  .setSignUpScreen(SignUpScreen.signup2);
                             },
                             icon: const Icon(Icons.arrow_back))),
                     const Positioned(

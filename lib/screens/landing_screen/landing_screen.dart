@@ -69,7 +69,7 @@ class LandingScreen extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/Signup1');
+                    toggleSignUp();
                   },
                   style: ButtonStyle(
                     minimumSize: MaterialStateProperty.all<Size>(Size(314, 70)),
@@ -99,7 +99,7 @@ class LandingScreen extends StatelessWidget {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, "/SignIn");
+                    toggleSignIn();
                   },
                   child: Text(
                     "Already have an Account? Log In Here",
