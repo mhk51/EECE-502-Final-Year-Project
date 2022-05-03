@@ -1,12 +1,10 @@
 // import 'package:flutter_application_1/services/auth.dart';
-import 'package:flutter_application_1/custom/constants.dart';
 import 'package:flutter_application_1/custom/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/Authentication/register1.dart';
 import 'package:flutter_application_1/screens/Authentication/register2.dart';
 import 'package:flutter_application_1/screens/Authentication/register3.dart';
 import 'package:flutter_application_1/screens/Authentication/registration_class.dart';
-import 'package:flutter_application_1/services/auth.dart';
 import 'package:provider/provider.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 

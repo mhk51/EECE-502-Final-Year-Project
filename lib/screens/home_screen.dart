@@ -212,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 0.02 * size.height,
                 ),
                 Container(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   width: 0.95 * size.width,
                   alignment: Alignment.bottomLeft,
                   decoration: const BoxDecoration(
