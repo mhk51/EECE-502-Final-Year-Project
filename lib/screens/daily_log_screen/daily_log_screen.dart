@@ -72,7 +72,7 @@ class _DailyLogScreenState extends State<DailyLogScreen> {
                             height: 0.03 * size.height,
                           ),
                           Container(
-                            padding: EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             decoration: BoxDecoration(
                                 border: Border.all(color: Colors.white),
                                 color: Colors.white,
