@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/models/user.dart';
 import 'package:flutter_application_1/services/auth.dart';
 
+enum SignUpScreen { signup1, signup2, signup3 }
+
 class RegistrationClass extends ChangeNotifier {
   String email;
   String password;
@@ -14,6 +16,7 @@ class RegistrationClass extends ChangeNotifier {
   bool isGenderMale;
   String error;
   bool loading = false;
+  SignUpScreen signUpScreen = SignUpScreen.signup1;
   final _auth = AuthService();
   RegistrationClass({
     this.email = "blabla",
@@ -79,6 +82,11 @@ class RegistrationClass extends ChangeNotifier {
 
   void setLoading(bool val) {
     loading = val;
+    notifyListeners();
+  }
+
+  void setSignUpScreen(SignUpScreen screen) {
+    signUpScreen = screen;
     notifyListeners();
   }
 

@@ -16,8 +16,6 @@ class Register extends StatefulWidget {
   _RegisterState createState() => _RegisterState();
 }
 
-enum SingingCharacter { lafayette, jefferson }
-
 class _RegisterState extends State<Register>
     with SingleTickerProviderStateMixin {
   // text field state

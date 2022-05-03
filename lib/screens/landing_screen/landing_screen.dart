@@ -4,7 +4,11 @@ const mockupHeight = 896;
 const mockupWidth = 414;
 
 class LandingScreen extends StatelessWidget {
-  const LandingScreen({Key? key}) : super(key: key);
+  final Function toggleSignIn;
+  final Function toggleSignUp;
+  const LandingScreen(
+      {Key? key, required this.toggleSignIn, required this.toggleSignUp})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -13,8 +13,6 @@ class Parent extends CustomUser {
       : super(uid: uid, name: name, email: email);
 }
 
-enum gender { Male, Female }
-
 class Child extends CustomUser {
   final int age;
   final int weight;
