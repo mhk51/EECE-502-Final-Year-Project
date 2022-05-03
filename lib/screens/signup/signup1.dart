@@ -4,7 +4,8 @@ import 'package:provider/provider.dart';
 import '../Authentication/registration_class.dart';
 
 class SignUp1 extends StatefulWidget {
-  const SignUp1({Key? key}) : super(key: key);
+  final Function toggleLanding;
+  const SignUp1({Key? key, required this.toggleLanding}) : super(key: key);
 
   @override
   State<SignUp1> createState() => _SignUp1State();
@@ -40,7 +41,9 @@ class _SignUp1State extends State<SignUp1> {
                         left: 24,
                         top: 10,
                         child: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              widget.toggleLanding();
+                            },
                             icon: const Icon(Icons.arrow_back))),
                     const Positioned(
                       left: 24,
@@ -112,7 +115,10 @@ class _SignUp1State extends State<SignUp1> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 40, top: 60),
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            registrationClass
+                                .setSignUpScreen(SignUpScreen.signup2);
+                          },
                           style: ButtonStyle(
                             minimumSize: MaterialStateProperty.all<Size>(
                                 const Size(314, 70)),

@@ -4,8 +4,8 @@ import '../../custom/loading.dart';
 import '../../services/auth.dart';
 
 class SignIn1 extends StatefulWidget {
-  final Function toggleView;
-  const SignIn1({Key? key, required this.toggleView}) : super(key: key);
+  final Function toggleLanding;
+  const SignIn1({Key? key, required this.toggleLanding}) : super(key: key);
 
   @override
   State<SignIn1> createState() => _SignIn1State();
@@ -80,7 +80,7 @@ class _SignIn1State extends State<SignIn1> {
                             top: 10,
                             child: IconButton(
                                 onPressed: () {
-                                  Navigator.pop(context);
+                                  widget.toggleLanding();
                                 },
                                 icon: const Icon(Icons.arrow_back))),
                         const Positioned(

@@ -4,13 +4,18 @@ const mockupHeight = 896;
 const mockupWidth = 414;
 
 class LandingScreen extends StatelessWidget {
-  const LandingScreen({Key? key}) : super(key: key);
+  final Function toggleSignIn;
+  final Function toggleSignUp;
+  const LandingScreen(
+      {Key? key, required this.toggleSignIn, required this.toggleSignUp})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final scale = mockupWidth / width;
     final textScaleFactor = width / mockupWidth.toDouble();
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 255, 75, 58),
@@ -75,7 +80,9 @@ class LandingScreen extends StatelessWidget {
               // top: 747,
               bottom: 79,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  toggleSignUp();
+                },
                 style: ButtonStyle(
                   minimumSize: MaterialStateProperty.all<Size>(Size(314, 70)),
                   backgroundColor:
@@ -109,7 +116,7 @@ class LandingScreen extends StatelessWidget {
               bottom: 30,
               child: TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, "/SignIn");
+                  toggleSignIn();
                 },
                 child: Text(
                   "Already have an Account? Log In Here",
