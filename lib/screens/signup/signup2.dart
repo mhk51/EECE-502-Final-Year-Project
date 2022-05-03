@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../custom/constants.dart';
+import '../Authentication/registration_class.dart';
 
 class SignUp2 extends StatefulWidget {
   const SignUp2({Key? key}) : super(key: key);
@@ -8,8 +12,13 @@ class SignUp2 extends StatefulWidget {
 }
 
 class _SignUp2State extends State<SignUp2> {
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    RegistrationClass registrationClass =
+        Provider.of<RegistrationClass>(context);
+    var defaultGender = 'None';
+    var genderType = ["Male", "Female"];
     return SafeArea(
       child: Scaffold(
           backgroundColor: const Color.fromARGB(242, 242, 242, 242),
@@ -34,7 +43,9 @@ class _SignUp2State extends State<SignUp2> {
                         left: 24,
                         top: 10,
                         child: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                             icon: const Icon(Icons.arrow_back))),
                     const Positioned(
                       left: 24,
@@ -81,69 +92,118 @@ class _SignUp2State extends State<SignUp2> {
                     ),
                   ]),
                 ),
-                Column(
-                  children: [
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(left: 50, right: 50, top: 30),
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Age',
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(left: 50, right: 50, top: 30),
+                        child: TextFormField(
+                          validator: (val) =>
+                              val!.isEmpty ? 'Enter an age' : null,
+                          onChanged: (value) {
+                            try {
+                              registrationClass.changeAge(int.parse(value));
+                            } catch (e) {}
+                          },
+                          decoration: const InputDecoration(
+                            labelText: 'Age',
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(left: 50, right: 50, top: 40),
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Weight',
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(left: 50, right: 50, top: 40),
+                        child: TextFormField(
+                          validator: (val) =>
+                              val!.isEmpty ? 'Enter a weight' : null,
+                          onChanged: (value) {
+                            try {
+                              registrationClass.changeWeight(int.parse(value));
+                            } catch (e) {}
+                          },
+                          decoration: const InputDecoration(
+                            labelText: 'Weight',
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(left: 50, right: 50, top: 40),
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Gender',
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(left: 50, right: 50, top: 30),
+                        child: TextFormField(
+                          validator: (val) =>
+                              val!.isEmpty ? 'Enter a height' : null,
+                          onChanged: (value) {
+                            try {
+                              registrationClass.changeHeight(int.parse(value));
+                            } catch (e) {}
+                          },
+                          decoration: const InputDecoration(
+                            labelText: 'Height',
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 40, top: 50),
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ButtonStyle(
-                          minimumSize: MaterialStateProperty.all<Size>(
-                              const Size(314, 70)),
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              const Color.fromARGB(255, 255, 75, 58)),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(left: 50, right: 50, top: 40),
+                        child: DropdownButtonFormField<String>(
+                            value: defaultGender,
+                            decoration: textInputDecoration,
+                            items: genderType.map((gender) {
+                              return DropdownMenuItem(
+                                value: gender,
+                                child: Text(gender),
+                              );
+                            }).toList(),
+                            onChanged: (val) {
+                              setState(() => defaultGender = val!);
+                              if (val == "Male") {
+                                registrationClass.setGender(true);
+                              } else if (val == "Female") {
+                                registrationClass.setGender(false);
+                              }
+                            }),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 40, top: 50),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              Navigator.pushNamed(context, '/Signup3');
+                            }
+                          },
+                          style: ButtonStyle(
+                            minimumSize: MaterialStateProperty.all<Size>(
+                                const Size(314, 70)),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                const Color.fromARGB(255, 255, 75, 58)),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                              ),
+                            ),
+                          ),
+                          child: const Text(
+                            "Next",
+                            // textScaleFactor: textScaleFactor,
+                            overflow: TextOverflow.visible,
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              height: 0.8683594336876502,
+                              fontSize: 24.0,
+                              fontFamily: 'Inria Serif',
+                              fontWeight: FontWeight.w400,
+                              color: Colors.white,
+
+                              /* letterSpacing: -1.95, */
                             ),
                           ),
                         ),
-                        child: const Text(
-                          "Next",
-                          // textScaleFactor: textScaleFactor,
-                          overflow: TextOverflow.visible,
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            height: 0.8683594336876502,
-                            fontSize: 24.0,
-                            fontFamily: 'Inria Serif',
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white,
-
-                            /* letterSpacing: -1.95, */
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 )
               ],
             ),

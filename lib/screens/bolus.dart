@@ -735,6 +735,9 @@ class _BolusListViewState extends State<BolusListView> {
                 widget.dropDownMenuOnChanged(val);
               },
             ),
+            SizedBox(
+              height: 0.04 * size.height,
+            ),
             Container(
               alignment: Alignment.center,
               child: ElevatedButton(

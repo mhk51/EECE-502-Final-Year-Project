@@ -135,7 +135,7 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
                                   recipeName: recipeName, uid: userUID)
                               .logAllRecipeItems(mealValue);
                         }
-                        // Navigator.pop(context);
+                        Navigator.pop(context);
                       },
                       child: Text(logging ? "Log Recipe" : "Save Recipe",
                           style: const TextStyle(

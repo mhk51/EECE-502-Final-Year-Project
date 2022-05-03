@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../models/user.dart';
+import '../../services/database.dart';
+import '../../services/therapy_database.dart';
+import '../Authentication/registration_class.dart';
 
 class SignUp3 extends StatefulWidget {
   const SignUp3({Key? key}) : super(key: key);
@@ -8,8 +14,11 @@ class SignUp3 extends StatefulWidget {
 }
 
 class _SignUp3State extends State<SignUp3> {
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    RegistrationClass registrationClass =
+        Provider.of<RegistrationClass>(context);
     return SafeArea(
       child: Scaffold(
           backgroundColor: const Color.fromARGB(242, 242, 242, 242),
@@ -34,7 +43,9 @@ class _SignUp3State extends State<SignUp3> {
                         left: 24,
                         top: 10,
                         child: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                             icon: const Icon(Icons.arrow_back))),
                     const Positioned(
                       left: 24,
@@ -81,60 +92,132 @@ class _SignUp3State extends State<SignUp3> {
                     ),
                   ]),
                 ),
-                Column(
-                  children: [
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(left: 50, right: 50, top: 60),
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Email',
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(left: 50, right: 50, top: 60),
+                        child: TextFormField(
+                          validator: (val) =>
+                              val!.isEmpty ? 'Enter an email' : null,
+                          onChanged: (val) {
+                            registrationClass.changeEmail(val);
+                          },
+                          decoration: const InputDecoration(
+                            labelText: 'Email',
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(left: 50, right: 50, top: 50),
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: 'Password',
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(left: 50, right: 50, top: 50),
+                        child: TextFormField(
+                          obscureText: true,
+                          validator: (val) => val!.length < 6
+                              ? 'Enter a password 6+ chars long'
+                              : null,
+                          onChanged: (val) {
+                            registrationClass.changePassword(val);
+                          },
+                          decoration: const InputDecoration(
+                            labelText: 'Password',
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 40, top: 60),
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ButtonStyle(
-                          minimumSize: MaterialStateProperty.all<Size>(
-                              const Size(314, 70)),
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              const Color.fromARGB(255, 255, 75, 58)),
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(left: 50, right: 50, top: 50),
+                        child: TextFormField(
+                          obscureText: true,
+                          validator: (val) => val != registrationClass.password
+                              ? 'Enter a matching password'
+                              : null,
+                          onChanged: (val) {
+                            registrationClass.changeConfirmPassword(val);
+                          },
+                          decoration: const InputDecoration(
+                            labelText: 'Confirm Password',
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 40, top: 60),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              registrationClass.setLoading(true);
+                              CustomUser? result =
+                                  await registrationClass.registerUser();
+                              if (result == null) {
+                                registrationClass.setLoading(false);
+                                registrationClass
+                                    .changeError('Please Supply a Valid Email');
+                              } else {
+                                await DatabaseService(uid: result.uid)
+                                    .updateUserDataCollection(
+                                  registrationClass.username,
+                                  registrationClass.email,
+                                  registrationClass.height,
+                                  registrationClass.age,
+                                  registrationClass.weight,
+                                  registrationClass.isGenderMale
+                                      ? 'male'
+                                      : 'female',
+                                );
+                                await TherapyDatabaseService(uid: result.uid)
+                                    .updateUserTherapyCollection(
+                                        11.0,
+                                        8.0,
+                                        5.6,
+                                        4.6,
+                                        3.0,
+                                        15.0,
+                                        10.0,
+                                        6.0,
+                                        '7:00',
+                                        '10:00',
+                                        '12:00',
+                                        '15:00',
+                                        '18:00',
+                                        '20:00',
+                                        -1,
+                                        -1);
+                              }
+                            }
+                          },
+                          style: ButtonStyle(
+                            minimumSize: MaterialStateProperty.all<Size>(
+                                const Size(314, 70)),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                const Color.fromARGB(255, 255, 75, 58)),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0),
+                              ),
+                            ),
+                          ),
+                          child: const Text(
+                            "Register",
+                            // textScaleFactor: textScaleFactor,
+                            overflow: TextOverflow.visible,
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              height: 0.8683594336876502,
+                              fontSize: 24.0,
+                              fontFamily: 'Inria Serif',
+                              fontWeight: FontWeight.w400,
+                              color: Colors.white,
+
+                              /* letterSpacing: -1.95, */
                             ),
                           ),
                         ),
-                        child: const Text(
-                          "Register",
-                          // textScaleFactor: textScaleFactor,
-                          overflow: TextOverflow.visible,
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            height: 0.8683594336876502,
-                            fontSize: 24.0,
-                            fontFamily: 'Inria Serif',
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white,
-
-                            /* letterSpacing: -1.95, */
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 )
               ],
             ),

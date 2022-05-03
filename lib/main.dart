@@ -13,6 +13,11 @@ import 'package:flutter_application_1/screens/recipe/recipe_list.dart';
 import 'package:flutter_application_1/screens/settings_form.dart';
 import 'package:flutter_application_1/screens/signin/signin.dart';
 import 'package:flutter_application_1/screens/signup/signup1.dart';
+<<<<<<< HEAD
+=======
+import 'package:flutter_application_1/screens/signup/signup2.dart';
+import 'package:flutter_application_1/screens/signup/signup3.dart';
+>>>>>>> 07f657ba869cd19c3d2da81ec69f7551c6325533
 import 'package:flutter_application_1/screens/weekly_insights_screen.dart';
 import 'package:flutter_application_1/screens/wrapper.dart';
 import 'package:provider/provider.dart';
