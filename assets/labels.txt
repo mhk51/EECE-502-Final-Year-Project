@@ -1,11 +1,12 @@
 0 Bread
-1 Dairy product
-2 Dessert
-3 Egg
-4 Fried food
-5 Meat 
-6 Noodles-pasta
-7 Rice
-8 Seafood
-9 Soup
-10 Vegetable-fruit
+1 Burger
+2 Dairy product
+3 Dessert
+4 Egg
+5 Fried food
+6 Meat 
+7 Noodles-pasta
+8 Rice
+9 Seafood
+10 Soup
+11 Vegetable-fruit
