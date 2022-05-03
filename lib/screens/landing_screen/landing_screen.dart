@@ -75,7 +75,9 @@ class LandingScreen extends StatelessWidget {
               // top: 747,
               bottom: 79,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/Signup1');
+                },
                 style: ButtonStyle(
                   minimumSize: MaterialStateProperty.all<Size>(Size(314, 70)),
                   backgroundColor:

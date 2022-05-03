@@ -40,7 +40,9 @@ class _SignUp1State extends State<SignUp1> {
                         left: 24,
                         top: 10,
                         child: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                             icon: const Icon(Icons.arrow_back))),
                     const Positioned(
                       left: 24,
@@ -95,6 +97,12 @@ class _SignUp1State extends State<SignUp1> {
                         padding:
                             const EdgeInsets.only(left: 50, right: 50, top: 60),
                         child: TextFormField(
+                          validator: (val) => registrationClass.fullname.isEmpty
+                              ? 'Enter First Name'
+                              : null,
+                          onChanged: (val) {
+                            registrationClass.changeFullname(val);
+                          },
                           decoration: const InputDecoration(
                             labelText: 'First Name',
                           ),
@@ -104,6 +112,12 @@ class _SignUp1State extends State<SignUp1> {
                         padding:
                             const EdgeInsets.only(left: 50, right: 50, top: 50),
                         child: TextFormField(
+                          validator: (val) => registrationClass.username.isEmpty
+                              ? 'Enter Family Name'
+                              : null,
+                          onChanged: (val) {
+                            registrationClass.changeUsername(val);
+                          },
                           decoration: const InputDecoration(
                             labelText: 'Family Name',
                           ),
@@ -112,7 +126,11 @@ class _SignUp1State extends State<SignUp1> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 40, top: 60),
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              Navigator.pushNamed(context, '/Signup2');
+                            }
+                          },
                           style: ButtonStyle(
                             minimumSize: MaterialStateProperty.all<Size>(
                                 const Size(314, 70)),
