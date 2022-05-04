@@ -44,10 +44,10 @@ class _FoodSearchWidgetState extends State<FoodSearchWidget> {
 
   ScrollController controller = ScrollController();
 
-  void _scrollListener() {
+  void _scrollListener() async {
     if (controller.offset >= controller.position.maxScrollExtent &&
         !controller.position.outOfRange) {
-      widget.bloc.fetchNextMovies();
+      await widget.bloc.fetchNextMovies();
     }
   }
 
@@ -65,52 +65,50 @@ class _FoodSearchWidgetState extends State<FoodSearchWidget> {
         stream: widget.bloc.foodStream,
         builder: (BuildContext context,
             AsyncSnapshot<List<DocumentSnapshot>> snapshot) {
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          }
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return ListView(children: generateEmptyTiles());
-            default:
-              List<FoodClass> list =
-                  snapshot.data!.map(documentToFoodClass).toList();
-              return Scrollbar(
+          if (snapshot.connectionState == ConnectionState.active &&
+              snapshot.hasData &&
+              snapshot.data!.isNotEmpty) {
+            List<FoodClass> list =
+                snapshot.data!.map(documentToFoodClass).toList();
+            return Scrollbar(
+              controller: controller,
+              thickness: 5,
+              radius: const Radius.circular(90),
+              interactive: true,
+              showTrackOnHover: true,
+              hoverThickness: 10,
+              trackVisibility: true,
+              isAlwaysShown: true,
+              child: ListView.separated(
                 controller: controller,
-                thickness: 5,
-                radius: const Radius.circular(90),
-                interactive: true,
-                showTrackOnHover: true,
-                hoverThickness: 10,
-                trackVisibility: true,
-                isAlwaysShown: true,
-                child: ListView.separated(
-                  controller: controller,
-                  itemCount: list.length,
-                  itemBuilder: (context, index) {
-                    if (widget.recipeName == '') {
-                      return FoodTile(
-                        food: list[index],
-                        recipeName: '',
-                      );
-                    } else {
-                      return FoodTile(
-                          food: list[index], recipeName: widget.recipeName);
-                    }
-                  },
-                  separatorBuilder: (context, index) {
-                    return const Padding(
-                      padding: EdgeInsets.only(right: 5),
-                      child: Divider(
-                        height: 1,
-                        color: Colors.black,
-                        thickness: 0.75,
-                      ),
+                itemCount: list.length,
+                itemBuilder: (context, index) {
+                  if (widget.recipeName == '') {
+                    return FoodTile(
+                      food: list[index],
+                      recipeName: '',
                     );
-                  },
-                  physics: const ScrollPhysics(parent: BouncingScrollPhysics()),
-                  padding: const EdgeInsets.all(0),
-                ),
-              );
+                  } else {
+                    return FoodTile(
+                        food: list[index], recipeName: widget.recipeName);
+                  }
+                },
+                separatorBuilder: (context, index) {
+                  return const Padding(
+                    padding: EdgeInsets.only(right: 5),
+                    child: Divider(
+                      height: 1,
+                      color: Colors.black,
+                      thickness: 0.75,
+                    ),
+                  );
+                },
+                physics: const ScrollPhysics(parent: BouncingScrollPhysics()),
+                padding: const EdgeInsets.all(0),
+              ),
+            );
+          } else {
+            return ListView(children: generateEmptyTiles());
           }
         },
       ),

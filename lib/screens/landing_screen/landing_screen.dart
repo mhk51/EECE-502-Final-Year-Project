@@ -14,9 +14,7 @@ class LandingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final size = MediaQuery.of(context).size;
-    final scale = mockupWidth / width;
     final textScaleFactor = width / mockupWidth.toDouble();
-    print(scale);
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 255, 75, 58),
@@ -28,7 +26,7 @@ class LandingScreen extends StatelessWidget {
                 SizedBox(
                   height: 0.05 * size.height,
                 ),
-                Container(
+                SizedBox(
                   width: size.width,
                   child: Padding(
                     padding: EdgeInsets.only(
@@ -50,7 +48,7 @@ class LandingScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: size.width,
                   height: size.height * 0.475,
                   child: Stack(
@@ -92,7 +90,8 @@ class LandingScreen extends StatelessWidget {
                     toggleSignUp();
                   },
                   style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.all<Size>(Size(314, 70)),
+                    minimumSize:
+                        MaterialStateProperty.all<Size>(const Size(314, 70)),
                     backgroundColor:
                         MaterialStateProperty.all<Color>(Colors.white),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
