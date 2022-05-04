@@ -104,7 +104,7 @@ class _RecipeItemInfoScreenState extends State<RecipeItemInfoScreen> {
                             //   child: Text("Food Name: ${food.foodName}"),
                             // ),
                             SizedBox(
-                              height: 48,
+                              // height: 48,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
