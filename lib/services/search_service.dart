@@ -5,13 +5,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Bloc {
   List<DocumentSnapshot> documentList = [];
 
-  late StreamController<List<DocumentSnapshot>> foodController;
-  String searchWord = "";
+  late StreamController<List<DocumentSnapshot>?> foodController;
+  List<String> searchWords = [];
   Bloc() {
-    foodController = StreamController<List<DocumentSnapshot>>();
+    foodController = StreamController<List<DocumentSnapshot>?>();
   }
 
-  Stream<List<DocumentSnapshot>> get foodStream => foodController.stream;
+  Stream<List<DocumentSnapshot>?> get foodStream => foodController.stream;
 
   CollectionReference foodDatabaseCollection =
       FirebaseFirestore.instance.collection("foods");
@@ -31,9 +31,9 @@ class Bloc {
   }
 
   Future fetchNewSearch() async {
-    foodController.sink.add([]);
+    foodController.sink.add(null);
     documentList = (await foodDatabaseCollection
-            .where('SearchIndex', arrayContains: searchWord.toLowerCase())
+            .where('SearchIndex', arrayContainsAny: searchWords)
             .limit(10)
             .get())
         .docs;
@@ -43,9 +43,9 @@ class Bloc {
   Future fetchNextMovies() async {
     try {
       late List<DocumentSnapshot> newDocumentList;
-      if (searchWord != "") {
+      if (searchWords != []) {
         newDocumentList = (await foodDatabaseCollection
-                .where('SearchIndex', arrayContains: searchWord.toLowerCase())
+                .where('SearchIndex', arrayContainsAny: searchWords)
                 .startAfterDocument(documentList.last)
                 .limit(10)
                 .get())

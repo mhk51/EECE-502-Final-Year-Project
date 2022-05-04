@@ -98,6 +98,38 @@ class FoodStatsService {
     // userFoodStatsCollection.doc().set(data)
   }
 
+  Future<void> decrementCounter(FoodClass food, String mealType) async {
+    DocumentSnapshot entry =
+        await userFoodStatsCollection.doc(food.foodName).get();
+    int count = entry.get("count");
+    int currBreakfastCount = entry.get("Breakfast");
+    int currLunchCount = entry.get("Lunch");
+    int currDinnerCount = entry.get("Dinner");
+    int currSnackCount = entry.get("Snack");
+
+    await userFoodStatsCollection
+        .doc(food.foodName)
+        .update({'count': count - 1});
+
+    if (mealType == "Breakfast") {
+      await userFoodStatsCollection
+          .doc(food.foodName)
+          .update({'Breakfast': currBreakfastCount - 1});
+    } else if (mealType == "Lunch") {
+      await userFoodStatsCollection
+          .doc(food.foodName)
+          .update({'Lunch': currLunchCount - 1});
+    } else if (mealType == "Dinner") {
+      await userFoodStatsCollection
+          .doc(food.foodName)
+          .update({'Dinner': currDinnerCount - 1});
+    } else if (mealType == "Snack") {
+      await userFoodStatsCollection
+          .doc(food.foodName)
+          .update({'Snack': currSnackCount - 1});
+    }
+  }
+
   Future<void> updateFoodFactor(List<String> foodNames, String mealType,
       double feedBackCorrection) async {
     for (var foodName in foodNames) {

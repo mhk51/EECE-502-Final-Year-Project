@@ -1,7 +1,6 @@
 // ignore_for_file: empty_catches, avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_application_1/custom/line_chart.dart';
 import 'package:flutter_application_1/custom/loading.dart';
 import 'package:flutter_application_1/models/food_class.dart';
@@ -96,38 +95,6 @@ class _BolusState extends State<Bolus> {
     });
   }
 
-  Future<void> showInformationDialog(BuildContext context) async {
-    return await showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextFormField(
-                  validator: (value) {
-                    return value!.isNotEmpty ? null : "Invalid Field";
-                  },
-                  decoration:
-                      const InputDecoration(hintText: "Enter Sugar Level"),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                ),
-              ],
-            ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () async {},
-                child: const Text(
-                  "Submit",
-                  style: TextStyle(color: primaryColor),
-                ),
-              )
-            ],
-          );
-        });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -213,6 +180,27 @@ class BolusListView extends StatefulWidget {
 }
 
 class _BolusListViewState extends State<BolusListView> {
+  Future<void> showBloodSugarDialog(BuildContext context) async {
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Please Input Blood Sugar Level'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () async {
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  "Dismiss",
+                  style: TextStyle(color: primaryColor),
+                ),
+              )
+            ],
+          );
+        });
+  }
+
   List<String> mealType = ["Breakfast", "Lunch", "Dinner", "Snack"];
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Future<double?> showInformationDialog(BuildContext context) async {
@@ -398,419 +386,459 @@ class _BolusListViewState extends State<BolusListView> {
     }
   }
 
+  String unit = "mmol/L";
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return ListView(
-      children: [
-        Card(
-          color: Colors.grey[300],
-          child: Padding(
-            padding: const EdgeInsets.all(6.0),
-            child: ExpansionTile(
-              expandedAlignment: Alignment.bottomLeft,
-              expandedCrossAxisAlignment: CrossAxisAlignment.start,
-              title: Text(
-                  'Total bolus: ${(insulinUnits * 10).round() / 10} units'),
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: RichText(
-                    text: TextSpan(
-                      children: <TextSpan>[
-                        const TextSpan(
-                          text: 'Active Insulin: ',
-                          style: TextStyle(color: Colors.black, fontSize: 15),
-                        ),
-                        TextSpan(
-                            text:
-                                '${insulinUnits.floor()}-${insulinUnits.ceil()} units',
-                            style: const TextStyle(
-                              color: Colors.green,
-                            ))
-                      ],
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    final units = ['mmol/L', 'mg/dL'];
+    return Form(
+      key: _formKey,
+      child: ListView(
+        children: [
+          Card(
+            color: Colors.grey[300],
+            child: Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: ExpansionTile(
+                expandedAlignment: Alignment.bottomLeft,
+                expandedCrossAxisAlignment: CrossAxisAlignment.start,
+                title: Text(
+                    'Total bolus: ${(insulinUnits * 10).round() / 10} units'),
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: RichText(
+                      text: TextSpan(
+                        children: <TextSpan>[
+                          const TextSpan(
+                            text: 'Active Insulin: ',
+                            style: TextStyle(color: Colors.black, fontSize: 15),
+                          ),
+                          TextSpan(
+                              text:
+                                  '${insulinUnits.floor()}-${insulinUnits.ceil()} units',
+                              style: const TextStyle(
+                                color: Colors.green,
+                              ))
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15, top: 5),
-                  child: InkWell(
-                    child: const Text(
-                      'Press for more details',
-                      style: TextStyle(fontSize: 12),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15, top: 5),
+                    child: InkWell(
+                      child: const Text(
+                        'Press for more details',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                      onTap: () {},
                     ),
-                    onTap: () {},
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Expanded(
+                  flex: 1,
+                  child: Icon(
+                    Icons.bloodtype,
+                    size: 30,
+                  ),
+                ),
+                const Expanded(
+                  flex: 1,
+                  child: Text('Glucose'),
+                ),
+                Expanded(
+                  flex: 5,
+                  child: Container(
+                    height: 42,
+                    width: 150,
+                    color: const Color.fromARGB(255, 255, 188, 164),
+                    padding: const EdgeInsets.fromLTRB(10, 6, 0, 2),
+                    margin: const EdgeInsets.fromLTRB(50, 0, 0, 0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            initialValue: widget.bloodSugarLevel.toString(),
+                            validator: (value) {
+                              return double.parse(value!) == 0.0 ? "" : null;
+                            },
+                            decoration: InputDecoration(
+                                errorStyle: const TextStyle(height: 0),
+                                suffixIcon: const Icon(Icons.edit),
+                                hintText: widget.bloodSugarLevel != 0.0
+                                    ? widget.bloodSugarLevel
+                                        .toStringAsPrecision(4)
+                                    : '00.00',
+                                contentPadding: const EdgeInsets.all(0)),
+                            onChanged: (val) {
+                              try {
+                                widget.bloodSugarLevel = double.parse(val);
+                              } catch (e) {}
+                            },
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        // const Drop(
+                        //   'mmol/L',
+                        //   style: TextStyle(fontSize: 16),
+                        // ),
+                        Expanded(
+                          child: DropdownButtonFormField<String>(
+                            value: unit,
+                            decoration: const InputDecoration(
+                                contentPadding: EdgeInsets.all(0)),
+                            items: units.map((unit) {
+                              return DropdownMenuItem(
+                                value: unit,
+                                child: Text(unit),
+                              );
+                            }).toList(),
+                            onChanged: (val) {
+                              setState(() {
+                                unit = val!;
+                              });
+                            },
+                          ),
+                        ),
+                        const SizedBox(width: 8)
+                      ],
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Expanded(
-                flex: 1,
-                child: Icon(
-                  Icons.bloodtype,
-                  size: 30,
-                ),
-              ),
-              const Expanded(
-                flex: 1,
-                child: Text('Glucose'),
-              ),
-              Expanded(
-                flex: 5,
-                child: Container(
-                  height: 42,
-                  width: 150,
-                  color: const Color.fromARGB(255, 255, 188, 164),
-                  padding: const EdgeInsets.fromLTRB(10, 6, 10, 2),
-                  margin: const EdgeInsets.fromLTRB(50, 0, 10, 0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                              suffixIcon: const Icon(Icons.edit),
-                              hintText: widget.bloodSugarLevel != 0.0
-                                  ? widget.bloodSugarLevel
-                                      .toStringAsPrecision(4)
-                                  : '00.00',
-                              contentPadding: const EdgeInsets.all(0)),
-                          onChanged: (val) {
-                            try {
-                              widget.bloodSugarLevel = double.parse(val);
-                            } catch (e) {}
-                          },
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      const Text(
-                        'mmol/L',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      const SizedBox(width: 8)
-                    ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Expanded(
+                  flex: 1,
+                  child: Icon(
+                    Icons.food_bank,
+                    size: 35,
                   ),
                 ),
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Expanded(
-                flex: 1,
-                child: Icon(
-                  Icons.food_bank,
-                  size: 35,
+                const Expanded(
+                  flex: 1,
+                  child: Text('Carbs'),
                 ),
-              ),
-              const Expanded(
-                flex: 1,
-                child: Text('Carbs'),
-              ),
-              Expanded(
-                flex: 5,
-                child: Container(
-                  height: 40,
-                  padding: const EdgeInsets.fromLTRB(10, 0, 3, 2),
-                  margin: const EdgeInsets.fromLTRB(50, 0, 0, 0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                              suffixIcon: const Icon(Icons.edit),
-                              hintText: widget.carbs != 0.0
-                                  ? widget.carbs.toStringAsPrecision(4)
-                                  : '00.00',
-                              contentPadding: const EdgeInsets.all(0)),
-                          onChanged: (val) {
-                            try {
-                              widget.carbs = double.parse(val);
-                            } catch (e) {}
-                          },
+                Expanded(
+                  flex: 5,
+                  child: Container(
+                    height: 40,
+                    padding: const EdgeInsets.fromLTRB(10, 0, 3, 2),
+                    margin: const EdgeInsets.fromLTRB(50, 0, 0, 0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            decoration: InputDecoration(
+                                suffixIcon: const Icon(Icons.edit),
+                                hintText: widget.carbs != 0.0
+                                    ? widget.carbs.toStringAsPrecision(4)
+                                    : '00.00',
+                                contentPadding: const EdgeInsets.all(0)),
+                            onChanged: (val) {
+                              try {
+                                widget.carbs = double.parse(val);
+                              } catch (e) {}
+                            },
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      const Text(
-                        'grams',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      const SizedBox(
-                        width: 36,
-                      ),
-                    ],
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        const Text(
+                          'grams',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        const SizedBox(
+                          width: 36,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Expanded(
-                flex: 1,
-                child: SizedBox(
-                  width: 1,
-                ),
-              ),
-              const Expanded(
-                flex: 1,
-                child: Text('Protein'),
-              ),
-              Expanded(
-                flex: 5,
-                child: Container(
-                  height: 40,
-                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 2),
-                  margin: const EdgeInsets.fromLTRB(50, 0, 0, 0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                              suffixIcon: const Icon(Icons.edit),
-                              hintText: widget.protein != 0.0
-                                  ? widget.protein.toStringAsPrecision(4)
-                                  : '00.00',
-                              contentPadding: const EdgeInsets.all(0)),
-                          onChanged: (val) {},
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      const Text(
-                        'grams',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      const SizedBox(
-                        width: 30,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Expanded(
-                flex: 1,
-                child: SizedBox(
-                  width: 1,
-                ),
-              ),
-              const Expanded(
-                flex: 1,
-                child: Text('Fats'),
-              ),
-              Expanded(
-                flex: 5,
-                child: Container(
-                  height: 40,
-                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 2),
-                  margin: const EdgeInsets.fromLTRB(50, 0, 0, 0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                              suffixIcon: const Icon(Icons.edit),
-                              hintText: widget.fat != 0.0
-                                  ? widget.fat.toStringAsPrecision(4)
-                                  : '00.00',
-                              contentPadding: const EdgeInsets.all(0)),
-                          onChanged: (val) {},
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      const Text(
-                        'grams',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      const SizedBox(
-                        width: 30,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Expanded(
-                flex: 1,
-                child: SizedBox(
-                  width: 1,
-                ),
-              ),
-              const Expanded(
-                flex: 1,
-                child: Text('Calories'),
-              ),
-              Expanded(
-                flex: 5,
-                child: Container(
-                  height: 40,
-                  padding: const EdgeInsets.fromLTRB(10, 0, 20, 2),
-                  margin: const EdgeInsets.fromLTRB(50, 0, 0, 0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                              suffixIcon: const Icon(Icons.edit),
-                              hintText: widget.calories != 0.0
-                                  ? widget.calories.toStringAsPrecision(4)
-                                  : '00.00',
-                              contentPadding: const EdgeInsets.all(0)),
-                          onChanged: (val) {},
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      const Text(
-                        'kcal',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      const SizedBox(
-                        width: 38,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Column(
-          children: [
-            SizedBox(
-              height: 0.02 * size.height,
+              ],
             ),
-            DropdownButtonFormField<String>(
-              value: widget.mealValue,
-              decoration: textInputDecoration,
-              items: mealType.map((sugar) {
-                return DropdownMenuItem(
-                  value: sugar,
-                  child: Text(sugar),
-                );
-              }).toList(),
-              onChanged: (val) {
-                widget.dropDownMenuOnChanged(val);
-              },
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Expanded(
+                  flex: 1,
+                  child: SizedBox(
+                    width: 1,
+                  ),
+                ),
+                const Expanded(
+                  flex: 1,
+                  child: Text('Protein'),
+                ),
+                Expanded(
+                  flex: 5,
+                  child: Container(
+                    height: 40,
+                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 2),
+                    margin: const EdgeInsets.fromLTRB(50, 0, 0, 0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            decoration: InputDecoration(
+                                suffixIcon: const Icon(Icons.edit),
+                                hintText: widget.protein != 0.0
+                                    ? widget.protein.toStringAsPrecision(4)
+                                    : '00.00',
+                                contentPadding: const EdgeInsets.all(0)),
+                            onChanged: (val) {},
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        const Text(
+                          'grams',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        const SizedBox(
+                          width: 30,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-            SizedBox(
-              height: 0.04 * size.height,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Expanded(
+                  flex: 1,
+                  child: SizedBox(
+                    width: 1,
+                  ),
+                ),
+                const Expanded(
+                  flex: 1,
+                  child: Text('Fats'),
+                ),
+                Expanded(
+                  flex: 5,
+                  child: Container(
+                    height: 40,
+                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 2),
+                    margin: const EdgeInsets.fromLTRB(50, 0, 0, 0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            decoration: InputDecoration(
+                                suffixIcon: const Icon(Icons.edit),
+                                hintText: widget.fat != 0.0
+                                    ? widget.fat.toStringAsPrecision(4)
+                                    : '00.00',
+                                contentPadding: const EdgeInsets.all(0)),
+                            onChanged: (val) {},
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        const Text(
+                          'grams',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        const SizedBox(
+                          width: 30,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-            Container(
-              alignment: Alignment.center,
-              child: ElevatedButton(
-                onPressed: () {
-                  if (widget.insulinSensitivity == -1 ||
-                      widget.carbohydratesRatio == -1) {
-                  } else {
-                    setState(() {
-                      insulinUnits = (widget.carbs / widget.carbohydratesRatio +
-                          (widget.bloodSugarLevel - widget.glucoseTarget) /
-                              widget.insulinSensitivity);
-                    });
-                  }
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Expanded(
+                  flex: 1,
+                  child: SizedBox(
+                    width: 1,
+                  ),
+                ),
+                const Expanded(
+                  flex: 1,
+                  child: Text('Calories'),
+                ),
+                Expanded(
+                  flex: 5,
+                  child: Container(
+                    height: 40,
+                    padding: const EdgeInsets.fromLTRB(10, 0, 20, 2),
+                    margin: const EdgeInsets.fromLTRB(50, 0, 0, 0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            decoration: InputDecoration(
+                                suffixIcon: const Icon(Icons.edit),
+                                hintText: widget.calories != 0.0
+                                    ? widget.calories.toStringAsPrecision(4)
+                                    : '00.00',
+                                contentPadding: const EdgeInsets.all(0)),
+                            onChanged: (val) {},
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        const Text(
+                          'kcal',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        const SizedBox(
+                          width: 38,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Column(
+            children: [
+              SizedBox(
+                height: 0.02 * size.height,
+              ),
+              DropdownButtonFormField<String>(
+                value: widget.mealValue,
+                decoration: textInputDecoration,
+                items: mealType.map((sugar) {
+                  return DropdownMenuItem(
+                    value: sugar,
+                    child: Text(sugar),
+                  );
+                }).toList(),
+                onChanged: (val) {
+                  widget.dropDownMenuOnChanged(val);
                 },
-                child: const Text("Calculate",
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontFamily: 'Inria Serif',
-                    )),
-                style: ButtonStyle(
-                  minimumSize:
-                      MaterialStateProperty.all<Size>(const Size(314, 70)),
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      const Color.fromARGB(255, 255, 75, 58)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
+              ),
+              SizedBox(
+                height: 0.04 * size.height,
+              ),
+              Container(
+                alignment: Alignment.center,
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      if (widget.insulinSensitivity == -1 ||
+                          widget.carbohydratesRatio == -1) {
+                      } else {
+                        double bsl = unit == "mmol/L"
+                            ? widget.bloodSugarLevel
+                            : widget.bloodSugarLevel / 18;
+                        setState(() {
+                          insulinUnits =
+                              (widget.carbs / widget.carbohydratesRatio +
+                                  (bsl - widget.glucoseTarget) /
+                                      widget.insulinSensitivity);
+                        });
+                      }
+                    } else {
+                      showBloodSugarDialog(context);
+                    }
+                  },
+                  child: const Text("Calculate",
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontFamily: 'Inria Serif',
+                      )),
+                  style: ButtonStyle(
+                    minimumSize:
+                        MaterialStateProperty.all<Size>(const Size(314, 70)),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        const Color.fromARGB(255, 255, 75, 58)),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 0.02 * size.height,
-            ),
-            Container(
-              alignment: Alignment.center,
-              child: ElevatedButton(
-                onPressed: () async {
-                  double? feedBackInsulin =
-                      await showInformationDialog(context);
-                  if (feedBackInsulin != null) {
-                    double effectiveCarbs = (feedBackInsulin -
-                            (widget.bloodSugarLevel - widget.glucoseTarget) /
-                                widget.insulinSensitivity) *
-                        widget.carbohydratesRatio;
-                    double feedBackCorrection = effectiveCarbs / widget.carbs;
-                    await FoodStatsService(uid: _auth.getUID())
-                        .updateFoodFactor(widget.foodNames, widget.mealValue,
-                            feedBackCorrection);
-                  }
-                },
-                child: const Text("Feedback",
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontFamily: 'Inria Serif',
-                    )),
-                style: ButtonStyle(
-                  minimumSize:
-                      MaterialStateProperty.all<Size>(const Size(314, 70)),
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      const Color.fromARGB(255, 255, 75, 58)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
+              SizedBox(
+                height: 0.02 * size.height,
+              ),
+              Container(
+                alignment: Alignment.center,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    double? feedBackInsulin =
+                        await showInformationDialog(context);
+                    if (feedBackInsulin != null) {
+                      double bsl = unit == "mmol/L"
+                          ? widget.bloodSugarLevel
+                          : widget.bloodSugarLevel / 18;
+                      double effectiveCarbs = (feedBackInsulin -
+                              (bsl - widget.glucoseTarget) /
+                                  widget.insulinSensitivity) *
+                          widget.carbohydratesRatio;
+                      double feedBackCorrection = effectiveCarbs / widget.carbs;
+                      await FoodStatsService(uid: _auth.getUID())
+                          .updateFoodFactor(widget.foodNames, widget.mealValue,
+                              feedBackCorrection);
+                    }
+                  },
+                  child: const Text("Feedback",
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontFamily: 'Inria Serif',
+                      )),
+                  style: ButtonStyle(
+                    minimumSize:
+                        MaterialStateProperty.all<Size>(const Size(314, 70)),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        const Color.fromARGB(255, 255, 75, 58)),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
-        )
-      ],
+            ],
+          )
+        ],
+      ),
     );
   }
 }

@@ -90,16 +90,6 @@ class _PersonalTabState extends State<PersonalTab> {
                         contentPadding: const EdgeInsets.symmetric(
                           horizontal: 50,
                         ),
-                        onTap: () async {
-                          String result = await showInformationDialog(
-                              context,
-                              "Please enter your display name",
-                              "Display Name",
-                              childData.name!);
-                          await DatabaseService(uid: childData.uid)
-                              .updateUserDataCollection({});
-                          await _auth.updateDisplayName(result);
-                        },
                         title: Text(
                           "Display Name",
                           style: TextStyle(color: Colors.grey[600]),
@@ -108,8 +98,8 @@ class _PersonalTabState extends State<PersonalTab> {
                           margin: const EdgeInsets.only(top: 10),
                           child: Text(
                             childData.name!,
-                            style: const TextStyle(
-                              color: Colors.black,
+                            style: TextStyle(
+                              color: Colors.grey[700],
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
                             ),

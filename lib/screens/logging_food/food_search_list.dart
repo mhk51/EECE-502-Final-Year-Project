@@ -61,13 +61,13 @@ class _FoodSearchWidgetState extends State<FoodSearchWidget> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: StreamBuilder<List<DocumentSnapshot>>(
+      child: StreamBuilder<List<DocumentSnapshot>?>(
         stream: widget.bloc.foodStream,
         builder: (BuildContext context,
-            AsyncSnapshot<List<DocumentSnapshot>> snapshot) {
+            AsyncSnapshot<List<DocumentSnapshot>?> snapshot) {
           if (snapshot.connectionState == ConnectionState.active &&
               snapshot.hasData &&
-              snapshot.data!.isNotEmpty) {
+              snapshot.data != null) {
             List<FoodClass> list =
                 snapshot.data!.map(documentToFoodClass).toList();
             return Scrollbar(

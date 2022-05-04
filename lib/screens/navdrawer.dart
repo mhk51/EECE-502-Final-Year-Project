@@ -45,7 +45,7 @@ class NavDrawer extends StatelessWidget {
                           height: 15,
                         ),
                         Text(
-                          ('${user.name}'),
+                          ('${childData.firstName} ${childData.lastName}'),
                           style: const TextStyle(
                               color: Colors.white, fontSize: 25),
                         ),

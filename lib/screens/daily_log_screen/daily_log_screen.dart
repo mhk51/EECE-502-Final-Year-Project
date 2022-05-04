@@ -194,7 +194,10 @@ class TodayMealList extends StatefulWidget {
 
 class _TodayMealListState extends State<TodayMealList> {
   Widget mappingFunction(DocumentSnapshot doc) {
-    return FoodLogTile(doc: doc);
+    return FoodLogTile(
+      doc: doc,
+      mealType: widget.mealType,
+    );
   }
 
   @override
