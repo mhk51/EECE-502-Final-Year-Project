@@ -133,112 +133,108 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         drawer: NavDrawer(),
         body: SingleChildScrollView(
-          child: SizedBox(
-            width: size.width,
-            height: size.height,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 10,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                padding: const EdgeInsets.all(8.0),
+                width: 0.95 * size.width,
+                alignment: Alignment.center,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
-                Container(
-                  padding: const EdgeInsets.all(8.0),
-                  width: 0.95 * size.width,
-                  alignment: Alignment.center,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                  ),
-                  child: Text('Welcome\n${user!.name}',
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 40,
-                        fontFamily: 'Inria Serif',
-                      )),
+                child: Text('Welcome\n${user!.name}',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 40,
+                      fontFamily: 'Inria Serif',
+                    )),
+              ),
+              SizedBox(
+                height: 0.02 * size.height,
+              ),
+              Container(
+                padding: const EdgeInsets.all(8.0),
+                width: 0.95 * size.width,
+                alignment: Alignment.center,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
-                SizedBox(
-                  height: 0.02 * size.height,
-                ),
-                Container(
-                  padding: const EdgeInsets.all(8.0),
-                  width: 0.95 * size.width,
-                  alignment: Alignment.center,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                  ),
-                  child: Column(
-                    children: const [
-                      Text("My Blood Sugar Data",
-                          style: TextStyle(
-                            fontSize: 28,
-                            fontFamily: 'Inria Serif',
-                          )),
-                      LineChart(),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: 0.02 * size.height,
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      await showInformationDialog(
-                          context); // Navigator.pushNamed(context, '/LoggingFood');
-                    },
-                    child: const Text("Log Current Sugar Level",
+                child: Column(
+                  children: const [
+                    Text("My Blood Sugar Data",
                         style: TextStyle(
                           fontSize: 28,
                           fontFamily: 'Inria Serif',
                         )),
-                    style: ButtonStyle(
-                      minimumSize:
-                          MaterialStateProperty.all<Size>(const Size(314, 70)),
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color.fromARGB(255, 255, 75, 58)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
+                    LineChart(),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 0.02 * size.height,
+              ),
+              Container(
+                alignment: Alignment.center,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    await showInformationDialog(
+                        context); // Navigator.pushNamed(context, '/LoggingFood');
+                  },
+                  child: const Text("Log Current Sugar Level",
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontFamily: 'Inria Serif',
+                      )),
+                  style: ButtonStyle(
+                    minimumSize:
+                        MaterialStateProperty.all<Size>(const Size(314, 70)),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        const Color.fromARGB(255, 255, 75, 58)),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 0.02 * size.height,
+              ),
+              SizedBox(
+                height: 0.02 * size.height,
+              ),
+              Container(
+                padding: const EdgeInsets.all(8.0),
+                width: 0.95 * size.width,
+                alignment: Alignment.bottomLeft,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
-                Container(
-                  padding: const EdgeInsets.all(8.0),
-                  width: 0.95 * size.width,
-                  alignment: Alignment.bottomLeft,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                  ),
-                  child: Column(
-                    children: const [
-                      Text("Tip Of The Day:",
-                          style: TextStyle(
-                            fontSize: 28,
-                            fontFamily: 'Inria Serif',
-                          )),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text("Choose food with low levels of added sugar",
-                          style: TextStyle(
-                            fontSize: 28,
-                            fontFamily: 'Inria Serif',
-                          )),
-                    ],
-                  ),
+                child: Column(
+                  children: const [
+                    Text("Tip Of The Day:",
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontFamily: 'Inria Serif',
+                        )),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text("Choose food with low levels of added sugar",
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontFamily: 'Inria Serif',
+                        )),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

@@ -9,7 +9,9 @@ import 'package:flutter_application_1/services/database.dart';
 import 'package:provider/provider.dart';
 
 class PersonalTab extends StatefulWidget {
-  const PersonalTab({Key? key}) : super(key: key);
+  final Function changeDisplayName;
+  const PersonalTab({Key? key, required this.changeDisplayName})
+      : super(key: key);
 
   @override
   State<PersonalTab> createState() => _PersonalTabState();
@@ -144,6 +146,8 @@ class _PersonalTabState extends State<PersonalTab> {
                               childData.firstName);
                           await DatabaseService(uid: childData.uid)
                               .updateUserDataCollection({'firstname': result});
+                          widget.changeDisplayName(
+                              result + " " + childData.lastName);
                         },
                         title: Text(
                           "First Name",
@@ -176,6 +180,8 @@ class _PersonalTabState extends State<PersonalTab> {
                               childData.lastName);
                           await DatabaseService(uid: childData.uid)
                               .updateUserDataCollection({'lastname': result});
+                          widget.changeDisplayName(
+                              childData.firstName + " " + result);
                         },
                         title: Text(
                           "Last Name",
