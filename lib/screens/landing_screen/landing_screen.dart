@@ -29,43 +29,63 @@ class LandingScreen extends StatelessWidget {
                   height: 0.05 * size.height,
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 0.04 * size.width),
-                  child: Text(
-                    '''What\nShould I\nEat?''',
-                    overflow: TextOverflow.visible,
-                    textAlign: TextAlign.left,
-                    textScaleFactor: textScaleFactor,
-                    style: const TextStyle(
-                      height: 0.8683594336876502,
-                      fontSize: 65.0,
-                      fontFamily: 'Inria Serif',
-                      fontWeight: FontWeight.w400,
-                      color: Color.fromARGB(255, 255, 255, 255),
+                  width: size.width,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        left: 0.123 * size.width, top: 0.032 * size.height),
+                    child: Text(
+                      '''What\nShould I\nEat?''',
+                      overflow: TextOverflow.visible,
+                      textAlign: TextAlign.left,
+                      textScaleFactor: textScaleFactor,
+                      style: const TextStyle(
+                        height: 0.8683594336876502,
+                        fontSize: 65.0,
+                        fontFamily: 'Inria Serif',
+                        fontWeight: FontWeight.w400,
+                        color: Color.fromARGB(255, 255, 255, 255),
 
-                      /* letterSpacing: -1.95, */
+                        /* letterSpacing: -1.95, */
+                      ),
                     ),
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 0.04 * size.width),
-                  child: Image.asset(
-                    "assets/images/buritto.png",
-                    height: 194,
-                    width: 205,
-                    // scale: scale,
+                  width: size.width,
+                  height: size.height * 0.475,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        top: 0,
+                        left: 0.5 * size.width,
+                        child: Image.asset(
+                          "assets/images/buritto.png",
+                          height: 0.216 * size.height,
+                          width: 0.495 * size.width,
+                          // scale: scale,
+                        ),
+                      ),
+                      Positioned(
+                        top: 0.1 * size.height,
+                        child: Image.asset(
+                          "assets/images/burger.png",
+                          height: 0.246 * size.height,
+                          width: 0.512 * size.width,
+                          // scale: scale,
+                        ),
+                      ),
+                      Positioned(
+                        top: 0.15 * size.height,
+                        left: 0.3 * size.width,
+                        child: Image.asset(
+                          "assets/images/pizza.png",
+                          height: 0.383 * size.height,
+                          width: 0.683 * size.width,
+                          // scale: scale,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                Image.asset(
-                  "assets/images/burger.png",
-                  height: 194,
-                  width: 205,
-                  // scale: scale,
-                ),
-                Image.asset(
-                  "assets/images/pizza.png",
-                  height: 194,
-                  width: 205,
-                  // scale: scale,
                 ),
                 ElevatedButton(
                   onPressed: () {
