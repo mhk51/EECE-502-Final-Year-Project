@@ -112,7 +112,10 @@ class _RecommendationListState extends State<RecommendationList> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(widget.mealType),
+        Text(
+          widget.mealType,
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        ),
         ListView(
           scrollDirection: Axis.vertical,
           shrinkWrap: true,

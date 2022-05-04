@@ -217,6 +217,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
           context: context,
           builder: (context) {
             return AlertDialog(
+              scrollable: true,
               content: StreamBuilder<List<DocumentSnapshot>>(
                   stream: FoodStatsService(uid: uid).recommendedFoodClass,
                   builder: (context, snapshot) {
@@ -249,32 +250,32 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black)),
+                            // decoration: BoxDecoration(
+                            //     border: Border.all(color: Colors.black)),
                             child: RecommendationList(
                               mealList: breakfastList,
                               mealType: 'Breakfast Recommendations',
                             ),
                           ),
                           Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black)),
+                            // decoration: BoxDecoration(
+                            //     border: Border.all(color: Colors.black)),
                             child: RecommendationList(
                               mealList: lunchList,
                               mealType: 'Lunch Recommendations',
                             ),
                           ),
                           Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black)),
+                            // decoration: BoxDecoration(
+                            //     border: Border.all(color: Colors.black)),
                             child: RecommendationList(
                               mealList: dinnerList,
                               mealType: 'Dinner Recommendations',
                             ),
                           ),
                           Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black)),
+                            // decoration: BoxDecoration(
+                            //     border: Border.all(color: Colors.black)),
                             child: RecommendationList(
                               mealList: snackList,
                               mealType: 'Snack Recommendations',
