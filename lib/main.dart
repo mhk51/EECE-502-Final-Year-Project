@@ -10,7 +10,7 @@ import 'package:flutter_application_1/screens/logging_food/logging_food_screen.d
 import 'package:flutter_application_1/screens/recipe/new_recipe_search.dart';
 import 'package:flutter_application_1/screens/recipe/recipe_item_info.dart';
 import 'package:flutter_application_1/screens/recipe/recipe_list.dart';
-import 'package:flutter_application_1/screens/settings_form.dart';
+import 'package:flutter_application_1/screens/settings/settings_form.dart';
 import 'package:flutter_application_1/screens/signin/signin.dart';
 import 'package:flutter_application_1/screens/signup/signup1.dart';
 import 'package:flutter_application_1/screens/weekly_insights_screen.dart';

@@ -36,7 +36,7 @@ class _RegisterPage3State extends State<RegisterPage3> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "Hey ${registrationClass.username}!",
+                  "Hey ${registrationClass.firstname} ${registrationClass.lastname}!",
                   style: const TextStyle(fontSize: 20),
                 ),
               ),
@@ -175,8 +175,9 @@ class _RegisterPage3State extends State<RegisterPage3> {
                         .changeError('Please Supply a Valid Email');
                   } else {
                     await DatabaseService(uid: result.uid)
-                        .updateUserDataCollection(
-                      registrationClass.username,
+                        .addUserDataCollection(
+                      registrationClass.firstname,
+                      registrationClass.lastname,
                       registrationClass.email,
                       registrationClass.height,
                       registrationClass.age,

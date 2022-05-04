@@ -1,5 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
+import 'dart:convert';
+
 class CustomUser {
   final String uid;
   final String? name;
@@ -18,15 +20,16 @@ class Child extends CustomUser {
   final int weight;
   final int height;
   final String gender;
-  String firstName = "-";
-  String lastName = "-";
+  String firstName;
+  String lastName;
   Child(
       {required String uid,
-      required String? name,
+      required this.firstName,
+      required this.lastName,
       required String? email,
       required this.age,
       required this.height,
       required this.weight,
       required this.gender})
-      : super(uid: uid, name: name, email: email);
+      : super(uid: uid, name: firstName + " " + lastName, email: email);
 }

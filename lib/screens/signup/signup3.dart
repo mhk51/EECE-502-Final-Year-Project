@@ -157,8 +157,9 @@ class _SignUp3State extends State<SignUp3> {
                                     .changeError('Please Supply a Valid Email');
                               } else {
                                 await DatabaseService(uid: result.uid)
-                                    .updateUserDataCollection(
-                                  registrationClass.username,
+                                    .addUserDataCollection(
+                                  registrationClass.firstname,
+                                  registrationClass.lastname,
                                   registrationClass.email,
                                   registrationClass.height,
                                   registrationClass.age,

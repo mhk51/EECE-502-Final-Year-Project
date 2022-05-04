@@ -52,11 +52,11 @@ class _RegisterPage2State extends State<RegisterPage2> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
-                    validator: (val) => registrationClass.fullname.isEmpty
+                    validator: (val) => registrationClass.firstname.isEmpty
                         ? 'Enter a Name'
                         : null,
                     onChanged: (val) {
-                      registrationClass.changeFullname(val);
+                      registrationClass.changeFirstName(val);
                     },
                     decoration: const InputDecoration(
                       hintText: "Enter Full Name:",
@@ -79,11 +79,11 @@ class _RegisterPage2State extends State<RegisterPage2> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
-                    validator: (val) => registrationClass.username.isEmpty
+                    validator: (val) => registrationClass.lastname.isEmpty
                         ? 'Enter a Username'
                         : null,
                     onChanged: (val) {
-                      registrationClass.changeUsername(val);
+                      registrationClass.changeLastName(val);
                     },
                     decoration: const InputDecoration(
                       hintText: "Enter UserName:",
