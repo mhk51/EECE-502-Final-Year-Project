@@ -17,6 +17,22 @@ class PersonalTab extends StatefulWidget {
 
 class _PersonalTabState extends State<PersonalTab> {
   final _auth = AuthService();
+
+  Future<void> showResetInformationDialog(BuildContext context) async {
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          return const AlertDialog(
+            content: Text(
+                "A link has been sent to your email to reset the password,\nPlease check all your inboxes.",
+                style: TextStyle(
+                  fontSize: 22,
+                  fontFamily: 'Inria Serif',
+                )),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<CustomUser?>(context);
@@ -251,6 +267,11 @@ class _PersonalTabState extends State<PersonalTab> {
                       OutlinedButton(
                         onPressed: () async {
                           await _auth.resetPassowrd();
+                          //
+                          //
+                          await showResetInformationDialog(context);
+                          //
+                          //
                         },
                         child: Text(
                           'CHANGE PASSWORD',
