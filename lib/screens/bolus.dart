@@ -812,6 +812,7 @@ class _BolusListViewState extends State<BolusListView> {
                                   widget.insulinSensitivity) *
                           widget.carbohydratesRatio;
                       double feedBackCorrection = effectiveCarbs / widget.carbs;
+                      feedBackCorrection = (feedBackCorrection - 1) * 0.5 + 1;
                       await FoodStatsService(uid: _auth.getUID())
                           .updateFoodFactor(widget.foodNames, widget.mealValue,
                               feedBackCorrection);

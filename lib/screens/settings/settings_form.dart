@@ -20,68 +20,79 @@ enum Gender { male, female }
 class _SettingsFormState extends State<SettingsForm> {
   final _auth = AuthService();
 
+  String displayName = "";
+
+  void changeDisplayName(String newName) {
+    displayName = newName;
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<CustomUser?>(context);
-    return user == null
-        ? const Loading()
-        : DefaultTabController(
-            length: 3,
-            child: Scaffold(
-              resizeToAvoidBottomInset: false,
-              drawer: NavDrawer(),
-              appBar: AppBar(
-                bottom: TabBar(
-                    isScrollable: true,
-                    unselectedLabelColor: Colors.white.withOpacity(0.3),
-                    indicatorColor: Colors.white,
-                    tabs: const [
-                      Tab(
-                        child: Text('Personal'),
-                      ),
-                      Tab(
-                        child: Text('Therapy'),
-                      ),
-                      Tab(
-                        child: Text('Settings'),
-                      ),
-                    ]),
-                backgroundColor: primaryColor,
-                title: const Text('Profile & Settings'),
-                centerTitle: true,
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/Home');
-                    },
-                    child: const Icon(Icons.check),
-                    style: TextButton.styleFrom(
-                      primary: Colors.white,
-                    ),
-                  )
-                ],
-              ),
-              body: TabBarView(
-                children: [
-                  const PersonalTab(),
-                  const TherapyTab(),
-                  TextButton(
-                    onPressed: () async {
-                      await _auth.resetPassowrd();
-                    },
-                    child: const Text(
-                      'Reset Password',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                    style: TextButton.styleFrom(
-                      backgroundColor: Colors.pink[400],
-                    ),
+    if (user == null) {
+      return const Loading();
+    } else {
+      displayName = user.name!;
+      return DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          appBar: AppBar(
+            bottom: TabBar(
+                isScrollable: true,
+                unselectedLabelColor: Colors.white.withOpacity(0.3),
+                indicatorColor: Colors.white,
+                tabs: const [
+                  Tab(
+                    child: Text('Personal'),
                   ),
-                ],
+                  Tab(
+                    child: Text('Therapy'),
+                  ),
+                  Tab(
+                    child: Text('Settings'),
+                  ),
+                ]),
+            backgroundColor: primaryColor,
+            title: const Text('Profile & Settings'),
+            centerTitle: true,
+            actions: [
+              TextButton(
+                onPressed: () async {
+                  await AuthService().updateDisplayName(displayName);
+                  Navigator.pushReplacementNamed(context, '/Home');
+                },
+                child: const Icon(Icons.check),
+                style: TextButton.styleFrom(
+                  primary: Colors.white,
+                ),
+              )
+            ],
+          ),
+          body: TabBarView(
+            children: [
+              PersonalTab(
+                changeDisplayName: changeDisplayName,
               ),
-            ),
-          );
+              const TherapyTab(),
+              TextButton(
+                onPressed: () async {
+                  await _auth.resetPassowrd();
+                },
+                child: const Text(
+                  'Reset Password',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.pink[400],
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
   }
 }
