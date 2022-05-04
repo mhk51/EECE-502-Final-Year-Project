@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/custom/constants.dart';
 import 'package:flutter_application_1/models/food_class.dart';
 
 class RecommendationTile extends StatefulWidget {
@@ -32,7 +33,7 @@ class _RecommendationTileState extends State<RecommendationTile> {
       padding: const EdgeInsets.only(top: 8.0),
       child: Card(
         color: Colors.grey[200],
-        margin: const EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
+        // margin: const EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
         child: ListTile(
           title: Padding(
             padding: const EdgeInsets.only(bottom: 10),
@@ -51,7 +52,7 @@ class _RecommendationTileState extends State<RecommendationTile> {
                 ),
                 TextSpan(
                   text: '${food.carbs}',
-                  style: TextStyle(color: Colors.blue, fontSize: fontSize),
+                  style: TextStyle(color: primaryColor, fontSize: fontSize),
                 ),
                 TextSpan(
                   text: ' - Prot: ',
@@ -59,7 +60,7 @@ class _RecommendationTileState extends State<RecommendationTile> {
                 ),
                 TextSpan(
                   text: '${food.protein}',
-                  style: TextStyle(color: Colors.blue, fontSize: fontSize),
+                  style: TextStyle(color: primaryColor, fontSize: fontSize),
                 ),
                 TextSpan(
                   text: ' - Fat: ',
@@ -67,7 +68,7 @@ class _RecommendationTileState extends State<RecommendationTile> {
                 ),
                 TextSpan(
                   text: '${food.fat}',
-                  style: TextStyle(color: Colors.blue, fontSize: fontSize),
+                  style: TextStyle(color: primaryColor, fontSize: fontSize),
                 )
               ],
             ),
@@ -78,7 +79,7 @@ class _RecommendationTileState extends State<RecommendationTile> {
             child: IconButton(
               icon: Icon(
                 Icons.add_circle,
-                color: addButtonSelected ? Colors.blue : Colors.grey[600],
+                color: addButtonSelected ? primaryColor : Colors.grey[600],
                 size: 25,
               ),
               onPressed: () async {
