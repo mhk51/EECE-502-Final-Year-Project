@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/user.dart';
@@ -156,6 +157,8 @@ class _SignUp3State extends State<SignUp3> {
                                 registrationClass
                                     .changeError('Please Supply a Valid Email');
                               } else {
+                                await const FlutterSecureStorage().write(
+                                    key: 'recommendations', value: 'true');
                                 await DatabaseService(uid: result.uid)
                                     .addUserDataCollection(
                                   registrationClass.firstname,

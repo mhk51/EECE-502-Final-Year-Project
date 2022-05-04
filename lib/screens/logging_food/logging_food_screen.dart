@@ -215,9 +215,8 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
       final Size size = MediaQuery.of(context).size;
       final uid = _auth.getUID();
-      String isrecommendationsOn =
-          (await const FlutterSecureStorage().read(key: 'recommendations'))!;
-      print(isrecommendationsOn);
+      String? isrecommendationsOn =
+          (await const FlutterSecureStorage().read(key: 'recommendations'));
       if (isrecommendationsOn == "true") {
         await showDialog(
             context: context,
@@ -249,13 +248,13 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                           snackList.add(snapshot.data![i]);
                         }
                       }
-                      return Container(
+                      return SizedBox(
                         width: 0.99 * size.width,
                         height: 0.9 * size.height,
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            Container(
+                            SizedBox(
                               // decoration: BoxDecoration(
                               //     border: Border.all(color: Colors.black)),
                               child: RecommendationList(
@@ -263,7 +262,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                                 mealType: 'Breakfast Recommendations',
                               ),
                             ),
-                            Container(
+                            SizedBox(
                               // decoration: BoxDecoration(
                               //     border: Border.all(color: Colors.black)),
                               child: RecommendationList(
@@ -271,7 +270,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                                 mealType: 'Lunch Recommendations',
                               ),
                             ),
-                            Container(
+                            SizedBox(
                               // decoration: BoxDecoration(
                               //     border: Border.all(color: Colors.black)),
                               child: RecommendationList(
@@ -279,7 +278,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                                 mealType: 'Dinner Recommendations',
                               ),
                             ),
-                            Container(
+                            SizedBox(
                               // decoration: BoxDecoration(
                               //     border: Border.all(color: Colors.black)),
                               child: RecommendationList(
@@ -322,14 +321,33 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Recommendations:"),
-                Switch.adaptive(
-                    value: recommendationsOn,
-                    onChanged: (val) async {
-                      setState(() => recommendationsOn = val);
-                      await FlutterSecureStorage().write(
-                          key: 'recommendations',
-                          value: recommendationsOn.toString());
+                const Text("Recommendations:"),
+                FutureBuilder<String?>(
+                    initialData: 'true',
+                    future: const FlutterSecureStorage()
+                        .read(key: 'recommendations'),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done &&
+                          snapshot.hasData) {
+                        recommendationsOn = snapshot.data! == 'true';
+                        return Switch.adaptive(
+                            value: recommendationsOn,
+                            onChanged: (val) async {
+                              setState(() => recommendationsOn = val);
+                              await const FlutterSecureStorage().write(
+                                  key: 'recommendations',
+                                  value: recommendationsOn.toString());
+                            });
+                      } else {
+                        return Switch.adaptive(
+                            value: recommendationsOn,
+                            onChanged: (val) async {
+                              setState(() => recommendationsOn = val);
+                              await const FlutterSecureStorage().write(
+                                  key: 'recommendations',
+                                  value: recommendationsOn.toString());
+                            });
+                      }
                     })
 
                 // ElevatedButton(
