@@ -293,7 +293,7 @@ class _BolusListViewState extends State<BolusListView> {
                         const Padding(
                           padding: EdgeInsets.all(20.0),
                           child: Text(
-                            'Title',
+                            'Set Doctor Factors',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,

@@ -6,6 +6,7 @@ import 'package:flutter_application_1/custom/constants.dart';
 import 'package:flutter_application_1/models/food_class.dart';
 import 'package:flutter_application_1/screens/logging_food/food_search_list.dart';
 import 'package:flutter_application_1/screens/navdrawer.dart';
+import 'package:flutter_application_1/screens/recommendations/recommendations.dart';
 import 'package:flutter_application_1/services/auth.dart';
 import 'package:flutter_application_1/services/barcode_service.dart';
 import 'package:flutter_application_1/services/recipe_database.dart';
@@ -198,6 +199,24 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
             ],
           );
         });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      await showDialog(
+          context: context,
+          builder: (context) {
+            return Column(
+              children: [
+                const Text('sata'),
+                Recommendations(),
+              ],
+            );
+          });
+    });
   }
 
   @override
