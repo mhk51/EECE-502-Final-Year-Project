@@ -107,7 +107,7 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
                         TableRow(
                           children: [
                             SizedBox(
-                              height: 48,
+                              // height: 48,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
