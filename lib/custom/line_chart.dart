@@ -35,15 +35,17 @@ class _LineChartState extends State<LineChart> {
             height: 300,
             margin: const EdgeInsets.all(8.0),
             child: SfCartesianChart(
+              plotAreaBackgroundColor: Colors.grey[200],
+              plotAreaBorderWidth: 10,
               // title: ChartTitle(text: "My Blood Sugar Data"),
               primaryXAxis: DateTimeAxis(
                   minimum: DateTime.now().subtract(
-                      const Duration(hours: 11, minutes: 59, seconds: 59)),
+                      const Duration(hours: 5, minutes: 59, seconds: 59)),
                   intervalType: DateTimeIntervalType.hours,
                   desiredIntervals: 1,
                   interval: 1,
                   maximum: DateTime.now()
-                      .add(const Duration(hours: 1, minutes: 59, seconds: 59))),
+                      .add(const Duration(hours: 5, minutes: 59, seconds: 59))),
               primaryYAxis: NumericAxis(
                   title: AxisTitle(
                     text: "Blood Glucose mmol/L",
@@ -52,10 +54,19 @@ class _LineChartState extends State<LineChart> {
                   minimum: 1,
                   maximum: 15),
               series: [
-                LineSeries(
-                    dataSource: list,
-                    xValueMapper: (LoggedBSL logg, _) => logg.time,
-                    yValueMapper: (LoggedBSL logg, _) => logg.level)
+                StackedLineSeries(
+                  name: 'Blood Sugar Level',
+                  dataSource: list,
+                  xValueMapper: (LoggedBSL logg, _) => logg.time,
+                  yValueMapper: (LoggedBSL logg, _) => logg.level,
+                  width: 4,
+                  color: Colors.red,
+                  isVisible: true,
+                  markerSettings: const MarkerSettings(
+                    isVisible: true,
+                    color: Colors.white,
+                  ),
+                ),
               ],
             ),
           );

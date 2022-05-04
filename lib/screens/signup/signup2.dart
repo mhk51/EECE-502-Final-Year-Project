@@ -127,7 +127,7 @@ class _SignUp2State extends State<SignUp2> {
                             } catch (e) {}
                           },
                           decoration: const InputDecoration(
-                            labelText: 'Weight',
+                            labelText: 'Weight  (kg)',
                           ),
                         ),
                       ),
@@ -143,7 +143,7 @@ class _SignUp2State extends State<SignUp2> {
                             } catch (e) {}
                           },
                           decoration: const InputDecoration(
-                            labelText: 'Height',
+                            labelText: 'Height  (cm)',
                           ),
                         ),
                       ),
