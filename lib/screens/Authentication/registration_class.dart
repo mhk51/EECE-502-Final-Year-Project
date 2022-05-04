@@ -8,8 +8,8 @@ class RegistrationClass extends ChangeNotifier {
   String email;
   String password;
   String confirmPassword;
-  String username;
-  String fullname;
+  String lastname;
+  String firstname;
   int age;
   int height;
   int weight;
@@ -22,8 +22,8 @@ class RegistrationClass extends ChangeNotifier {
     this.email = "blabla",
     this.password = "",
     this.confirmPassword = "",
-    this.fullname = "",
-    this.username = "",
+    this.firstname = "",
+    this.lastname = "",
     this.age = 0,
     this.height = 0,
     this.weight = 0,
@@ -45,13 +45,13 @@ class RegistrationClass extends ChangeNotifier {
     notifyListeners();
   }
 
-  void changeFullname(String val) {
-    fullname = val;
+  void changeFirstName(String val) {
+    firstname = val;
     notifyListeners();
   }
 
-  void changeUsername(String val) {
-    username = val;
+  void changeLastName(String val) {
+    lastname = val;
     notifyListeners();
   }
 
@@ -91,6 +91,7 @@ class RegistrationClass extends ChangeNotifier {
   }
 
   Future<CustomUser?> registerUser() async {
-    return await _auth.registerWithEmailAndPassword(email, password, username);
+    return await _auth.registerWithEmailAndPassword(
+        email, password, firstname + " " + lastname);
   }
 }

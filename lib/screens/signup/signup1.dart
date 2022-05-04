@@ -98,11 +98,12 @@ class _SignUp1State extends State<SignUp1> {
                         padding:
                             const EdgeInsets.only(left: 50, right: 50, top: 60),
                         child: TextFormField(
-                          validator: (val) => registrationClass.fullname.isEmpty
-                              ? 'Enter First Name'
-                              : null,
+                          validator: (val) =>
+                              registrationClass.firstname.isEmpty
+                                  ? 'Enter First Name'
+                                  : null,
                           onChanged: (val) {
-                            registrationClass.changeFullname(val);
+                            registrationClass.changeFirstName(val);
                           },
                           decoration: const InputDecoration(
                             labelText: 'First Name',
@@ -113,11 +114,11 @@ class _SignUp1State extends State<SignUp1> {
                         padding:
                             const EdgeInsets.only(left: 50, right: 50, top: 50),
                         child: TextFormField(
-                          validator: (val) => registrationClass.username.isEmpty
+                          validator: (val) => registrationClass.lastname.isEmpty
                               ? 'Enter Family Name'
                               : null,
                           onChanged: (val) {
-                            registrationClass.changeUsername(val);
+                            registrationClass.changeLastName(val);
                           },
                           decoration: const InputDecoration(
                             labelText: 'Family Name',

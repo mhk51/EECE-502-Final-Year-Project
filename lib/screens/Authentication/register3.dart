@@ -36,7 +36,7 @@ class _RegisterPage3State extends State<RegisterPage3> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "Hey ${registrationClass.username}!",
+                  "Hey ${registrationClass.firstname} ${registrationClass.lastname}!",
                   style: const TextStyle(fontSize: 20),
                 ),
               ),
@@ -175,8 +175,9 @@ class _RegisterPage3State extends State<RegisterPage3> {
                         .changeError('Please Supply a Valid Email');
                   } else {
                     await DatabaseService(uid: result.uid)
-                        .updateUserDataCollection(
-                      registrationClass.username,
+                        .addUserDataCollection(
+                      registrationClass.firstname,
+                      registrationClass.lastname,
                       registrationClass.email,
                       registrationClass.height,
                       registrationClass.age,
@@ -184,23 +185,7 @@ class _RegisterPage3State extends State<RegisterPage3> {
                       registrationClass.isGenderMale ? 'male' : 'female',
                     );
                     await TherapyDatabaseService(uid: result.uid)
-                        .updateUserTherapyCollection(
-                            11.0,
-                            8.0,
-                            5.6,
-                            4.6,
-                            3.0,
-                            15.0,
-                            10.0,
-                            6.0,
-                            '7:00',
-                            '10:00',
-                            '12:00',
-                            '15:00',
-                            '18:00',
-                            '20:00',
-                            -1,
-                            -1);
+                        .addUserTherapyCollection();
                   }
                 }
 
