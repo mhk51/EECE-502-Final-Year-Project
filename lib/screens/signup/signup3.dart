@@ -169,23 +169,7 @@ class _SignUp3State extends State<SignUp3> {
                                       : 'female',
                                 );
                                 await TherapyDatabaseService(uid: result.uid)
-                                    .updateUserTherapyCollection(
-                                        11.0,
-                                        8.0,
-                                        5.6,
-                                        4.6,
-                                        3.0,
-                                        15.0,
-                                        10.0,
-                                        6.0,
-                                        '7:00',
-                                        '10:00',
-                                        '12:00',
-                                        '15:00',
-                                        '18:00',
-                                        '20:00',
-                                        -1,
-                                        -1);
+                                    .addUserTherapyCollection();
                               }
                             }
                           },

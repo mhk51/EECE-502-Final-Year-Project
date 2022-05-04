@@ -179,22 +179,7 @@ class _TherapyTabState extends State<TherapyTab> {
                                   snapshot.data!.carbohydratesRatio!);
                               await TherapyDatabaseService(uid: user.uid)
                                   .updateUserTherapyCollection(
-                                      snapshot.data!.hyperglycemia,
-                                      snapshot.data!.glucoseHigh,
-                                      snapshot.data!.glucoseTarget,
-                                      snapshot.data!.glucoseLow,
-                                      snapshot.data!.hypoglycemia,
-                                      snapshot.data!.hyperglycemiaAfterMeal,
-                                      snapshot.data!.glucoseHighAfterMeal,
-                                      snapshot.data!.glucoseLowAfterMeal,
-                                      snapshot.data!.breakFastStartTime,
-                                      snapshot.data!.breakFastEndTime,
-                                      snapshot.data!.lunchStartTime,
-                                      snapshot.data!.lunchEndTime,
-                                      snapshot.data!.dinnerStartTime,
-                                      snapshot.data!.dinnerEndTime,
-                                      snapshot.data!.insulinSensitivity!,
-                                      result);
+                                      {'carbohydratesRatio': result});
                             },
                             title: const Text(
                               "Carbohydrates ratio (hourly)",
@@ -211,27 +196,12 @@ class _TherapyTabState extends State<TherapyTab> {
                             onTap: () async {
                               double result = await showTherapyDialog(
                                   context,
-                                  "Carbohydrates ratio (hourly)",
+                                  "Insulin sensitibity (hourly)",
                                   "00.000",
                                   snapshot.data!.carbohydratesRatio!);
                               await TherapyDatabaseService(uid: user.uid)
                                   .updateUserTherapyCollection(
-                                      snapshot.data!.hyperglycemia,
-                                      snapshot.data!.glucoseHigh,
-                                      snapshot.data!.glucoseTarget,
-                                      snapshot.data!.glucoseLow,
-                                      snapshot.data!.hypoglycemia,
-                                      snapshot.data!.hyperglycemiaAfterMeal,
-                                      snapshot.data!.glucoseHighAfterMeal,
-                                      snapshot.data!.glucoseLowAfterMeal,
-                                      snapshot.data!.breakFastStartTime,
-                                      snapshot.data!.breakFastEndTime,
-                                      snapshot.data!.lunchStartTime,
-                                      snapshot.data!.lunchEndTime,
-                                      snapshot.data!.dinnerStartTime,
-                                      snapshot.data!.dinnerEndTime,
-                                      result,
-                                      snapshot.data!.carbohydratesRatio!);
+                                      {'insulinSensitivity': result});
                             },
                             title: const Text(
                               "Insulin sensitibity (hourly)",

@@ -8,41 +8,29 @@ class TherapyDatabaseService {
   final CollectionReference userTherapyCollection =
       FirebaseFirestore.instance.collection('UserTherapyCollection');
 
-  Future<void> updateUserTherapyCollection(
-      double hyperglycemia,
-      double glucoseHigh,
-      double glocoseTarget,
-      double glucoseLow,
-      double hypoglycemia,
-      double hyperglycemiaAfterMeal,
-      double glucoseHighAfterMeal,
-      double glucoseLowAfterMeal,
-      String breakFastStartTime,
-      String breakFastEndTime,
-      String lunchStartTime,
-      String lunchEndTime,
-      String dinnerStartTime,
-      String dinnerEndTime,
-      double insulinSensitivity,
-      double carbohydratesRatio) async {
+  Future<void> addUserTherapyCollection() async {
     return await userTherapyCollection.doc(uid).set({
-      'hyperglycemia': hyperglycemia,
-      'glucoseHigh': glucoseHigh,
-      'glucoseTarget': glocoseTarget,
-      'glucoseLow': glucoseLow,
-      'hypoglycemia': hypoglycemia,
-      'hyperglycemiaAfterMeal': hyperglycemiaAfterMeal,
-      'glucoseHighAfterMeal': glucoseHighAfterMeal,
-      'glucoseLowAfterMeal': glucoseLowAfterMeal,
-      'breakFastStartTime': breakFastStartTime,
-      'breakFastEndTime': breakFastEndTime,
-      'lunchStartTime': lunchStartTime,
-      'lunchEndTime': lunchEndTime,
-      'dinnerStartTime': dinnerStartTime,
-      'dinnerEndTime': dinnerEndTime,
-      'insulinSensitivity': insulinSensitivity,
-      'carbohydratesRatio': carbohydratesRatio
+      'hyperglycemia': 11.0,
+      'glucoseHigh': 8.0,
+      'glucoseTarget': 5.6,
+      'glucoseLow': 4.6,
+      'hypoglycemia': 3.0,
+      'hyperglycemiaAfterMeal': 15.0,
+      'glucoseHighAfterMeal': 10.0,
+      'glucoseLowAfterMeal': 6.0,
+      'breakFastStartTime': '7:00',
+      'breakFastEndTime': '10:00',
+      'lunchStartTime': '12:00',
+      'lunchEndTime': '15:00',
+      'dinnerStartTime': '18:00',
+      'dinnerEndTime': '20:00',
+      'insulinSensitivity': -1.0,
+      'carbohydratesRatio': -1.0,
     });
+  }
+
+  Future<void> updateUserTherapyCollection(Map<String, dynamic> data) async {
+    return await userTherapyCollection.doc(uid).update(data);
   }
 
   //userDataCollection from snapshot
