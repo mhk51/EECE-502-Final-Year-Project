@@ -14,7 +14,7 @@ class ItemInfoScreen extends StatefulWidget {
 }
 
 class _ItemInfoScreenState extends State<ItemInfoScreen> {
-  List<int> portions = [50, 100, 200, 300, 400, 500];
+  List<int> portions = [1, 50, 100, 200, 300, 400, 500];
   List<String> mealType = ["Breakfast", "Lunch", "Dinner", "Snack"];
   String defaultMeal = "Breakfast";
   int defaultPortion = 100;
@@ -136,7 +136,7 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
                                       children: [
                                         TextSpan(
                                           text:
-                                              '${food.carbs * (defaultPortion / 100) * numberofServings}',
+                                              '${((food.carbs * (defaultPortion / 100) * numberofServings) * 100).round() / 100}',
                                           style: const TextStyle(
                                               color: primaryColor),
                                         ),
@@ -166,7 +166,7 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
                                       children: [
                                         TextSpan(
                                           text:
-                                              '${food.protein * (defaultPortion / 100) * numberofServings}',
+                                              '${((food.protein * (defaultPortion / 100) * numberofServings) * 100).round() / 100}',
                                           style: const TextStyle(
                                               color: primaryColor),
                                         ),
@@ -196,7 +196,7 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
                                       children: [
                                         TextSpan(
                                           text:
-                                              '${food.fat * (defaultPortion / 100) * numberofServings}',
+                                              '${((food.fat * (defaultPortion / 100) * numberofServings) * 100).round() / 100}',
                                           style: const TextStyle(
                                               color: primaryColor),
                                         ),
@@ -226,7 +226,7 @@ class _ItemInfoScreenState extends State<ItemInfoScreen> {
                                       children: [
                                         TextSpan(
                                           text:
-                                              '${food.sugar * (defaultPortion / 100) * numberofServings}',
+                                              '${((food.sugar * (defaultPortion / 100) * numberofServings) * 100).round() / 100}',
                                           style: const TextStyle(
                                               color: primaryColor),
                                         ),
