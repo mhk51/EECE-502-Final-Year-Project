@@ -13,6 +13,7 @@ import 'package:flutter_application_1/services/barcode_service.dart';
 import 'package:flutter_application_1/services/recipe_database.dart';
 import 'package:flutter_application_1/services/search_service.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../custom/loading.dart';
 import '../../services/food_stats_service.dart';
@@ -205,6 +206,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
         });
   }
 
+  bool recommendationsOn = true;
   @override
   void initState() {
     super.initState();
@@ -213,80 +215,85 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
       final Size size = MediaQuery.of(context).size;
       final uid = _auth.getUID();
-      await showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              scrollable: true,
-              content: StreamBuilder<List<DocumentSnapshot>>(
-                  stream: FoodStatsService(uid: uid).recommendedFoodClass,
-                  builder: (context, snapshot) {
-                    double carbs = 0;
-                    double protein = 0;
-                    double fat = 0;
-                    List<DocumentSnapshot> breakfastList = [];
-                    List<DocumentSnapshot> lunchList = [];
-                    List<DocumentSnapshot> dinnerList = [];
-                    List<DocumentSnapshot> snackList = [];
+      String isrecommendationsOn =
+          (await const FlutterSecureStorage().read(key: 'recommendations'))!;
+      print(isrecommendationsOn);
+      if (isrecommendationsOn == "true") {
+        await showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                scrollable: true,
+                content: StreamBuilder<List<DocumentSnapshot>>(
+                    stream: FoodStatsService(uid: uid).recommendedFoodClass,
+                    builder: (context, snapshot) {
+                      double carbs = 0;
+                      double protein = 0;
+                      double fat = 0;
+                      List<DocumentSnapshot> breakfastList = [];
+                      List<DocumentSnapshot> lunchList = [];
+                      List<DocumentSnapshot> dinnerList = [];
+                      List<DocumentSnapshot> snackList = [];
 
-                    if (!snapshot.hasData) {
-                      return const Loading();
-                    }
-                    for (int i = 0; i < snapshot.data!.length; i++) {
-                      if (snapshot.data![i].get('Breakfast') > 1) {
-                        breakfastList.add(snapshot.data![i]);
-                      } else if (snapshot.data![i].get('Lunch') > 1) {
-                        lunchList.add(snapshot.data![i]);
-                      } else if (snapshot.data![i].get('Dinner') > 1) {
-                        dinnerList.add(snapshot.data![i]);
-                      } else if (snapshot.data![i].get('Snack') > 1) {
-                        snackList.add(snapshot.data![i]);
+                      if (!snapshot.hasData) {
+                        return const Loading();
                       }
-                    }
-                    return Container(
-                      width: 0.99 * size.width,
-                      height: 0.9 * size.height,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Container(
-                            // decoration: BoxDecoration(
-                            //     border: Border.all(color: Colors.black)),
-                            child: RecommendationList(
-                              mealList: breakfastList,
-                              mealType: 'Breakfast Recommendations',
+                      for (int i = 0; i < snapshot.data!.length; i++) {
+                        if (snapshot.data![i].get('Breakfast') > 1) {
+                          breakfastList.add(snapshot.data![i]);
+                        } else if (snapshot.data![i].get('Lunch') > 1) {
+                          lunchList.add(snapshot.data![i]);
+                        } else if (snapshot.data![i].get('Dinner') > 1) {
+                          dinnerList.add(snapshot.data![i]);
+                        } else if (snapshot.data![i].get('Snack') > 1) {
+                          snackList.add(snapshot.data![i]);
+                        }
+                      }
+                      return Container(
+                        width: 0.99 * size.width,
+                        height: 0.9 * size.height,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Container(
+                              // decoration: BoxDecoration(
+                              //     border: Border.all(color: Colors.black)),
+                              child: RecommendationList(
+                                mealList: breakfastList,
+                                mealType: 'Breakfast Recommendations',
+                              ),
                             ),
-                          ),
-                          Container(
-                            // decoration: BoxDecoration(
-                            //     border: Border.all(color: Colors.black)),
-                            child: RecommendationList(
-                              mealList: lunchList,
-                              mealType: 'Lunch Recommendations',
+                            Container(
+                              // decoration: BoxDecoration(
+                              //     border: Border.all(color: Colors.black)),
+                              child: RecommendationList(
+                                mealList: lunchList,
+                                mealType: 'Lunch Recommendations',
+                              ),
                             ),
-                          ),
-                          Container(
-                            // decoration: BoxDecoration(
-                            //     border: Border.all(color: Colors.black)),
-                            child: RecommendationList(
-                              mealList: dinnerList,
-                              mealType: 'Dinner Recommendations',
+                            Container(
+                              // decoration: BoxDecoration(
+                              //     border: Border.all(color: Colors.black)),
+                              child: RecommendationList(
+                                mealList: dinnerList,
+                                mealType: 'Dinner Recommendations',
+                              ),
                             ),
-                          ),
-                          Container(
-                            // decoration: BoxDecoration(
-                            //     border: Border.all(color: Colors.black)),
-                            child: RecommendationList(
-                              mealList: snackList,
-                              mealType: 'Snack Recommendations',
+                            Container(
+                              // decoration: BoxDecoration(
+                              //     border: Border.all(color: Colors.black)),
+                              child: RecommendationList(
+                                mealList: snackList,
+                                mealType: 'Snack Recommendations',
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }),
-            );
-          });
+                          ],
+                        ),
+                      );
+                    }),
+              );
+            });
+      }
     });
   }
 
@@ -315,27 +322,37 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Text("Recommendations:"),
+                Switch.adaptive(
+                    value: recommendationsOn,
+                    onChanged: (val) async {
+                      setState(() => recommendationsOn = val);
+                      await FlutterSecureStorage().write(
+                          key: 'recommendations',
+                          value: recommendationsOn.toString());
+                    })
+
                 // ElevatedButton(
                 //     onPressed: () {}, child: const Text("All Results")),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text("Favorites",
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontFamily: 'Inria Serif',
-                      )),
-                  style: ButtonStyle(
-                    minimumSize:
-                        MaterialStateProperty.all<Size>(const Size(185, 55)),
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(primaryColor),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
-                    ),
-                  ),
-                ),
+                // ElevatedButton(
+                //   onPressed: () {},
+                //   child: const Text("Favorites",
+                //       style: TextStyle(
+                //         fontSize: 28,
+                //         fontFamily: 'Inria Serif',
+                //       )),
+                //   style: ButtonStyle(
+                //     minimumSize:
+                //         MaterialStateProperty.all<Size>(const Size(185, 55)),
+                //     backgroundColor:
+                //         MaterialStateProperty.all<Color>(primaryColor),
+                //     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                //       RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.circular(30.0),
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 // const SizedBox(width: 20),
                 // ElevatedButton(
                 //   onPressed: () {},
