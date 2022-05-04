@@ -72,8 +72,8 @@ class _RecommendationTileState extends State<RecommendationTile> {
               ],
             ),
           ),
-          trailing: SizedBox(
-            height: 100,
+          trailing: Container(
+            // height: 100,
             // width: 100,
             child: IconButton(
               icon: Icon(
