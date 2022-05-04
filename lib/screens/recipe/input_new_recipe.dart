@@ -188,7 +188,10 @@ class _RecipeIgredientListState extends State<RecipeIgredientList> {
   }
 
   Widget mappingFunction(DocumentSnapshot food) {
-    return FoodLogTile(doc: food);
+    return FoodLogTile(
+      doc: food,
+      mealType: "",
+    );
   }
 
   final _auth = AuthService();

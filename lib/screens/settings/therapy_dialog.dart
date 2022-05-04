@@ -80,8 +80,8 @@ Future<double> showTherapyDialog(
                   }
                 },
                 style: TextButton.styleFrom(
-                  primary: Colors.indigo[800],
-                  backgroundColor: Colors.indigo[800],
+                  primary: Colors.red,
+                  backgroundColor: Colors.red,
                 ),
                 child: const Padding(
                   padding: EdgeInsets.all(5.0),

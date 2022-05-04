@@ -2,10 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/custom/constants.dart';
 import 'package:flutter_application_1/models/food_class.dart';
+import 'package:flutter_application_1/services/auth.dart';
+import 'package:flutter_application_1/services/food_stats_service.dart';
 
 class FoodLogTile extends StatefulWidget {
   final DocumentSnapshot doc;
-  const FoodLogTile({Key? key, required this.doc}) : super(key: key);
+  final mealType;
+  const FoodLogTile({Key? key, required this.doc, required this.mealType})
+      : super(key: key);
 
   @override
   State<FoodLogTile> createState() => _FoodLogTileState();
@@ -25,6 +29,7 @@ class _FoodLogTileState extends State<FoodLogTile> {
 
   late FoodClass food = foodClassFromSnapshot(widget.doc);
   final double fontSize = 11;
+  final _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -75,6 +80,10 @@ class _FoodLogTileState extends State<FoodLogTile> {
             icon: const Icon(Icons.delete),
             onPressed: () async {
               await widget.doc.reference.delete();
+              if (widget.mealType != "") {
+                await FoodStatsService(uid: _auth.getUID())
+                    .decrementCounter(food, widget.mealType);
+              }
             },
           ),
         ),
