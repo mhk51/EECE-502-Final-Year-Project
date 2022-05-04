@@ -74,41 +74,24 @@ class _RecommendationTileState extends State<RecommendationTile> {
           ),
           trailing: SizedBox(
             height: 100,
-            width: 100,
-            child: Row(
-              children: [
-                IconButton(
-                  icon: Icon(
-                    Icons.add_circle,
-                    color: addButtonSelected ? Colors.blue : Colors.grey[600],
-                    size: 25,
-                  ),
-                  onPressed: () async {
-                    await Navigator.pushNamed(
-                      context,
-                      '/ItemInfo',
-                      arguments: food,
-                    );
-                    setState(() {
-                      addButtonSelected = !addButtonSelected;
-                    });
-                  },
-                  iconSize: 5,
-                ),
-                IconButton(
-                  onPressed: () {
-                    setState(() {
-                      starButtonSelected = !starButtonSelected;
-                    });
-                  },
-                  icon: Icon(
-                    Icons.star,
-                    color: starButtonSelected ? Colors.amber : Colors.grey[600],
-                    size: 25,
-                  ),
-                  iconSize: 5,
-                ),
-              ],
+            // width: 100,
+            child: IconButton(
+              icon: Icon(
+                Icons.add_circle,
+                color: addButtonSelected ? Colors.blue : Colors.grey[600],
+                size: 25,
+              ),
+              onPressed: () async {
+                await Navigator.pushNamed(
+                  context,
+                  '/ItemInfo',
+                  arguments: food,
+                );
+                setState(() {
+                  addButtonSelected = !addButtonSelected;
+                });
+              },
+              iconSize: 5,
             ),
           ),
         ),

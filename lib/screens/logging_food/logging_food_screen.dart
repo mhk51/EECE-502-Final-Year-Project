@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/custom/app_icons_icons.dart';
@@ -12,6 +13,9 @@ import 'package:flutter_application_1/services/barcode_service.dart';
 import 'package:flutter_application_1/services/recipe_database.dart';
 import 'package:flutter_application_1/services/search_service.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+
+import '../../custom/loading.dart';
+import '../../services/food_stats_service.dart';
 // import 'package:image_picker/image_picker.dart';
 // import 'package:tflite/tflite.dart';
 
@@ -204,16 +208,82 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
   @override
   void initState() {
     super.initState();
+    final _auth = AuthService();
 
     WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      final Size size = MediaQuery.of(context).size;
+      final uid = _auth.getUID();
       await showDialog(
           context: context,
           builder: (context) {
-            return Column(
-              children: [
-                const Text('sata'),
-                Recommendations(),
-              ],
+            return AlertDialog(
+              content: StreamBuilder<List<DocumentSnapshot>>(
+                  stream: FoodStatsService(uid: uid).recommendedFoodClass,
+                  builder: (context, snapshot) {
+                    double carbs = 0;
+                    double protein = 0;
+                    double fat = 0;
+                    List<DocumentSnapshot> breakfastList = [];
+                    List<DocumentSnapshot> lunchList = [];
+                    List<DocumentSnapshot> dinnerList = [];
+                    List<DocumentSnapshot> snackList = [];
+
+                    if (!snapshot.hasData) {
+                      return const Loading();
+                    }
+                    for (int i = 0; i < snapshot.data!.length; i++) {
+                      if (snapshot.data![i].get('Breakfast') > 1) {
+                        breakfastList.add(snapshot.data![i]);
+                      } else if (snapshot.data![i].get('Lunch') > 1) {
+                        lunchList.add(snapshot.data![i]);
+                      } else if (snapshot.data![i].get('Dinner') > 1) {
+                        dinnerList.add(snapshot.data![i]);
+                      } else if (snapshot.data![i].get('Snack') > 1) {
+                        snackList.add(snapshot.data![i]);
+                      }
+                    }
+                    return Container(
+                      width: 0.99 * size.width,
+                      height: 0.9 * size.height,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black)),
+                            child: RecommendationList(
+                              mealList: breakfastList,
+                              mealType: 'Breakfast Recommendations',
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black)),
+                            child: RecommendationList(
+                              mealList: lunchList,
+                              mealType: 'Lunch Recommendations',
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black)),
+                            child: RecommendationList(
+                              mealList: dinnerList,
+                              mealType: 'Dinner Recommendations',
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black)),
+                            child: RecommendationList(
+                              mealList: snackList,
+                              mealType: 'Snack Recommendations',
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
             );
           });
     });
@@ -289,8 +359,8 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                         fontFamily: 'Inria Serif',
                       )),
                   style: ButtonStyle(
-                    minimumSize:
-                        MaterialStateProperty.all<Size>(const Size(185, 55)),
+                    minimumSize: MaterialStateProperty.all<Size>(
+                        Size(0.45 * size.width, 55)),
                     backgroundColor:
                         MaterialStateProperty.all<Color>(primaryColor),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -310,8 +380,8 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                         fontFamily: 'Inria Serif',
                       )),
                   style: ButtonStyle(
-                    minimumSize:
-                        MaterialStateProperty.all<Size>(const Size(185, 55)),
+                    minimumSize: MaterialStateProperty.all<Size>(
+                        Size(0.45 * size.width, 55)),
                     backgroundColor:
                         MaterialStateProperty.all<Color>(primaryColor),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(

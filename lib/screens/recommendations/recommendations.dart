@@ -18,6 +18,7 @@ class _RecommendationsState extends State<Recommendations> {
   @override
   Widget build(BuildContext context) {
     final uid = _auth.getUID();
+    final Size size = MediaQuery.of(context).size;
     return AlertDialog(
         content: StreamBuilder<List<DocumentSnapshot>>(
             stream: FoodStatsService(uid: uid).recommendedFoodClass,
@@ -44,43 +45,48 @@ class _RecommendationsState extends State<Recommendations> {
                   snackList.add(snapshot.data![i]);
                 }
               }
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    decoration:
-                        BoxDecoration(border: Border.all(color: Colors.black)),
-                    child: RecommendationList(
-                      mealList: breakfastList,
-                      mealType: 'Breakfast Recommendations',
+              return Container(
+                width: 0.9 * size.width,
+                height: 0.9 * size.height,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black)),
+                      child: RecommendationList(
+                        mealList: breakfastList,
+                        mealType: 'Breakfast Recommendations',
+                      ),
                     ),
-                  ),
-                  Container(
-                    decoration:
-                        BoxDecoration(border: Border.all(color: Colors.black)),
-                    child: RecommendationList(
-                      mealList: lunchList,
-                      mealType: 'Lunch Recommendations',
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black)),
+                      child: RecommendationList(
+                        mealList: lunchList,
+                        mealType: 'Lunch Recommendations',
+                      ),
                     ),
-                  ),
-                  Container(
-                    decoration:
-                        BoxDecoration(border: Border.all(color: Colors.black)),
-                    child: RecommendationList(
-                      mealList: dinnerList,
-                      mealType: 'Dinner Recommendations',
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black)),
+                      child: RecommendationList(
+                        mealList: dinnerList,
+                        mealType: 'Dinner Recommendations',
+                      ),
                     ),
-                  ),
-                  Container(
-                    decoration:
-                        BoxDecoration(border: Border.all(color: Colors.black)),
-                    child: RecommendationList(
-                      mealList: snackList,
-                      mealType: 'Snack Recommendations',
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black)),
+                      child: RecommendationList(
+                        mealList: snackList,
+                        mealType: 'Snack Recommendations',
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               );
             }));
   }
