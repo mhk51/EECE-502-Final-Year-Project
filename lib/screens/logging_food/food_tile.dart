@@ -47,7 +47,7 @@ class _FoodTileState extends State<FoodTile> {
               style: TextStyle(color: Colors.black, fontSize: fontSize),
             ),
             TextSpan(
-              text: '${widget.food.carbs}',
+              text: '${(widget.food.carbs * 100).round() / 100}',
               style: TextStyle(color: primaryColor, fontSize: fontSize),
             ),
             TextSpan(
@@ -55,7 +55,7 @@ class _FoodTileState extends State<FoodTile> {
               style: TextStyle(color: Colors.black, fontSize: fontSize),
             ),
             TextSpan(
-              text: '${widget.food.protein}',
+              text: '${(widget.food.protein * 100).round() / 100}',
               style: TextStyle(color: primaryColor, fontSize: fontSize),
             ),
             TextSpan(
@@ -63,7 +63,7 @@ class _FoodTileState extends State<FoodTile> {
               style: TextStyle(color: Colors.black, fontSize: fontSize),
             ),
             TextSpan(
-              text: '${widget.food.fat}',
+              text: '${(widget.food.fat * 100).round() / 100}',
               style: TextStyle(color: primaryColor, fontSize: fontSize),
             )
           ],
