@@ -24,40 +24,41 @@ class _LineChartState extends State<LineChart> {
             BloodSugarDatabaseService(uid: _auth.getUID()).bloodSugarLogStream,
         builder: (context, snapshot) {
           // BloodSugarDatabaseService(uid: '1').test();
+          List<LoggedBSL> list;
           if (snapshot.hasData) {
-            List<LoggedBSL> list = snapshot.data!.map(bslfromDoc).toList();
+            list = snapshot.data!.map(bslfromDoc).toList();
             list.sort(((a, b) => a.time.compareTo(b.time)));
-            return Container(
-              height: 300,
-              margin: const EdgeInsets.all(8.0),
-              child: SfCartesianChart(
-                // title: ChartTitle(text: "My Blood Sugar Data"),
-                primaryXAxis: DateTimeAxis(
-                    minimum: DateTime.now().subtract(
-                        const Duration(hours: 11, minutes: 59, seconds: 59)),
-                    intervalType: DateTimeIntervalType.hours,
-                    desiredIntervals: 1,
-                    interval: 1,
-                    maximum: DateTime.now().add(
-                        const Duration(hours: 1, minutes: 59, seconds: 59))),
-                primaryYAxis: NumericAxis(
-                    title: AxisTitle(
-                      text: "Blood Glucose mmol/L",
-                      // alignment: ChartAlignment.far,
-                    ),
-                    minimum: 1,
-                    maximum: 30),
-                series: [
-                  LineSeries(
-                      dataSource: list,
-                      xValueMapper: (LoggedBSL logg, _) => logg.time,
-                      yValueMapper: (LoggedBSL logg, _) => logg.level)
-                ],
-              ),
-            );
           } else {
-            return const Text('Loading');
+            list = [];
           }
+          return Container(
+            height: 300,
+            margin: const EdgeInsets.all(8.0),
+            child: SfCartesianChart(
+              // title: ChartTitle(text: "My Blood Sugar Data"),
+              primaryXAxis: DateTimeAxis(
+                  minimum: DateTime.now().subtract(
+                      const Duration(hours: 11, minutes: 59, seconds: 59)),
+                  intervalType: DateTimeIntervalType.hours,
+                  desiredIntervals: 1,
+                  interval: 1,
+                  maximum: DateTime.now()
+                      .add(const Duration(hours: 1, minutes: 59, seconds: 59))),
+              primaryYAxis: NumericAxis(
+                  title: AxisTitle(
+                    text: "Blood Glucose mmol/L",
+                    // alignment: ChartAlignment.far,
+                  ),
+                  minimum: 1,
+                  maximum: 15),
+              series: [
+                LineSeries(
+                    dataSource: list,
+                    xValueMapper: (LoggedBSL logg, _) => logg.time,
+                    yValueMapper: (LoggedBSL logg, _) => logg.level)
+              ],
+            ),
+          );
         });
   }
 }

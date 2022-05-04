@@ -13,14 +13,14 @@ class Bloc {
 
   Stream<List<DocumentSnapshot>> get foodStream => foodController.stream;
 
+  CollectionReference foodDatabaseCollection =
+      FirebaseFirestore.instance.collection("foods");
+
   Future fetchFirstList() async {
     try {
-      documentList = (await FirebaseFirestore.instance
-              .collection("foods")
-              .orderBy("Description")
-              .limit(10)
-              .get())
-          .docs;
+      documentList =
+          (await foodDatabaseCollection.orderBy("Description").limit(10).get())
+              .docs;
       foodController.sink.add(documentList);
     } on SocketException {
       foodController.sink
@@ -30,9 +30,9 @@ class Bloc {
     }
   }
 
-  fetchNewSearch() async {
-    documentList = (await FirebaseFirestore.instance
-            .collection('foods')
+  Future fetchNewSearch() async {
+    foodController.sink.add([]);
+    documentList = (await foodDatabaseCollection
             .where('SearchIndex', arrayContains: searchWord.toLowerCase())
             .limit(10)
             .get())
@@ -40,15 +40,24 @@ class Bloc {
     foodController.sink.add(documentList);
   }
 
-  fetchNextMovies() async {
+  Future fetchNextMovies() async {
     try {
-      List<DocumentSnapshot> newDocumentList = (await FirebaseFirestore.instance
-              .collection("foods")
-              .where('SearchIndex', arrayContains: searchWord.toLowerCase())
-              .startAfterDocument(documentList[documentList.length - 1])
-              .limit(10)
-              .get())
-          .docs;
+      late List<DocumentSnapshot> newDocumentList;
+      if (searchWord != "") {
+        newDocumentList = (await foodDatabaseCollection
+                .where('SearchIndex', arrayContains: searchWord.toLowerCase())
+                .startAfterDocument(documentList.last)
+                .limit(10)
+                .get())
+            .docs;
+      } else {
+        newDocumentList = (await foodDatabaseCollection
+                .orderBy('Description')
+                .startAfterDocument(documentList.last)
+                .limit(10)
+                .get())
+            .docs;
+      }
       documentList.addAll(newDocumentList);
       foodController.sink.add(documentList);
     } on SocketException {
