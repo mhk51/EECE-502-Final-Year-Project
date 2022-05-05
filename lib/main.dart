@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/barcode_info_screen.dart';
 import 'package:flutter_application_1/screens/bolus.dart';
 import 'package:flutter_application_1/screens/camera_screen.dart';
 import 'package:flutter_application_1/screens/daily_log_screen/daily_log_screen.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
           '/Home': (context) => const HomeScreen(),
           '/Insights': (context) => const WeeklyInsightsScreen(),
           '/ItemInfo': (context) => const ItemInfoScreen(),
+          '/BarcodeInfo': (context) => const BarcodeInfoScreen(),
           '/RecipeItemInfo': (context) => const RecipeItemInfoScreen(),
           '/LoggingFood': (context) => const LoggingFoodScreen(),
           '/NewRecipeSearch': (context) => const NewRecipeSearch(),
@@ -50,8 +52,6 @@ class MyApp extends StatelessWidget {
           '/CameraScreen': (context) => const CameraScreen(),
           '/Bolus': (context) => const Bolus(),
           '/RecipeList': (context) => const RecipeList(),
-          // '/SignIn': (context) => SignIn1(toggleView: () {}),
-          // '/SignUp': (context) => SignUp1(),
         },
       ),
     );

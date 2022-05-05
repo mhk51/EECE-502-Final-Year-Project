@@ -533,10 +533,12 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                       onPressed: () async {
                         await scanBarcodeNormal();
                         if (_scanBarcode != -1) {
-                          FoodClass result = await BarcodeService()
+                          FoodClass? result = await BarcodeService()
                               .barcodeResult(_scanBarcode);
-                          await Navigator.pushNamed(context, '/ItemInfo',
-                              arguments: result);
+                          if (result != null) {
+                            await Navigator.pushNamed(context, '/BarcodeInfo',
+                                arguments: result);
+                          }
                         }
                       },
                       icon: const Icon(

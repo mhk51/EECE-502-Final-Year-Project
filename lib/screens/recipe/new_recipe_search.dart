@@ -204,10 +204,12 @@ class _NewRecipeSearchState extends State<NewRecipeSearch> {
                         // QuerySnapshot<Object?> result =
                         //     await BarcodeService().barcodeResult(_scanBarcode);
                         // print(result.docs.first.get('title'));
-                        FoodClass result =
+                        FoodClass? result =
                             await BarcodeService().barcodeResult(_scanBarcode);
-                        await Navigator.pushNamed(context, '/ItemInfo',
-                            arguments: result);
+                        if (result != null) {
+                          await Navigator.pushNamed(context, '/ItemInfo',
+                              arguments: result);
+                        }
                       },
                       icon: const Icon(
                         AppIcons.barcode_2,
