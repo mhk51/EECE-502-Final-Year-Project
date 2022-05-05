@@ -63,7 +63,7 @@ class _SignIn1State extends State<SignIn1> {
                 child: Column(
                   children: [
                     Container(
-                      height: MediaQuery.of(context).size.height * 0.4,
+                      height: MediaQuery.of(context).size.height * 0.43,
                       width: MediaQuery.of(context).size.width,
                       // color: Color.fromARGB(255, 255, 255, 255),
                       decoration: BoxDecoration(

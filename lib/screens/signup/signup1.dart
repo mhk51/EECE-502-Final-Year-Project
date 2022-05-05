@@ -25,7 +25,7 @@ class _SignUp1State extends State<SignUp1> {
             child: Column(
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.4,
+                  height: MediaQuery.of(context).size.height * 0.45,
                   width: MediaQuery.of(context).size.width,
                   // color: Color.fromARGB(255, 255, 255, 255),
                   decoration: BoxDecoration(
@@ -71,8 +71,8 @@ class _SignUp1State extends State<SignUp1> {
                     ),
                     const Positioned(
                       left: 65,
-                      right: 65,
-                      bottom: 24,
+                      right: 1,
+                      bottom: 20,
                       child: Text(
                         "General Info", overflow: TextOverflow.visible,
                         textAlign: TextAlign.left,

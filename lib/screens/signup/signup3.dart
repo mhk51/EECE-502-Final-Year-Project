@@ -28,7 +28,7 @@ class _SignUp3State extends State<SignUp3> {
             child: Column(
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.4,
+                  height: MediaQuery.of(context).size.height * 0.43,
                   width: MediaQuery.of(context).size.width,
                   // color: Color.fromARGB(255, 255, 255, 255),
                   decoration: BoxDecoration(
@@ -76,7 +76,7 @@ class _SignUp3State extends State<SignUp3> {
                     const Positioned(
                       left: 65,
                       right: 65,
-                      bottom: 24,
+                      bottom: 20,
                       child: Text(
                         "Register", overflow: TextOverflow.visible,
                         textAlign: TextAlign.center,
@@ -100,7 +100,7 @@ class _SignUp3State extends State<SignUp3> {
                     children: [
                       Padding(
                         padding:
-                            const EdgeInsets.only(left: 50, right: 50, top: 60),
+                            const EdgeInsets.only(left: 50, right: 50, top: 40),
                         child: TextFormField(
                           validator: (val) =>
                               val!.isEmpty ? 'Enter an email' : null,

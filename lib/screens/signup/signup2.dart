@@ -29,7 +29,7 @@ class _SignUp2State extends State<SignUp2> {
             child: Column(
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.4,
+                  height: MediaQuery.of(context).size.height * 0.43,
                   width: MediaQuery.of(context).size.width,
                   // color: Color.fromARGB(255, 255, 255, 255),
                   decoration: BoxDecoration(
@@ -76,8 +76,8 @@ class _SignUp2State extends State<SignUp2> {
                     ),
                     const Positioned(
                       left: 65,
-                      right: 65,
-                      bottom: 24,
+                      right: 0,
+                      bottom: 15,
                       child: Text(
                         "General Info", overflow: TextOverflow.visible,
                         textAlign: TextAlign.left,
@@ -101,7 +101,7 @@ class _SignUp2State extends State<SignUp2> {
                     children: [
                       Padding(
                         padding:
-                            const EdgeInsets.only(left: 50, right: 50, top: 30),
+                            const EdgeInsets.only(left: 50, right: 50, top: 20),
                         child: TextFormField(
                           validator: (val) =>
                               val!.isEmpty ? 'Enter an age' : null,
@@ -117,7 +117,7 @@ class _SignUp2State extends State<SignUp2> {
                       ),
                       Padding(
                         padding:
-                            const EdgeInsets.only(left: 50, right: 50, top: 40),
+                            const EdgeInsets.only(left: 50, right: 50, top: 20),
                         child: TextFormField(
                           validator: (val) =>
                               val!.isEmpty ? 'Enter a weight' : null,
@@ -133,7 +133,7 @@ class _SignUp2State extends State<SignUp2> {
                       ),
                       Padding(
                         padding:
-                            const EdgeInsets.only(left: 50, right: 50, top: 30),
+                            const EdgeInsets.only(left: 50, right: 50, top: 20),
                         child: TextFormField(
                           validator: (val) =>
                               val!.isEmpty ? 'Enter a height' : null,
@@ -149,7 +149,7 @@ class _SignUp2State extends State<SignUp2> {
                       ),
                       Padding(
                         padding:
-                            const EdgeInsets.only(left: 50, right: 50, top: 40),
+                            const EdgeInsets.only(left: 50, right: 50, top: 20),
                         child: DropdownButtonFormField<String>(
                             value: defaultGender,
                             decoration: textInputDecoration,
@@ -169,7 +169,7 @@ class _SignUp2State extends State<SignUp2> {
                             }),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 40, top: 50),
+                        padding: const EdgeInsets.only(bottom: 40, top: 30),
                         child: ElevatedButton(
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
