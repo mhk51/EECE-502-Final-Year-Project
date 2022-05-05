@@ -9,7 +9,6 @@ import 'package:flutter_application_1/services/auth.dart';
 import 'package:flutter_application_1/services/bloodsugar_database.dart';
 import 'package:flutter_application_1/services/food_database.dart';
 import 'package:flutter_application_1/services/food_stats_service.dart';
-import 'package:flutter_application_1/services/recipe_database.dart';
 import 'package:flutter_application_1/services/therapy_database.dart';
 
 import '../custom/constants.dart';
@@ -32,7 +31,6 @@ class _BolusState extends State<Bolus> {
       responses = await Future.wait([
         BloodSugarDatabaseService(uid: userUID).getBSLDocs(mealType),
         FoodDatabaseService(uid: userUID).getFoodLogs(mealType),
-        RecipeDatabaseService(uid: userUID, recipeName: '').getAllRecipes(),
         TherapyDatabaseService(uid: userUID).getTherapyParams(),
       ]);
     } catch (e) {
@@ -41,8 +39,7 @@ class _BolusState extends State<Bolus> {
 
     List<LoggedBSL> bslList = responses[0] as List<LoggedBSL>;
     List<FoodClass> foodList = responses[1] as List<FoodClass>;
-    List<String> recipeList = responses[2] as List<String>;
-    Map<String, double> therapyParams = responses[3] as Map<String, double>;
+    Map<String, double> therapyParams = responses[2] as Map<String, double>;
 
     double bslevel = 0.0;
     for (int i = 0; i < bslList.length; i++) {
@@ -75,7 +72,6 @@ class _BolusState extends State<Bolus> {
       'calories': totalCalories,
       'foodNames': foodNames,
       'bslevel': bslevel,
-      'recipeList': recipeList,
       'glucoseTarget': therapyParams['glucoseTarget'],
       'carbohydratesRatio': therapyParams['carbohydratesRatio'],
       'insulinSensitivity': therapyParams['insulinSensitivity']
