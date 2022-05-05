@@ -52,8 +52,8 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
     setState(() {
       pickedImage = File(tempStore!.path);
       isImageLoaded = true;
-      applyModelOnImage(pickedImage);
     });
+    await applyModelOnImage(pickedImage);
   }
 
   Future getImagefromGallery() async {
@@ -62,20 +62,20 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
     setState(() {
       pickedImage = File(tempStore!.path);
       isImageLoaded = true;
-      applyModelOnImage(pickedImage);
     });
+    await applyModelOnImage(pickedImage);
   }
 
   loadMyModel() async {
     var result = await Tflite.loadModel(
       labels: "assets/labels.txt",
-      model: "assets/food11model4.tflite",
+      model: "assets/food11model.tflite",
     );
     // ignore: avoid_print
     print("Result after loading model: $result");
   }
 
-  applyModelOnImage(File file) async {
+  Future applyModelOnImage(File file) async {
     var res = await Tflite.runModelOnImage(
       path: file.path,
       // numResults: 11,
@@ -115,7 +115,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                           ),
                         )
                       : Container(),
-                  Text('Name: $_name \nConfedence: $_confidence'),
+                  Text('Name: $_name \nConfidence: $_confidence'),
                 ],
               ),
             ),
