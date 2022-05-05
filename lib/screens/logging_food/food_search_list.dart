@@ -47,7 +47,7 @@ class _FoodSearchWidgetState extends State<FoodSearchWidget> {
   void _scrollListener() async {
     if (controller.offset >= controller.position.maxScrollExtent &&
         !controller.position.outOfRange) {
-      await widget.bloc.fetchNextMovies();
+      await widget.bloc.fetchNextFood();
     }
   }
 

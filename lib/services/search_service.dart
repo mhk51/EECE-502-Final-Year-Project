@@ -40,7 +40,7 @@ class Bloc {
     foodController.sink.add(documentList);
   }
 
-  Future fetchNextMovies() async {
+  Future fetchNextFood() async {
     try {
       late List<DocumentSnapshot> newDocumentList;
       if (searchWords != []) {

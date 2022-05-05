@@ -131,6 +131,9 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
           '#ff6666', 'Cancel', true, ScanMode.BARCODE);
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';
+    } catch (e) {
+      barcodeScanRes = "";
+      print(e);
     }
 
     if (!mounted) return;
@@ -528,15 +531,13 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                             const BorderRadius.all(Radius.circular(10))),
                     child: IconButton(
                       onPressed: () async {
-                        // _showChoiceDialog(context);
                         await scanBarcodeNormal();
-                        // QuerySnapshot<Object?> result =
-                        //     await BarcodeService().barcodeResult(_scanBarcode);
-                        // print(result.docs.first.get('title'));
-                        FoodClass result =
-                            await BarcodeService().barcodeResult(_scanBarcode);
-                        await Navigator.pushNamed(context, '/ItemInfo',
-                            arguments: result);
+                        if (_scanBarcode != -1) {
+                          FoodClass result = await BarcodeService()
+                              .barcodeResult(_scanBarcode);
+                          await Navigator.pushNamed(context, '/ItemInfo',
+                              arguments: result);
+                        }
                       },
                       icon: const Icon(
                         AppIcons.barcode_2,
