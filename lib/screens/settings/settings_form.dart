@@ -1,6 +1,5 @@
 import 'package:flutter_application_1/custom/constants.dart';
 import 'package:flutter_application_1/models/user.dart';
-import 'package:flutter_application_1/screens/navdrawer.dart';
 import 'package:flutter_application_1/screens/settings/personal_tab.dart';
 import 'package:flutter_application_1/screens/settings/therapy_tab.dart';
 import 'package:flutter_application_1/services/auth.dart';

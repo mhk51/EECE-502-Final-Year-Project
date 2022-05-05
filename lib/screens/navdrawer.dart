@@ -10,14 +10,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class NavDrawer extends StatelessWidget {
   NavDrawer({Key? key}) : super(key: key);
 
-  final AuthService _auth = AuthService();
-
+  final _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<CustomUser?>(context);
     Color primaryColor = const Color.fromARGB(255, 255, 75, 58);
     Color backgroundColor = const Color.fromARGB(238, 238, 238, 238);
-
     String? pageRouteName = ModalRoute.of(context)?.settings.name;
     if (user == null) {
       return const Wrapper();
@@ -205,6 +203,7 @@ class NavDrawer extends StatelessWidget {
                     ),
                     onTap: () async {
                       await _auth.signOut();
+
                       await Navigator.pushReplacementNamed(context, '/');
                     },
                   ),

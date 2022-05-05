@@ -7,7 +7,7 @@ import 'package:flutter_application_1/services/food_stats_service.dart';
 
 class FoodLogTile extends StatefulWidget {
   final DocumentSnapshot doc;
-  final mealType;
+  final String mealType;
   const FoodLogTile({Key? key, required this.doc, required this.mealType})
       : super(key: key);
 

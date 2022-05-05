@@ -1,6 +1,4 @@
 import 'package:flutter_application_1/screens/Authentication/registration_class.dart';
-import 'package:flutter_application_1/screens/Authentication/sign_in.dart';
-import 'package:flutter_application_1/screens/Authentication/register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/landing_screen/landing_screen.dart';
 import 'package:flutter_application_1/screens/signin/signin.dart';
@@ -56,7 +54,6 @@ class _AuthenticateState extends State<Authenticate> {
             ),
           ],
           builder: (context, child) {
-            bool loading = Provider.of<RegistrationClass>(context).loading;
             SignUpScreen screen =
                 Provider.of<RegistrationClass>(context).signUpScreen;
             if (screen == SignUpScreen.signup1) {
@@ -64,9 +61,9 @@ class _AuthenticateState extends State<Authenticate> {
                 toggleLanding: toggleLanding,
               );
             } else if (screen == SignUpScreen.signup2) {
-              return SignUp2();
+              return const SignUp2();
             } else {
-              return SignUp3();
+              return const SignUp3();
             }
           });
     }
