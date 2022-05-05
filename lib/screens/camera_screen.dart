@@ -27,8 +27,6 @@ class _CameraScreenState extends State<CameraScreen> {
       isImageLoaded = true;
       applyModelOnImage(pickedImage);
     });
-    // Navigator.of(context).pop();
-    // applyModelOnImage(imageFile);
   }
 
   loadMyModel() async {
@@ -83,7 +81,7 @@ class _CameraScreenState extends State<CameraScreen> {
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               image: FileImage(File(pickedImage.path)),
-                              fit: BoxFit.fill)),
+                              fit: BoxFit.cover)),
                     ),
                   )
                 : Container(),

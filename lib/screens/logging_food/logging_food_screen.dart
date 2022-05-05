@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,6 +15,8 @@ import 'package:flutter_application_1/services/recipe_database.dart';
 import 'package:flutter_application_1/services/search_service.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:tflite/tflite.dart';
 
 import '../../custom/loading.dart';
 import '../../services/food_stats_service.dart';
@@ -33,91 +36,127 @@ class LoggingFoodScreen extends StatefulWidget {
 }
 
 class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
-  // //dialog for camera and image picker
-  // late File imageFile;
+  late File pickedImage;
 
-  // //HenriVincent
-  // bool isImageLoaded = false;
+  //HenriVincent
+  bool isImageLoaded = false;
 
-  // List _result = [];
-  // String _name = "";
-  // String _confidence = "";
-  // String numbers = "";
+  List _result = [];
+  String _name = "";
+  String _confidence = "";
+  String numbers = "";
 
-  // _openGallery(BuildContext context) async {
-  //   imageFile =
-  //       await (ImagePicker().pickImage(source: ImageSource.gallery)) as File;
-  //   Navigator.of(context).pop();
-  //   applyModelOnImage(imageFile);
-  // }
+  Future getImagefromCamera() async {
+    // ignore: deprecated_member_use
+    var tempStore = await (ImagePicker().getImage(source: ImageSource.camera));
+    setState(() {
+      pickedImage = File(tempStore!.path);
+      isImageLoaded = true;
+      applyModelOnImage(pickedImage);
+    });
+  }
 
-  // _openCamera(BuildContext context) async {
-  //   imageFile =
-  //       (await ImagePicker().pickImage(source: ImageSource.camera)) as File;
-  //   Navigator.of(context).pop();
-  //   applyModelOnImage(imageFile);
-  // }
+  Future getImagefromGallery() async {
+    // ignore: deprecated_member_use
+    var tempStore = await (ImagePicker().getImage(source: ImageSource.gallery));
+    setState(() {
+      pickedImage = File(tempStore!.path);
+      isImageLoaded = true;
+      applyModelOnImage(pickedImage);
+    });
+  }
 
-  // loadMyModel() async {
-  //   var result = await Tflite.loadModel(
-  //     labels: "assets/labels.txt",
-  //     model: "assets/food11model.tflite",
-  //   );
-  //   print("Result: $result");
-  // }
+  loadMyModel() async {
+    var result = await Tflite.loadModel(
+      labels: "assets/labels.txt",
+      model: "assets/food11model4.tflite",
+    );
+    // ignore: avoid_print
+    print("Result after loading model: $result");
+  }
 
-  // applyModelOnImage(File file) async {
-  //   var res = await Tflite.runModelOnImage(
-  //       path: file.path,
-  //       numResults: 11,
-  //       threshold: 0.5,
-  //       imageMean: 127.5,
-  //       imageStd: 127.5);
-  // setState(() {
-  //   _result = res!;
-  //   String str = _result[0]["label"];
-  //   _name = str.substring(11);
-  //   _confidence = _result != null
-  //       ? (_result[0]["confidence"] * 100.0).toString().substring(0, 11) + "%"
-  //       : "";
-  // });
-  //   print(res);
-  // }
+  applyModelOnImage(File file) async {
+    var res = await Tflite.runModelOnImage(
+      path: file.path,
+      // numResults: 11,
+      // threshold: 0.5,
+      // imageMean: 127.5,
+      // imageStd: 127.5,
+    );
+    setState(() {
+      _result = res!;
+      _name = _result[0]["label"].toString().substring(2);
+      _confidence =
+          (_result[0]["confidence"] * 100.0).toString().substring(0, 5) + "%";
+    });
+    // ignore: avoid_print
+    print(res);
+  }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   loadMyModel();
-  // }
+  Future<void> _showResultDialog(BuildContext context) async {
+    return await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Container(
+              padding: const EdgeInsets.all(30),
+              child: Column(
+                children: [
+                  const SizedBox(height: 30),
+                  isImageLoaded
+                      ? Center(
+                          child: Container(
+                            height: 350,
+                            width: 350,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: FileImage(File(pickedImage.path)),
+                                    fit: BoxFit.scaleDown)),
+                          ),
+                        )
+                      : Container(),
+                  Text('Name: $_name \nConfedence: $_confidence'),
+                ],
+              ),
+            ),
+          );
+        });
+  }
 
-  // Future<void> _showChoiceDialog(BuildContext context) {
-  //   return showDialog(
-  //       context: context,
-  //       builder: (BuildContext context) {
-  //         return AlertDialog(
-  //           content: SingleChildScrollView(
-  //               child: ListBody(
-  //             children: <Widget>[
-  //               GestureDetector(
-  //                 child: const Text("Gallery"),
-  //                 onTap: () {
-  //                   _openGallery(context);
-  //                 },
-  //               ),
-  //               const Padding(
-  //                 padding: EdgeInsets.all(8.0),
-  //               ),
-  //               GestureDetector(
-  //                 child: const Text("Camera"),
-  //                 onTap: () {
-  //                   _openCamera(context);
-  //                 },
-  //               )
-  //             ],
-  //           )),
-  //         );
-  //       });
-  // }
+  Future<void> _showChoiceDialog(BuildContext context) async {
+    return await showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: SingleChildScrollView(
+                child: ListBody(
+              children: <Widget>[
+                GestureDetector(
+                  child: const Text("Gallery"),
+                  onTap: () async {
+                    await getImagefromGallery();
+                    Navigator.pop(context);
+                    await _showResultDialog(context);
+                  },
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                ),
+                GestureDetector(
+                  child: const Text("Camera"),
+                  onTap: () async {
+                    await getImagefromCamera();
+                    Navigator.pop(context);
+                    await _showResultDialog(context);
+                  },
+                )
+              ],
+            )),
+          );
+        });
+  }
+
   Bloc bloc = Bloc();
   var msgController = TextEditingController();
   String tempSearchWord = "";
@@ -133,7 +172,6 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
       barcodeScanRes = 'Failed to get platform version.';
     } catch (e) {
       barcodeScanRes = "";
-      print(e);
     }
 
     if (!mounted) return;
@@ -212,6 +250,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
   bool recommendationsOn = true;
   @override
   void initState() {
+    loadMyModel();
     super.initState();
     final _auth = AuthService();
 
@@ -352,34 +391,6 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                             });
                       }
                     })
-
-                // ElevatedButton(
-                //     onPressed: () {}, child: const Text("All Results")),
-                // ElevatedButton(
-                //   onPressed: () {},
-                //   child: const Text("Favorites",
-                //       style: TextStyle(
-                //         fontSize: 28,
-                //         fontFamily: 'Inria Serif',
-                //       )),
-                //   style: ButtonStyle(
-                //     minimumSize:
-                //         MaterialStateProperty.all<Size>(const Size(185, 55)),
-                //     backgroundColor:
-                //         MaterialStateProperty.all<Color>(primaryColor),
-                //     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                //       RoundedRectangleBorder(
-                //         borderRadius: BorderRadius.circular(30.0),
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                // const SizedBox(width: 20),
-                // ElevatedButton(
-                //   onPressed: () {},
-                //   child: const Text("Favorites"),
-                // ),
-                // Expanded(child: Search()),
               ],
             ),
             SizedBox(
@@ -432,12 +443,6 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                 ),
               ],
             ),
-            // ElevatedButton(
-            //   onPressed: () async {
-            //     await showInformationDialog(context);
-            //   },
-            //   child: const Text("Input New Recipe"),
-            // ),
             SizedBox(
               height: 0.02 * size.height,
             ),
@@ -513,8 +518,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                             const BorderRadius.all(Radius.circular(10))),
                     child: IconButton(
                       onPressed: () async {
-                        // _showChoiceDialog(context);
-                        await Navigator.pushNamed(context, '/CameraScreen');
+                        await _showChoiceDialog(context);
                       },
                       icon: const Icon(
                         Icons.center_focus_strong,
@@ -562,8 +566,6 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
             FoodSearchWidget(
               searchWord: searchWord,
               recipeName: '',
-              // fromenterrecipe: false,
-              // ingredients: const [],
               bloc: bloc,
             ),
           ],
