@@ -69,7 +69,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
   loadMyModel() async {
     var result = await Tflite.loadModel(
       labels: "assets/labels.txt",
-      model: "assets/food11model.tflite",
+      model: "assets/food11model4.tflite",
     );
     // ignore: avoid_print
     print("Result after loading model: $result");

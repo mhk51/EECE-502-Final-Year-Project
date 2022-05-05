@@ -452,13 +452,13 @@ class _BolusListViewState extends State<BolusListView> {
                   child: Text('Glucose'),
                 ),
                 Expanded(
-                  flex: 5,
+                  flex: 4,
                   child: Container(
                     height: 42,
                     width: 150,
                     color: const Color.fromARGB(255, 255, 188, 164),
                     padding: const EdgeInsets.fromLTRB(10, 6, 0, 2),
-                    margin: const EdgeInsets.fromLTRB(50, 0, 0, 0),
+                    margin: const EdgeInsets.fromLTRB(40, 0, 0, 0),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
@@ -533,11 +533,11 @@ class _BolusListViewState extends State<BolusListView> {
                   child: Text('Carbs'),
                 ),
                 Expanded(
-                  flex: 5,
+                  flex: 4,
                   child: Container(
                     height: 40,
                     padding: const EdgeInsets.fromLTRB(10, 0, 3, 2),
-                    margin: const EdgeInsets.fromLTRB(50, 0, 0, 0),
+                    margin: const EdgeInsets.fromLTRB(40, 0, 0, 0),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
@@ -589,11 +589,11 @@ class _BolusListViewState extends State<BolusListView> {
                   child: Text('Protein'),
                 ),
                 Expanded(
-                  flex: 5,
+                  flex: 4,
                   child: Container(
                     height: 40,
                     padding: const EdgeInsets.fromLTRB(10, 0, 10, 2),
-                    margin: const EdgeInsets.fromLTRB(50, 0, 0, 0),
+                    margin: const EdgeInsets.fromLTRB(40, 0, 0, 0),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
@@ -641,11 +641,11 @@ class _BolusListViewState extends State<BolusListView> {
                   child: Text('Fats'),
                 ),
                 Expanded(
-                  flex: 5,
+                  flex: 4,
                   child: Container(
                     height: 40,
                     padding: const EdgeInsets.fromLTRB(10, 0, 10, 2),
-                    margin: const EdgeInsets.fromLTRB(50, 0, 0, 0),
+                    margin: const EdgeInsets.fromLTRB(40, 0, 0, 0),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
@@ -693,11 +693,11 @@ class _BolusListViewState extends State<BolusListView> {
                   child: Text('Calories'),
                 ),
                 Expanded(
-                  flex: 5,
+                  flex: 4,
                   child: Container(
                     height: 40,
                     padding: const EdgeInsets.fromLTRB(10, 0, 20, 2),
-                    margin: const EdgeInsets.fromLTRB(50, 0, 0, 0),
+                    margin: const EdgeInsets.fromLTRB(40, 0, 0, 0),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
