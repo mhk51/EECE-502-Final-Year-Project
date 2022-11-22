@@ -10,8 +10,7 @@ import 'package:provider/provider.dart';
 class RegisterPage3 extends StatefulWidget {
   final PageController controller;
   final Function setProgressBar;
-  const RegisterPage3(
-      {Key? key, required this.controller, required this.setProgressBar})
+  const RegisterPage3({Key? key, required this.controller, required this.setProgressBar})
       : super(key: key);
 
   @override
@@ -23,8 +22,7 @@ class _RegisterPage3State extends State<RegisterPage3> {
 
   @override
   Widget build(BuildContext context) {
-    RegistrationClass registrationClass =
-        Provider.of<RegistrationClass>(context);
+    RegistrationClass registrationClass = Provider.of<RegistrationClass>(context);
     final Size size = MediaQuery.of(context).size;
     return Form(
       key: _formKey,
@@ -55,9 +53,7 @@ class _RegisterPage3State extends State<RegisterPage3> {
                   style: TextStyle(fontSize: 20),
                 ),
                 style: ElevatedButton.styleFrom(
-                    primary: registrationClass.isGenderMale
-                        ? Colors.red
-                        : Colors.blue),
+                    backgroundColor: registrationClass.isGenderMale ? Colors.red : Colors.blue),
               ),
               const SizedBox(
                 width: 20,
@@ -71,9 +67,7 @@ class _RegisterPage3State extends State<RegisterPage3> {
                   style: TextStyle(fontSize: 20),
                 ),
                 style: ElevatedButton.styleFrom(
-                    primary: registrationClass.isGenderMale
-                        ? Colors.blue
-                        : Colors.red),
+                    backgroundColor: registrationClass.isGenderMale ? Colors.blue : Colors.red),
               ),
             ],
           ),
@@ -168,14 +162,11 @@ class _RegisterPage3State extends State<RegisterPage3> {
                   CustomUser? result = await registrationClass.registerUser();
                   if (result == null) {
                     widget.controller.animateToPage(0,
-                        duration: const Duration(milliseconds: 400),
-                        curve: Curves.bounceIn);
+                        duration: const Duration(milliseconds: 400), curve: Curves.bounceIn);
                     registrationClass.setLoading(false);
-                    registrationClass
-                        .changeError('Please Supply a Valid Email');
+                    registrationClass.changeError('Please Supply a Valid Email');
                   } else {
-                    await DatabaseService(uid: result.uid)
-                        .addUserDataCollection(
+                    await DatabaseService(uid: result.uid).addUserDataCollection(
                       registrationClass.firstname,
                       registrationClass.lastname,
                       registrationClass.email,
@@ -184,8 +175,7 @@ class _RegisterPage3State extends State<RegisterPage3> {
                       registrationClass.weight,
                       registrationClass.isGenderMale ? 'male' : 'female',
                     );
-                    await TherapyDatabaseService(uid: result.uid)
-                        .addUserTherapyCollection();
+                    await TherapyDatabaseService(uid: result.uid).addUserTherapyCollection();
                   }
                 }
 
@@ -217,8 +207,7 @@ class _RegisterPage3State extends State<RegisterPage3> {
                 "Submit",
                 style: TextStyle(fontSize: 20),
               ),
-              style:
-                  ElevatedButton.styleFrom(minimumSize: Size(size.width, 60)),
+              style: ElevatedButton.styleFrom(minimumSize: Size(size.width, 60)),
             ),
           )
         ],

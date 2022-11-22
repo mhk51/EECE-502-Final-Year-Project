@@ -63,7 +63,7 @@ class _SettingsFormState extends State<SettingsForm> {
                 },
                 child: const Icon(Icons.check),
                 style: TextButton.styleFrom(
-                  primary: Colors.white,
+                  backgroundColor: Colors.white,
                 ),
               )
             ],

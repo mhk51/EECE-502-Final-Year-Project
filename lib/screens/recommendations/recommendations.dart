@@ -23,9 +23,6 @@ class _RecommendationsState extends State<Recommendations> {
         content: StreamBuilder<List<DocumentSnapshot>>(
             stream: FoodStatsService(uid: uid).recommendedFoodClass,
             builder: (context, snapshot) {
-              double carbs = 0;
-              double protein = 0;
-              double fat = 0;
               List<DocumentSnapshot> breakfastList = [];
               List<DocumentSnapshot> lunchList = [];
               List<DocumentSnapshot> dinnerList = [];
@@ -45,7 +42,7 @@ class _RecommendationsState extends State<Recommendations> {
                   snackList.add(snapshot.data![i]);
                 }
               }
-              return Container(
+              return SizedBox(
                 width: 0.9 * size.width,
                 height: 0.9 * size.height,
                 child: Column(
@@ -54,32 +51,28 @@ class _RecommendationsState extends State<Recommendations> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black)),
+                      decoration: BoxDecoration(border: Border.all(color: Colors.black)),
                       child: RecommendationList(
                         mealList: breakfastList,
                         mealType: 'Breakfast Recommendations',
                       ),
                     ),
                     Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black)),
+                      decoration: BoxDecoration(border: Border.all(color: Colors.black)),
                       child: RecommendationList(
                         mealList: lunchList,
                         mealType: 'Lunch Recommendations',
                       ),
                     ),
                     Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black)),
+                      decoration: BoxDecoration(border: Border.all(color: Colors.black)),
                       child: RecommendationList(
                         mealList: dinnerList,
                         mealType: 'Dinner Recommendations',
                       ),
                     ),
                     Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black)),
+                      decoration: BoxDecoration(border: Border.all(color: Colors.black)),
                       child: RecommendationList(
                         mealList: snackList,
                         mealType: 'Snack Recommendations',
@@ -95,8 +88,7 @@ class _RecommendationsState extends State<Recommendations> {
 class RecommendationList extends StatefulWidget {
   final List<DocumentSnapshot> mealList;
   final String mealType;
-  const RecommendationList(
-      {Key? key, required this.mealList, required this.mealType})
+  const RecommendationList({Key? key, required this.mealList, required this.mealType})
       : super(key: key);
 
   @override

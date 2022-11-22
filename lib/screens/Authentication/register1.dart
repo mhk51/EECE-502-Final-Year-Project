@@ -6,8 +6,7 @@ import 'package:provider/provider.dart';
 class RegisterPage1 extends StatefulWidget {
   final Function setProgressBar;
   final PageController controller;
-  const RegisterPage1(
-      {Key? key, required this.controller, required this.setProgressBar})
+  const RegisterPage1({Key? key, required this.controller, required this.setProgressBar})
       : super(key: key);
 
   @override
@@ -18,8 +17,7 @@ class _RegisterPage1State extends State<RegisterPage1> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    RegistrationClass registrationClass =
-        Provider.of<RegistrationClass>(context);
+    RegistrationClass registrationClass = Provider.of<RegistrationClass>(context);
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
       child: Form(
@@ -35,22 +33,18 @@ class _RegisterPage1State extends State<RegisterPage1> {
                 }),
             const SizedBox(height: 20.0),
             TextFormField(
-                decoration:
-                    textInputDecoration.copyWith(hintText: 'Password...'),
+                decoration: textInputDecoration.copyWith(hintText: 'Password...'),
                 obscureText: true,
-                validator: (val) =>
-                    val!.length < 6 ? 'Enter a password 6+ chars long' : null,
+                validator: (val) => val!.length < 6 ? 'Enter a password 6+ chars long' : null,
                 onChanged: (val) {
                   registrationClass.changePassword(val);
                 }),
             const SizedBox(height: 20.0),
             TextFormField(
-                decoration: textInputDecoration.copyWith(
-                    hintText: 'Confirm Password...'),
+                decoration: textInputDecoration.copyWith(hintText: 'Confirm Password...'),
                 obscureText: true,
-                validator: (val) => val != registrationClass.password
-                    ? 'Enter a matching password'
-                    : null,
+                validator: (val) =>
+                    val != registrationClass.password ? 'Enter a matching password' : null,
                 onChanged: (val) {
                   registrationClass.changeConfirmPassword(val);
                 }),
@@ -71,14 +65,13 @@ class _RegisterPage1State extends State<RegisterPage1> {
                   //     error = 'Please supply a valid email';
                   //   });
                   // }
-                  widget.controller.nextPage(
-                      duration: const Duration(seconds: 1),
-                      curve: Curves.decelerate);
+                  widget.controller
+                      .nextPage(duration: const Duration(seconds: 1), curve: Curves.decelerate);
                   widget.setProgressBar(1);
                 }
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.pink[400],
+                backgroundColor: Colors.pink[400],
               ),
             ),
             const SizedBox(height: 12.0),

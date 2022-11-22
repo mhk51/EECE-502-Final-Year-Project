@@ -56,8 +56,7 @@ class _BolusState extends State<Bolus> {
       foodNames.add(food.foodName);
     }
     if (foodList.isNotEmpty) {
-      data =
-          await FoodStatsService(uid: userUID).getCorrectionFactors(foodNames);
+      data = await FoodStatsService(uid: userUID).getCorrectionFactors(foodNames);
     }
     for (FoodClass food in foodList) {
       totalCarbs += (food.carbs) * data[food.foodName]!.toDouble();
@@ -102,15 +101,13 @@ class _BolusState extends State<Bolus> {
       body: FutureBuilder<Map<String, dynamic>>(
         future: fetchData(mealValue),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done &&
-              snapshot.hasData) {
+          if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
             List<String> foodNames = snapshot.data!['foodNames'];
             double bloodSugarLevel = snapshot.data!['bslevel'];
             double carbs = ((snapshot.data!['carbs']! * 100).round() / 100);
             double protein = ((snapshot.data!['protein']! * 100).round() / 100);
             double fat = ((snapshot.data!['fat']! * 100).round() / 100);
-            double calories =
-                ((snapshot.data!['calories']! * 100).round() / 100);
+            double calories = ((snapshot.data!['calories']! * 100).round() / 100);
             double glucoseTarget = snapshot.data!['glucoseTarget'];
             double carbohydratesRatio = snapshot.data!['carbohydratesRatio'];
             double insulinSensitivity = snapshot.data!['insulinSensitivity'];
@@ -204,8 +201,7 @@ class _BolusListViewState extends State<BolusListView> {
         context: context,
         builder: (context) {
           late double feedBackInsulin;
-          final TextEditingController _textEditingController =
-              TextEditingController();
+          final TextEditingController _textEditingController = TextEditingController();
           return AlertDialog(
             content: Form(
               key: _formKey,
@@ -228,11 +224,10 @@ class _BolusListViewState extends State<BolusListView> {
                     validator: (value) {
                       return value!.isNotEmpty ? null : "Invalid Field";
                     },
-                    decoration: const InputDecoration(
-                        hintText: "Actual Insulin Needed"),
+                    decoration: const InputDecoration(hintText: "Actual Insulin Needed"),
                     controller: _textEditingController,
-                    keyboardType: const TextInputType.numberWithOptions(
-                        decimal: true, signed: false),
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true, signed: false),
                   ),
                 ],
               ),
@@ -259,7 +254,7 @@ class _BolusListViewState extends State<BolusListView> {
   void initState() {
     super.initState();
     if (widget.insulinSensitivity == -1 || widget.carbohydratesRatio == -1) {
-      WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
         double carbohydratesRatio = -1;
         double insulinSensitivity = -1;
         await showDialog(
@@ -289,8 +284,7 @@ class _BolusListViewState extends State<BolusListView> {
                           color: Colors.grey[400],
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                           child: TextFormField(
                             cursorColor: Colors.indigo[800],
                             validator: (value) {
@@ -309,8 +303,7 @@ class _BolusListViewState extends State<BolusListView> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 20),
+                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                           child: TextFormField(
                             cursorColor: Colors.indigo[800],
                             validator: (value) {
@@ -353,13 +346,11 @@ class _BolusListViewState extends State<BolusListView> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           TherapyDatabaseService(uid: _auth.getUID())
-                              .updateTherapyParams(
-                                  insulinSensitivity, carbohydratesRatio);
+                              .updateTherapyParams(insulinSensitivity, carbohydratesRatio);
                           Navigator.pop(context);
                         }
                       },
                       style: TextButton.styleFrom(
-                        primary: Colors.red,
                         backgroundColor: Colors.red,
                       ),
                       child: const Padding(
@@ -399,8 +390,7 @@ class _BolusListViewState extends State<BolusListView> {
               child: ExpansionTile(
                 expandedAlignment: Alignment.bottomLeft,
                 expandedCrossAxisAlignment: CrossAxisAlignment.start,
-                title: Text(
-                    'Total bolus: ${(insulinUnits * 10).round() / 10} units'),
+                title: Text('Total bolus: ${(insulinUnits * 10).round() / 10} units'),
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(left: 15),
@@ -412,8 +402,7 @@ class _BolusListViewState extends State<BolusListView> {
                             style: TextStyle(color: Colors.black, fontSize: 15),
                           ),
                           TextSpan(
-                              text:
-                                  '${insulinUnits.floor()}-${insulinUnits.ceil()} units',
+                              text: '${insulinUnits.floor()}-${insulinUnits.ceil()} units',
                               style: const TextStyle(
                                 color: Colors.green,
                               ))
@@ -472,8 +461,7 @@ class _BolusListViewState extends State<BolusListView> {
                                 errorStyle: const TextStyle(height: 0),
                                 suffixIcon: const Icon(Icons.edit),
                                 hintText: widget.bloodSugarLevel != 0.0
-                                    ? widget.bloodSugarLevel
-                                        .toStringAsPrecision(4)
+                                    ? widget.bloodSugarLevel.toStringAsPrecision(4)
                                     : '00.00',
                                 contentPadding: const EdgeInsets.all(0)),
                             onChanged: (val) {
@@ -493,8 +481,7 @@ class _BolusListViewState extends State<BolusListView> {
                         Expanded(
                           child: DropdownButtonFormField<String>(
                             value: unit,
-                            decoration: const InputDecoration(
-                                contentPadding: EdgeInsets.all(0)),
+                            decoration: const InputDecoration(contentPadding: EdgeInsets.all(0)),
                             items: units.map((unit) {
                               return DropdownMenuItem(
                                 value: unit,
@@ -653,9 +640,8 @@ class _BolusListViewState extends State<BolusListView> {
                           child: TextField(
                             decoration: InputDecoration(
                                 suffixIcon: const Icon(Icons.edit),
-                                hintText: widget.fat != 0.0
-                                    ? widget.fat.toStringAsPrecision(4)
-                                    : '00.00',
+                                hintText:
+                                    widget.fat != 0.0 ? widget.fat.toStringAsPrecision(4) : '00.00',
                                 contentPadding: const EdgeInsets.all(0)),
                             onChanged: (val) {},
                           ),
@@ -755,17 +741,13 @@ class _BolusListViewState extends State<BolusListView> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      if (widget.insulinSensitivity == -1 ||
-                          widget.carbohydratesRatio == -1) {
+                      if (widget.insulinSensitivity == -1 || widget.carbohydratesRatio == -1) {
                       } else {
-                        double bsl = unit == "mmol/L"
-                            ? widget.bloodSugarLevel
-                            : widget.bloodSugarLevel / 18;
+                        double bsl =
+                            unit == "mmol/L" ? widget.bloodSugarLevel : widget.bloodSugarLevel / 18;
                         setState(() {
-                          insulinUnits =
-                              (widget.carbs / widget.carbohydratesRatio +
-                                  (bsl - widget.glucoseTarget) /
-                                      widget.insulinSensitivity);
+                          insulinUnits = (widget.carbs / widget.carbohydratesRatio +
+                              (bsl - widget.glucoseTarget) / widget.insulinSensitivity);
                         });
                       }
                     } else {
@@ -778,10 +760,9 @@ class _BolusListViewState extends State<BolusListView> {
                         fontFamily: 'Inria Serif',
                       )),
                   style: ButtonStyle(
-                    minimumSize:
-                        MaterialStateProperty.all<Size>(const Size(314, 70)),
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color.fromARGB(255, 255, 75, 58)),
+                    minimumSize: MaterialStateProperty.all<Size>(const Size(314, 70)),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(const Color.fromARGB(255, 255, 75, 58)),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
@@ -797,21 +778,17 @@ class _BolusListViewState extends State<BolusListView> {
                 alignment: Alignment.center,
                 child: ElevatedButton(
                   onPressed: () async {
-                    double? feedBackInsulin =
-                        await showInformationDialog(context);
+                    double? feedBackInsulin = await showInformationDialog(context);
                     if (feedBackInsulin != null) {
-                      double bsl = unit == "mmol/L"
-                          ? widget.bloodSugarLevel
-                          : widget.bloodSugarLevel / 18;
+                      double bsl =
+                          unit == "mmol/L" ? widget.bloodSugarLevel : widget.bloodSugarLevel / 18;
                       double effectiveCarbs = (feedBackInsulin -
-                              (bsl - widget.glucoseTarget) /
-                                  widget.insulinSensitivity) *
+                              (bsl - widget.glucoseTarget) / widget.insulinSensitivity) *
                           widget.carbohydratesRatio;
                       double feedBackCorrection = effectiveCarbs / widget.carbs;
                       feedBackCorrection = (feedBackCorrection - 1) * 0.5 + 1;
                       await FoodStatsService(uid: _auth.getUID())
-                          .updateFoodFactor(widget.foodNames, widget.mealValue,
-                              feedBackCorrection);
+                          .updateFoodFactor(widget.foodNames, widget.mealValue, feedBackCorrection);
                     }
                   },
                   child: const Text("Feedback",
@@ -820,10 +797,9 @@ class _BolusListViewState extends State<BolusListView> {
                         fontFamily: 'Inria Serif',
                       )),
                   style: ButtonStyle(
-                    minimumSize:
-                        MaterialStateProperty.all<Size>(const Size(314, 70)),
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color.fromARGB(255, 255, 75, 58)),
+                    minimumSize: MaterialStateProperty.all<Size>(const Size(314, 70)),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(const Color.fromARGB(255, 255, 75, 58)),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),

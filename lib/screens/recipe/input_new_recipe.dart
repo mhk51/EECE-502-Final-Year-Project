@@ -21,8 +21,7 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
   List<String> mealTypes = ["Breakfast", "Lunch", "Dinner", "Snack"];
   @override
   Widget build(BuildContext context) {
-    final data =
-        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final data = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final String recipeName = data['recipeName'] as String;
     final bool logging = data['Logging'] as bool;
     final Size size = MediaQuery.of(context).size;
@@ -97,12 +96,9 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
                             fontFamily: 'Inria Serif',
                           )),
                       style: ButtonStyle(
-                        minimumSize: MaterialStateProperty.all<Size>(
-                            const Size(185, 55)),
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(primaryColor),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                        minimumSize: MaterialStateProperty.all<Size>(const Size(185, 55)),
+                        backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30.0),
                           ),
@@ -131,8 +127,7 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
                     ElevatedButton(
                       onPressed: () async {
                         if (logging) {
-                          await RecipeDatabaseService(
-                                  recipeName: recipeName, uid: userUID)
+                          await RecipeDatabaseService(recipeName: recipeName, uid: userUID)
                               .logAllRecipeItems(mealValue);
                         }
                         Navigator.pop(context);
@@ -143,12 +138,9 @@ class _InputNewRecipeState extends State<InputNewRecipe> {
                             fontFamily: 'Inria Serif',
                           )),
                       style: ButtonStyle(
-                        minimumSize: MaterialStateProperty.all<Size>(
-                            const Size(185, 55)),
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(primaryColor),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                        minimumSize: MaterialStateProperty.all<Size>(const Size(185, 55)),
+                        backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30.0),
                           ),
@@ -168,8 +160,7 @@ class RecipeIgredientList extends StatefulWidget {
   final String recipeName;
   final List<FoodClass> ingredientsList;
 
-  const RecipeIgredientList(
-      {Key? key, required this.ingredientsList, required this.recipeName})
+  const RecipeIgredientList({Key? key, required this.ingredientsList, required this.recipeName})
       : super(key: key);
 
   @override
@@ -197,14 +188,11 @@ class _RecipeIgredientListState extends State<RecipeIgredientList> {
   final _auth = AuthService();
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
     return StreamBuilder<List<DocumentSnapshot>>(
-        stream: RecipeDatabaseService(
-                uid: _auth.getUID(), recipeName: widget.recipeName)
-            .recipeStream,
+        stream:
+            RecipeDatabaseService(uid: _auth.getUID(), recipeName: widget.recipeName).recipeStream,
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.active &&
-              snapshot.hasData) {
+          if (snapshot.connectionState == ConnectionState.active && snapshot.hasData) {
             return ListView(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,

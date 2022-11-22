@@ -76,102 +76,73 @@ class _DailyLogScreenState extends State<DailyLogScreen> {
                             decoration: BoxDecoration(
                                 border: Border.all(color: Colors.white),
                                 color: Colors.white,
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(10))),
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    "Total Daily Intake: ",
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 28),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'Carbs: ',
-                                        style: const TextStyle(
-                                            color: Colors.black, fontSize: 22),
-                                        children: [
-                                          TextSpan(
-                                            text:
-                                                '${(carbs * 100).round() / 100}',
-                                            style: const TextStyle(
-                                                color: primaryColor),
-                                          ),
-                                          const TextSpan(
-                                            text: ' g',
-                                          )
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'Protein: ',
-                                        style: const TextStyle(
-                                            color: Colors.black, fontSize: 22),
-                                        children: [
-                                          TextSpan(
-                                            text:
-                                                '${(protein * 100).round() / 100}',
-                                            style: const TextStyle(
-                                                color: primaryColor),
-                                          ),
-                                          const TextSpan(
-                                            text: ' g',
-                                          )
-                                        ]),
-                                  ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: 'Fat: ',
-                                        style: const TextStyle(
-                                            color: Colors.black, fontSize: 22),
-                                        children: [
-                                          TextSpan(
-                                            text:
-                                                '${(fat * 100).round() / 100}',
-                                            style: const TextStyle(
-                                                color: primaryColor),
-                                          ),
-                                          const TextSpan(
-                                            text: ' g',
-                                          )
-                                        ]),
-                                  )
-                                ]),
+                                borderRadius: const BorderRadius.all(Radius.circular(10))),
+                            child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+                              const Text(
+                                "Total Daily Intake: ",
+                                style: TextStyle(color: Colors.black, fontSize: 28),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'Carbs: ',
+                                    style: const TextStyle(color: Colors.black, fontSize: 22),
+                                    children: [
+                                      TextSpan(
+                                        text: '${(carbs * 100).round() / 100}',
+                                        style: const TextStyle(color: primaryColor),
+                                      ),
+                                      const TextSpan(
+                                        text: ' g',
+                                      )
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'Protein: ',
+                                    style: const TextStyle(color: Colors.black, fontSize: 22),
+                                    children: [
+                                      TextSpan(
+                                        text: '${(protein * 100).round() / 100}',
+                                        style: const TextStyle(color: primaryColor),
+                                      ),
+                                      const TextSpan(
+                                        text: ' g',
+                                      )
+                                    ]),
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                    text: 'Fat: ',
+                                    style: const TextStyle(color: Colors.black, fontSize: 22),
+                                    children: [
+                                      TextSpan(
+                                        text: '${(fat * 100).round() / 100}',
+                                        style: const TextStyle(color: primaryColor),
+                                      ),
+                                      const TextSpan(
+                                        text: ' g',
+                                      )
+                                    ]),
+                              )
+                            ]),
                           ),
                         ],
                       ),
-                      Container(
-                        // decoration: BoxDecoration(
-                        //     border: Border.all(color: Colors.black)),
-                        child: TodayMealList(
-                          mealList: breakfastList,
-                          mealType: 'Breakfast',
-                        ),
+                      TodayMealList(
+                        mealList: breakfastList,
+                        mealType: 'Breakfast',
                       ),
-                      Container(
-                        // decoration: BoxDecoration(
-                        //     border: Border.all(color: Colors.black)),
-                        child: TodayMealList(
-                          mealList: lunchList,
-                          mealType: 'Lunch',
-                        ),
+                      TodayMealList(
+                        mealList: lunchList,
+                        mealType: 'Lunch',
                       ),
-                      Container(
-                        // decoration: BoxDecoration(
-                        //     border: Border.all(color: Colors.black)),
-                        child: TodayMealList(
-                          mealList: dinnerList,
-                          mealType: 'Dinner',
-                        ),
+                      TodayMealList(
+                        mealList: dinnerList,
+                        mealType: 'Dinner',
                       ),
-                      Container(
-                        // decoration: BoxDecoration(
-                        //     border: Border.all(color: Colors.black)),
-                        child: TodayMealList(
-                          mealList: snackList,
-                          mealType: 'Snack',
-                        ),
+                      TodayMealList(
+                        mealList: snackList,
+                        mealType: 'Snack',
                       ),
                     ]),
               );
@@ -184,9 +155,7 @@ class _DailyLogScreenState extends State<DailyLogScreen> {
 class TodayMealList extends StatefulWidget {
   final List<DocumentSnapshot> mealList;
   final String mealType;
-  const TodayMealList(
-      {Key? key, required this.mealList, required this.mealType})
-      : super(key: key);
+  const TodayMealList({Key? key, required this.mealList, required this.mealType}) : super(key: key);
 
   @override
   State<TodayMealList> createState() => _TodayMealListState();

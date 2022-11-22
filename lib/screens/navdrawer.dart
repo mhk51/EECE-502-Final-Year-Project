@@ -15,7 +15,7 @@ class NavDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<CustomUser?>(context);
     Color primaryColor = const Color.fromARGB(255, 255, 75, 58);
-    Color backgroundColor = const Color.fromARGB(238, 238, 238, 238);
+    // Color backgroundColor = const Color.fromARGB(238, 238, 238, 238);
     String? pageRouteName = ModalRoute.of(context)?.settings.name;
     if (user == null) {
       return const Wrapper();
@@ -44,8 +44,7 @@ class NavDrawer extends StatelessWidget {
                         ),
                         Text(
                           ('${childData.firstName} ${childData.lastName}'),
-                          style: const TextStyle(
-                              color: Colors.white, fontSize: 25),
+                          style: const TextStyle(color: Colors.white, fontSize: 25),
                         ),
                       ],
                     ),
@@ -67,11 +66,8 @@ class NavDrawer extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
-                    onTap: () =>
-                        {Navigator.pushReplacementNamed(context, '/Home')},
-                    tileColor: (pageRouteName == '/Home')
-                        ? Colors.grey[700]
-                        : Colors.grey[800],
+                    onTap: () => {Navigator.pushReplacementNamed(context, '/Home')},
+                    tileColor: (pageRouteName == '/Home') ? Colors.grey[700] : Colors.grey[800],
                   ),
                   const SizedBox(
                     height: 8,
@@ -89,11 +85,8 @@ class NavDrawer extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
-                    onTap: () =>
-                        {Navigator.pushReplacementNamed(context, '/Bolus')},
-                    tileColor: (pageRouteName == '/Bolus')
-                        ? Colors.grey[700]
-                        : Colors.grey[800],
+                    onTap: () => {Navigator.pushReplacementNamed(context, '/Bolus')},
+                    tileColor: (pageRouteName == '/Bolus') ? Colors.grey[700] : Colors.grey[800],
                   ),
                   const SizedBox(
                     height: 8,
@@ -133,12 +126,9 @@ class NavDrawer extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
-                    onTap: () => {
-                      Navigator.pushReplacementNamed(context, '/DailyLogging')
-                    },
-                    tileColor: (pageRouteName == '/DailyLogging')
-                        ? Colors.grey[700]
-                        : Colors.grey[800],
+                    onTap: () => {Navigator.pushReplacementNamed(context, '/DailyLogging')},
+                    tileColor:
+                        (pageRouteName == '/DailyLogging') ? Colors.grey[700] : Colors.grey[800],
                   ),
                   const SizedBox(
                     height: 8,
@@ -156,12 +146,9 @@ class NavDrawer extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
-                    onTap: () => {
-                      Navigator.pushReplacementNamed(context, '/LoggingFood')
-                    },
-                    tileColor: (pageRouteName == '/LoggingFood')
-                        ? Colors.grey[700]
-                        : Colors.grey[800],
+                    onTap: () => {Navigator.pushReplacementNamed(context, '/LoggingFood')},
+                    tileColor:
+                        (pageRouteName == '/LoggingFood') ? Colors.grey[700] : Colors.grey[800],
                   ),
                   const SizedBox(
                     height: 8,
@@ -179,11 +166,8 @@ class NavDrawer extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
-                    onTap: () =>
-                        {Navigator.pushReplacementNamed(context, '/Settings')},
-                    tileColor: (pageRouteName == '/Settings')
-                        ? Colors.grey[700]
-                        : Colors.grey[800],
+                    onTap: () => {Navigator.pushReplacementNamed(context, '/Settings')},
+                    tileColor: (pageRouteName == '/Settings') ? Colors.grey[700] : Colors.grey[800],
                   ),
                   const SizedBox(
                     height: 8,

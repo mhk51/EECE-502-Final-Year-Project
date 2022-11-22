@@ -7,8 +7,7 @@ Future<double> showTherapyDialog(
       context: context,
       builder: (context) {
         final _formKey = GlobalKey<FormState>();
-        final TextEditingController _textEditingController =
-            TextEditingController();
+        final TextEditingController _textEditingController = TextEditingController();
         double result = value;
         return AlertDialog(
           contentPadding: EdgeInsets.zero,
@@ -80,7 +79,6 @@ Future<double> showTherapyDialog(
                   }
                 },
                 style: TextButton.styleFrom(
-                  primary: Colors.red,
                   backgroundColor: Colors.red,
                 ),
                 child: const Padding(

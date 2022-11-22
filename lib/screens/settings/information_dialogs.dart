@@ -7,8 +7,7 @@ Future<String> showInformationDialog(
       context: context,
       builder: (context) {
         final _formKey = GlobalKey<FormState>();
-        final TextEditingController _textEditingController =
-            TextEditingController();
+        final TextEditingController _textEditingController = TextEditingController();
         String result = value;
         return AlertDialog(
           contentPadding: EdgeInsets.zero,
@@ -77,7 +76,6 @@ Future<String> showInformationDialog(
                   }
                 },
                 style: TextButton.styleFrom(
-                  primary: Colors.red,
                   backgroundColor: Colors.red,
                 ),
                 child: const Padding(

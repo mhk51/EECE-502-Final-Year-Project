@@ -86,8 +86,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
     setState(() {
       _result = res!;
       _name = _result[0]["label"].toString().substring(2);
-      _confidence =
-          (_result[0]["confidence"] * 100.0).toString().substring(0, 5) + "%";
+      _confidence = (_result[0]["confidence"] * 100.0).toString().substring(0, 5) + "%";
     });
     // ignore: avoid_print
     print(res);
@@ -166,8 +165,8 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
     String barcodeScanRes;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, ScanMode.BARCODE);
+      barcodeScanRes =
+          await FlutterBarcodeScanner.scanBarcode('#ff6666', 'Cancel', true, ScanMode.BARCODE);
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';
     } catch (e) {
@@ -190,8 +189,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
         context: context,
         builder: (context) {
           String recipeName = "";
-          final TextEditingController _textEditingController =
-              TextEditingController();
+          final TextEditingController _textEditingController = TextEditingController();
           return AlertDialog(
             content: Column(
               mainAxisSize: MainAxisSize.min,
@@ -203,8 +201,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                   validator: (value) {
                     return value!.isNotEmpty ? null : "Invalid Field";
                   },
-                  decoration:
-                      const InputDecoration(hintText: "Enter Recipe Name"),
+                  decoration: const InputDecoration(hintText: "Enter Recipe Name"),
                   controller: _textEditingController,
                 ),
               ],
@@ -213,15 +210,11 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
               TextButton(
                   onPressed: () async {
                     final uid = AuthService().getUID();
-                    bool exists = await RecipeDatabaseService(
-                            recipeName: recipeName, uid: uid)
+                    bool exists = await RecipeDatabaseService(recipeName: recipeName, uid: uid)
                         .checkIfRecipeExists();
                     if (!exists) {
                       await Navigator.pushNamed(context, '/InputNewRecipe',
-                          arguments: {
-                            'recipeName': recipeName,
-                            'Logging': false
-                          });
+                          arguments: {'recipeName': recipeName, 'Logging': false});
                       Navigator.pop(context);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -254,7 +247,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
     super.initState();
     final _auth = AuthService();
 
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       final Size size = MediaQuery.of(context).size;
       final uid = _auth.getUID();
       String? isrecommendationsOn =
@@ -268,9 +261,6 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                 content: StreamBuilder<List<DocumentSnapshot>>(
                     stream: FoodStatsService(uid: uid).recommendedFoodClass,
                     builder: (context, snapshot) {
-                      double carbs = 0;
-                      double protein = 0;
-                      double fat = 0;
                       List<DocumentSnapshot> breakfastList = [];
                       List<DocumentSnapshot> lunchList = [];
                       List<DocumentSnapshot> dinnerList = [];
@@ -366,19 +356,16 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                 const Text("Recommendations:"),
                 FutureBuilder<String?>(
                     initialData: 'true',
-                    future: const FlutterSecureStorage()
-                        .read(key: 'recommendations'),
+                    future: const FlutterSecureStorage().read(key: 'recommendations'),
                     builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done &&
-                          snapshot.hasData) {
+                      if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
                         recommendationsOn = snapshot.data! == 'true';
                         return Switch.adaptive(
                             value: recommendationsOn,
                             onChanged: (val) async {
                               setState(() => recommendationsOn = val);
                               await const FlutterSecureStorage().write(
-                                  key: 'recommendations',
-                                  value: recommendationsOn.toString());
+                                  key: 'recommendations', value: recommendationsOn.toString());
                             });
                       } else {
                         return Switch.adaptive(
@@ -386,8 +373,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                             onChanged: (val) async {
                               setState(() => recommendationsOn = val);
                               await const FlutterSecureStorage().write(
-                                  key: 'recommendations',
-                                  value: recommendationsOn.toString());
+                                  key: 'recommendations', value: recommendationsOn.toString());
                             });
                       }
                     })
@@ -409,10 +395,8 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                         fontFamily: 'Inria Serif',
                       )),
                   style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.all<Size>(
-                        Size(0.45 * size.width, 55)),
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(primaryColor),
+                    minimumSize: MaterialStateProperty.all<Size>(Size(0.45 * size.width, 55)),
+                    backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
@@ -430,10 +414,8 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                         fontFamily: 'Inria Serif',
                       )),
                   style: ButtonStyle(
-                    minimumSize: MaterialStateProperty.all<Size>(
-                        Size(0.45 * size.width, 55)),
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(primaryColor),
+                    minimumSize: MaterialStateProperty.all<Size>(Size(0.45 * size.width, 55)),
+                    backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
@@ -463,8 +445,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                                 color: Colors.grey,
                                 width: 2.5,
                               ),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
+                              borderRadius: BorderRadius.all(Radius.circular(20))),
                           suffixIcon: IconButton(
                             onPressed: () {
                               msgController.clear();
@@ -475,8 +456,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                             ),
                           ),
                         ),
-                        validator: (val) =>
-                            val!.isEmpty ? 'Enter a Search Word' : null,
+                        validator: (val) => val!.isEmpty ? 'Enter a Search Word' : null,
                         onChanged: (val) {
                           tempSearchWord = val;
                         },
@@ -484,23 +464,20 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.white),
                           color: Colors.white,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(20))),
+                          borderRadius: const BorderRadius.all(Radius.circular(20))),
                     ),
                   ),
                   Container(
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.white),
                         color: primaryColor,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10))),
+                        borderRadius: const BorderRadius.all(Radius.circular(10))),
                     child: IconButton(
                       onPressed: () {
                         setState(() {
                           searchWord = tempSearchWord;
                         });
-                        bloc.searchWords =
-                            (searchWord.toLowerCase()).split(' ');
+                        bloc.searchWords = (searchWord.toLowerCase()).split(' ');
                         bloc.fetchNewSearch();
                       },
                       icon: const Icon(
@@ -514,8 +491,7 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.white),
                         color: primaryColor,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10))),
+                        borderRadius: const BorderRadius.all(Radius.circular(10))),
                     child: IconButton(
                       onPressed: () async {
                         await _showChoiceDialog(context);
@@ -531,17 +507,14 @@ class _LoggingFoodScreenState extends State<LoggingFoodScreen> {
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.white),
                         color: primaryColor,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10))),
+                        borderRadius: const BorderRadius.all(Radius.circular(10))),
                     child: IconButton(
                       onPressed: () async {
                         await scanBarcodeNormal();
                         if (_scanBarcode != -1) {
-                          FoodClass? result = await BarcodeService()
-                              .barcodeResult(_scanBarcode);
+                          FoodClass? result = await BarcodeService().barcodeResult(_scanBarcode);
                           if (result != null) {
-                            await Navigator.pushNamed(context, '/BarcodeInfo',
-                                arguments: result);
+                            await Navigator.pushNamed(context, '/BarcodeInfo', arguments: result);
                           }
                         }
                       },

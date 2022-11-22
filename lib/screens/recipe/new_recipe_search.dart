@@ -23,14 +23,12 @@ class _NewRecipeSearchState extends State<NewRecipeSearch> {
   //dialog for camera and image picker
   late File imageFile;
   _openGallery(BuildContext context) async {
-    imageFile =
-        (await ImagePicker().pickImage(source: ImageSource.gallery)) as File;
+    imageFile = (await ImagePicker().pickImage(source: ImageSource.gallery)) as File;
     Navigator.of(context).pop();
   }
 
   _openCamera(BuildContext context) async {
-    imageFile =
-        (await ImagePicker().pickImage(source: ImageSource.camera)) as File;
+    imageFile = (await ImagePicker().pickImage(source: ImageSource.camera)) as File;
     Navigator.of(context).pop();
   }
 
@@ -39,8 +37,8 @@ class _NewRecipeSearchState extends State<NewRecipeSearch> {
     String barcodeScanRes;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, ScanMode.BARCODE);
+      barcodeScanRes =
+          await FlutterBarcodeScanner.scanBarcode('#ff6666', 'Cancel', true, ScanMode.BARCODE);
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';
     }
@@ -126,8 +124,7 @@ class _NewRecipeSearchState extends State<NewRecipeSearch> {
                                 color: Colors.grey,
                                 width: 2.5,
                               ),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
+                              borderRadius: BorderRadius.all(Radius.circular(20))),
                           suffixIcon: IconButton(
                             onPressed: () {
                               msgController.clear();
@@ -138,8 +135,7 @@ class _NewRecipeSearchState extends State<NewRecipeSearch> {
                             ),
                           ),
                         ),
-                        validator: (val) =>
-                            val!.isEmpty ? 'Enter a Search Word' : null,
+                        validator: (val) => val!.isEmpty ? 'Enter a Search Word' : null,
                         onChanged: (val) {
                           tempSearchWord = val;
                         },
@@ -147,23 +143,20 @@ class _NewRecipeSearchState extends State<NewRecipeSearch> {
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.white),
                           color: Colors.white,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(20))),
+                          borderRadius: const BorderRadius.all(Radius.circular(20))),
                     ),
                   ),
                   Container(
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.white),
                         color: primaryColor,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10))),
+                        borderRadius: const BorderRadius.all(Radius.circular(10))),
                     child: IconButton(
                       onPressed: () {
                         setState(() {
                           searchWord = tempSearchWord;
                         });
-                        bloc.searchWords =
-                            (searchWord.toLowerCase()).split(' ');
+                        bloc.searchWords = (searchWord.toLowerCase()).split(' ');
                         bloc.fetchNewSearch();
                       },
                       icon: const Icon(
@@ -177,11 +170,10 @@ class _NewRecipeSearchState extends State<NewRecipeSearch> {
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.white),
                         color: primaryColor,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10))),
+                        borderRadius: const BorderRadius.all(Radius.circular(10))),
                     child: IconButton(
                       onPressed: () async {
-                        // _showChoiceDialog(context);
+                        _showChoiceDialog(context);
                         await Navigator.pushNamed(context, '/CameraScreen');
                       },
                       icon: const Icon(
@@ -195,8 +187,7 @@ class _NewRecipeSearchState extends State<NewRecipeSearch> {
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.white),
                         color: primaryColor,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10))),
+                        borderRadius: const BorderRadius.all(Radius.circular(10))),
                     child: IconButton(
                       onPressed: () async {
                         // _showChoiceDialog(context);
@@ -204,11 +195,9 @@ class _NewRecipeSearchState extends State<NewRecipeSearch> {
                         // QuerySnapshot<Object?> result =
                         //     await BarcodeService().barcodeResult(_scanBarcode);
                         // print(result.docs.first.get('title'));
-                        FoodClass? result =
-                            await BarcodeService().barcodeResult(_scanBarcode);
+                        FoodClass? result = await BarcodeService().barcodeResult(_scanBarcode);
                         if (result != null) {
-                          await Navigator.pushNamed(context, '/ItemInfo',
-                              arguments: result);
+                          await Navigator.pushNamed(context, '/ItemInfo', arguments: result);
                         }
                       },
                       icon: const Icon(

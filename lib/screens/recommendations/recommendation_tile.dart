@@ -73,27 +73,23 @@ class _RecommendationTileState extends State<RecommendationTile> {
               ],
             ),
           ),
-          trailing: Container(
-            // height: 100,
-            // width: 100,
-            child: IconButton(
-              icon: Icon(
-                Icons.add_circle,
-                color: addButtonSelected ? primaryColor : Colors.grey[600],
-                size: 25,
-              ),
-              onPressed: () async {
-                await Navigator.pushNamed(
-                  context,
-                  '/ItemInfo',
-                  arguments: food,
-                );
-                setState(() {
-                  addButtonSelected = !addButtonSelected;
-                });
-              },
-              iconSize: 5,
+          trailing: IconButton(
+            icon: Icon(
+              Icons.add_circle,
+              color: addButtonSelected ? primaryColor : Colors.grey[600],
+              size: 25,
             ),
+            onPressed: () async {
+              await Navigator.pushNamed(
+                context,
+                '/ItemInfo',
+                arguments: food,
+              );
+              setState(() {
+                addButtonSelected = !addButtonSelected;
+              });
+            },
+            iconSize: 5,
           ),
         ),
       ),

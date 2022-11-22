@@ -8,10 +8,7 @@ import 'package:flutter_application_1/services/search_service.dart';
 class FoodSearchWidget extends StatefulWidget {
   final String recipeName;
   const FoodSearchWidget(
-      {Key? key,
-      required this.searchWord,
-      required this.recipeName,
-      required this.bloc})
+      {Key? key, required this.searchWord, required this.recipeName, required this.bloc})
       : super(key: key);
 
   final String searchWord;
@@ -63,22 +60,18 @@ class _FoodSearchWidgetState extends State<FoodSearchWidget> {
     return Expanded(
       child: StreamBuilder<List<DocumentSnapshot>?>(
         stream: widget.bloc.foodStream,
-        builder: (BuildContext context,
-            AsyncSnapshot<List<DocumentSnapshot>?> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<List<DocumentSnapshot>?> snapshot) {
           if (snapshot.connectionState == ConnectionState.active &&
               snapshot.hasData &&
               snapshot.data != null) {
-            List<FoodClass> list =
-                snapshot.data!.map(documentToFoodClass).toList();
+            List<FoodClass> list = snapshot.data!.map(documentToFoodClass).toList();
             return Scrollbar(
               controller: controller,
               thickness: 5,
               radius: const Radius.circular(90),
               interactive: true,
-              showTrackOnHover: true,
-              hoverThickness: 10,
               trackVisibility: true,
-              isAlwaysShown: true,
+              thumbVisibility: true,
               child: ListView.separated(
                 controller: controller,
                 itemCount: list.length,
@@ -89,8 +82,7 @@ class _FoodSearchWidgetState extends State<FoodSearchWidget> {
                       recipeName: '',
                     );
                   } else {
-                    return FoodTile(
-                        food: list[index], recipeName: widget.recipeName);
+                    return FoodTile(food: list[index], recipeName: widget.recipeName);
                   }
                 },
                 separatorBuilder: (context, index) {
